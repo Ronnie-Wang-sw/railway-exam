@@ -632,10 +632,10 @@
 <nav class="tabs">
   <button class="tab-btn active" data-tab="chinese">國文</button>
   <button class="tab-btn" data-tab="english">英文</button>
+  <button class="tab-btn" data-tab="vocab">單字本 <span id="vocab-count" class="vocab-count">0</span></button>
   <button class="tab-btn" data-tab="law">法學知識</button>
   <button class="tab-btn" data-tab="transport">運輸學概要</button>
   <button class="tab-btn" data-tab="vehicle">動力車與車輛構造</button>
-  <button class="tab-btn" data-tab="vocab">單字本 <span id="vocab-count" class="vocab-count">0</span></button>
 </nav>
 
 <main>
@@ -1116,6 +1116,8 @@ async function onWordClick(evt, el){
     const qtextEl = card.querySelector('.qtext') || card.querySelector('.gram-example .en');
     sentence = qtextEl ? qtextEl.innerText : '';
   }
+  // 記錄此單字在題目／文法例句中出現的順序，讓單字本能依「題目順序」排序
+  const order = Array.from(document.querySelectorAll('#quiz-english .word, #grammar-list .word')).indexOf(el);
   const list = await vocabLoad();
   if(list.some(v=>v.word.toLowerCase() === word.toLowerCase())){
     showToast(`「${word}」已在單字本中`);
@@ -1127,7 +1129,8 @@ async function onWordClick(evt, el){
     sentence,
     sessionDate: currentSessionKey,
     week: weekLabelOf(currentSessionKey),
-    month: monthLabelOf(currentSessionKey)
+    month: monthLabelOf(currentSessionKey),
+    order: order
   });
   await vocabSave(list);
   el.classList.add('added');
@@ -1175,12 +1178,20 @@ async function renderNotebook(){
     wrap.innerHTML = `<p style="color:#948d7c;font-size:14px;">目前還沒有單字。到「英文」測驗頁點選看不懂的單字，就會自動加進這裡，並依週次、月份整理。</p>`;
     return;
   }
-  // 依月份 -> 週次分組
+  // 依月份 -> 週次分組，組內依「新增時的題目順序」排序（同一場考題的單字依出現順序排列）
   const byMonth = {};
   list.forEach(v=>{
     byMonth[v.month] = byMonth[v.month] || {};
     byMonth[v.month][v.week] = byMonth[v.month][v.week] || [];
     byMonth[v.month][v.week].push(v);
+  });
+  Object.keys(byMonth).forEach(month=>{
+    Object.keys(byMonth[month]).forEach(week=>{
+      byMonth[month][week].sort((a,b)=>{
+        if(a.sessionDate !== b.sessionDate) return a.sessionDate < b.sessionDate ? -1 : 1;
+        return (a.order ?? 0) - (b.order ?? 0);
+      });
+    });
   });
   let html = '';
   Object.keys(byMonth).forEach(month=>{
