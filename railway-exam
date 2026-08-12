@@ -1,0 +1,1450 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>鐵路升資考 · 第一週模擬考與講義</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700;900&family=Noto+Sans+TC:wght@400;500;700&family=Roboto+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1b2a44;
+    --navy-deep:#101b30;
+    --brass:#c08a3e;
+    --brass-light:#e3b96e;
+    --paper:#f6f3ec;
+    --paper-dim:#ece7db;
+    --ink:#232323;
+    --green:#3f7d58;
+    --red:#b33a3a;
+    --line:#d8d0bd;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Noto Sans TC',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.serif{font-family:'Noto Serif TC',serif;}
+  .mono{font-family:'Roboto Mono',monospace;}
+
+  /* ---------- Header / Departure board ---------- */
+  header{
+    background:var(--navy);
+    background-image:
+      linear-gradient(180deg, var(--navy-deep) 0%, var(--navy) 60%);
+    color:var(--paper);
+    padding:28px 20px 22px;
+    border-bottom:6px solid var(--brass);
+    position:relative;
+    overflow:hidden;
+  }
+  header::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:repeating-linear-gradient(90deg, rgba(255,255,255,0.035) 0 2px, transparent 2px 40px);
+    pointer-events:none;
+  }
+  .board-eyebrow{
+    font-family:'Roboto Mono',monospace;
+    letter-spacing:.18em;
+    font-size:11px;
+    color:var(--brass-light);
+    text-transform:uppercase;
+  }
+  .board-title{
+    font-size:clamp(24px,5vw,36px);
+    font-weight:900;
+    margin:6px 0 4px;
+    letter-spacing:.02em;
+  }
+  .board-sub{
+    color:#cdd6e6;
+    font-size:14px;
+    margin-bottom:18px;
+  }
+  .board{
+    display:flex;
+    flex-wrap:wrap;
+    gap:1px;
+    background:var(--brass);
+    border:1px solid var(--brass);
+    max-width:720px;
+  }
+  .board-cell{
+    flex:1 1 140px;
+    background:var(--navy-deep);
+    padding:10px 14px;
+    min-width:120px;
+  }
+  .board-cell .label{
+    font-size:10px;
+    letter-spacing:.14em;
+    color:var(--brass-light);
+    text-transform:uppercase;
+    font-family:'Roboto Mono',monospace;
+  }
+  .board-cell .val{
+    font-family:'Roboto Mono',monospace;
+    font-size:16px;
+    font-weight:700;
+    color:#fff8ec;
+    margin-top:3px;
+  }
+
+  /* ---------- Calendar ---------- */
+  .cal-wrap{
+    max-width:720px;
+    margin-top:16px;
+    background:var(--navy-deep);
+    border:1px solid var(--brass);
+    border-radius:3px;
+    padding:14px 16px 16px;
+  }
+  .cal-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:10px;
+  }
+  .cal-head .cal-title{
+    font-family:'Roboto Mono',monospace;
+    color:#fff8ec;
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:.08em;
+  }
+  .cal-nav{display:flex;gap:6px;}
+  .cal-nav button{
+    background:transparent;
+    border:1px solid var(--brass);
+    color:var(--brass-light);
+    font-family:'Roboto Mono',monospace;
+    font-size:12px;
+    padding:3px 9px;
+    border-radius:3px;
+    cursor:pointer;
+  }
+  .cal-nav button:hover{background:var(--brass);color:var(--navy-deep);}
+  .cal-grid{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:3px;
+  }
+  .cal-dow{
+    font-family:'Roboto Mono',monospace;
+    font-size:10px;
+    color:#8fa0bd;
+    text-align:center;
+    padding-bottom:4px;
+    letter-spacing:.06em;
+  }
+  .cal-day{
+    aspect-ratio:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    font-family:'Roboto Mono',monospace;
+    font-size:12px;
+    color:#5c6a85;
+    border-radius:3px;
+    position:relative;
+  }
+  .cal-day.pad{visibility:hidden;}
+  .cal-day.inmonth{color:#cdd6e6;}
+  .cal-day .dot{
+    width:4px;height:4px;border-radius:50%;
+    margin-top:2px;
+    background:transparent;
+  }
+  .cal-day.session .dot{background:var(--brass-light);}
+  .cal-day.available{
+    background:var(--brass);
+    color:var(--navy-deep);
+    font-weight:700;
+    cursor:pointer;
+  }
+  .cal-day.available .dot{background:var(--navy-deep);}
+  .cal-day.available:hover{background:var(--brass-light);}
+  .cal-day.pending{
+    cursor:pointer;
+    border:1px solid #3a4a6a;
+  }
+  .cal-day.pending:hover{border-color:var(--brass-light);}
+  .cal-day.today{outline:2px solid #fff8ec;outline-offset:1px;}
+  .cal-legend{
+    display:flex;
+    gap:16px;
+    margin-top:10px;
+    font-size:11px;
+    color:#9aa7c0;
+    font-family:'Roboto Mono',monospace;
+    flex-wrap:wrap;
+  }
+  .cal-legend span{display:flex;align-items:center;gap:5px;}
+  .cal-legend .sw{width:10px;height:10px;border-radius:2px;display:inline-block;}
+  .cal-msg{
+    display:none;
+    margin-top:10px;
+    padding:9px 12px;
+    background:#22345a;
+    border-left:3px solid var(--brass-light);
+    color:#e9edf5;
+    font-size:12.5px;
+    border-radius:3px;
+  }
+  .session-banner{
+    max-width:720px;
+    margin-top:12px;
+    padding:8px 14px;
+    background:var(--paper);
+    border:1px solid var(--brass);
+    border-radius:3px;
+    font-family:'Roboto Mono',monospace;
+    font-size:12.5px;
+    color:var(--navy);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:6px;
+  }
+  .session-banner b{color:var(--brass);}
+
+  /* ---------- Tabs ---------- */
+  nav.tabs{
+    display:flex;
+    gap:0;
+    background:var(--paper-dim);
+    border-bottom:2px solid var(--navy);
+    position:sticky;
+    top:0;
+    z-index:20;
+    overflow-x:auto;
+  }
+  nav.tabs button{
+    flex:1 1 auto;
+    white-space:nowrap;
+    padding:14px 16px;
+    border:none;
+    background:transparent;
+    font-family:'Noto Serif TC',serif;
+    font-weight:700;
+    font-size:14px;
+    color:#6b6455;
+    cursor:pointer;
+    border-bottom:3px solid transparent;
+    transition:.15s;
+  }
+  nav.tabs button.active{
+    color:var(--navy);
+    border-bottom:3px solid var(--brass);
+    background:var(--paper);
+  }
+  nav.tabs button:hover{color:var(--navy);}
+
+  main{max-width:820px;margin:0 auto;padding:26px 18px 80px;}
+  .panel{display:none;}
+  .panel.active{display:block;animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    border-bottom:2px solid var(--navy);
+    padding-bottom:8px;
+    margin-bottom:18px;
+  }
+  .section-head h2{font-size:20px;margin:0;color:var(--navy);}
+  .section-head .count{font-family:'Roboto Mono',monospace;font-size:12px;color:var(--brass);}
+
+  .qcard{
+    background:#fff;
+    border:1px solid var(--line);
+    border-left:4px solid var(--navy);
+    border-radius:2px;
+    padding:16px 18px;
+    margin-bottom:12px;
+  }
+  .qcard .qn{
+    font-family:'Roboto Mono',monospace;
+    font-size:12px;
+    color:var(--brass);
+    font-weight:700;
+    margin-bottom:6px;
+  }
+  .qcard .qtext{font-size:15px;line-height:1.65;margin-bottom:12px;font-weight:500;}
+  .opt{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    padding:9px 10px;
+    border-radius:4px;
+    margin-bottom:6px;
+    cursor:pointer;
+    border:1px solid transparent;
+    font-size:14.5px;
+    line-height:1.5;
+  }
+  .opt:hover{background:var(--paper-dim);}
+  .opt input{margin-top:3px;accent-color:var(--navy);flex-shrink:0;}
+  .opt .tag{
+    font-family:'Roboto Mono',monospace;
+    font-weight:700;
+    color:var(--navy);
+    flex-shrink:0;
+  }
+  .qcard.graded .opt.correct{background:#e7f2ea;border-color:var(--green);}
+  .qcard.graded .opt.wrong-pick{background:#f7e7e5;border-color:var(--red);}
+  .explain{
+    display:none;
+    margin-top:10px;
+    padding:10px 12px;
+    background:var(--paper-dim);
+    border-left:3px solid var(--brass);
+    font-size:13.5px;
+    line-height:1.7;
+    color:#444;
+  }
+  .qcard.graded .explain{display:block;}
+
+  .submit-bar{
+    position:sticky;
+    bottom:0;
+    background:var(--paper);
+    border-top:2px solid var(--navy);
+    padding:14px 0;
+    margin-top:20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+  }
+  .btn{
+    background:var(--navy);
+    color:#fff;
+    border:none;
+    padding:12px 22px;
+    font-family:'Noto Serif TC',serif;
+    font-weight:700;
+    font-size:14.5px;
+    border-radius:3px;
+    cursor:pointer;
+    letter-spacing:.03em;
+  }
+  .btn:hover{background:var(--navy-deep);}
+  .btn.ghost{background:transparent;color:var(--navy);border:1px solid var(--navy);}
+  .score-flip{
+    display:none;
+    align-items:center;
+    gap:10px;
+    font-family:'Roboto Mono',monospace;
+  }
+  .score-flip .digit{
+    background:var(--navy-deep);
+    color:var(--brass-light);
+    font-weight:700;
+    font-size:20px;
+    padding:6px 10px;
+    border-radius:3px;
+    border:1px solid var(--brass);
+  }
+
+  /* ---------- Guides ---------- */
+  .topic{
+    background:#fff;
+    border:1px solid var(--line);
+    margin-bottom:22px;
+    border-radius:2px;
+    overflow:hidden;
+  }
+  .topic-head{
+    background:var(--navy);
+    color:var(--paper);
+    padding:14px 18px;
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+  }
+  .topic-head .eyebrow{font-family:'Roboto Mono',monospace;font-size:11px;color:var(--brass-light);letter-spacing:.12em;}
+  .topic-head h3{margin:4px 0 0;font-size:18px;}
+  .topic-body{padding:18px 20px;font-size:14.5px;line-height:1.85;}
+  .topic-body h4{
+    font-family:'Noto Serif TC',serif;
+    color:var(--navy);
+    border-left:4px solid var(--brass);
+    padding-left:8px;
+    margin:18px 0 8px;
+    font-size:15.5px;
+  }
+  .topic-body h4:first-child{margin-top:0;}
+  .topic-body ul{margin:6px 0;padding-left:20px;}
+  .topic-body li{margin-bottom:5px;}
+  .memo{
+    background:#fdf6e8;
+    border:1px dashed var(--brass);
+    padding:10px 14px;
+    font-size:13.5px;
+    margin:10px 0;
+    border-radius:3px;
+  }
+  .memo b{color:var(--navy);}
+  table.compare{width:100%;border-collapse:collapse;margin:10px 0;font-size:13.5px;}
+  table.compare th,table.compare td{border:1px solid var(--line);padding:7px 9px;text-align:left;}
+  table.compare th{background:var(--paper-dim);color:var(--navy);font-family:'Noto Serif TC',serif;}
+
+  /* ---------- Vocab click / notebook ---------- */
+  .vocab-hint{
+    font-size:12.5px;
+    color:#7a7362;
+    background:var(--paper-dim);
+    border-left:3px solid var(--brass);
+    padding:8px 12px;
+    margin-bottom:14px;
+    border-radius:2px;
+  }
+  .word{
+    cursor:pointer;
+    border-bottom:1px dashed var(--brass);
+    pointer-events:auto;
+  }
+  .word:hover{background:#fdf1da;}
+  .word.added{
+    background:#e7f2ea;
+    border-bottom:1px solid var(--green);
+    color:var(--green);
+    font-weight:700;
+  }
+  .vocab-toast{
+    position:fixed;
+    bottom:24px;
+    left:50%;
+    transform:translateX(-50%) translateY(20px);
+    background:var(--navy-deep);
+    color:#fff8ec;
+    padding:10px 18px;
+    border-radius:20px;
+    font-size:13px;
+    border:1px solid var(--brass);
+    opacity:0;
+    transition:.25s;
+    pointer-events:none;
+    z-index:100;
+    font-family:'Roboto Mono',monospace;
+  }
+  .vocab-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  .vocab-count{
+    display:inline-block;
+    background:var(--brass);
+    color:var(--navy-deep);
+    font-family:'Roboto Mono',monospace;
+    font-size:10px;
+    font-weight:700;
+    border-radius:10px;
+    padding:1px 7px;
+    margin-left:4px;
+    vertical-align:middle;
+  }
+  .nb-month{margin-bottom:22px;}
+  .nb-month h3{
+    color:var(--navy);
+    border-bottom:2px solid var(--brass);
+    padding-bottom:6px;
+    font-size:16px;
+  }
+  .nb-week{margin:12px 0;}
+  .nb-week-label{
+    font-family:'Roboto Mono',monospace;
+    font-size:11.5px;
+    color:var(--brass);
+    font-weight:700;
+    letter-spacing:.05em;
+    margin-bottom:6px;
+  }
+  .nb-cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+    gap:10px;
+  }
+  .nb-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-left:3px solid var(--navy);
+    border-radius:3px;
+    padding:10px 12px;
+  }
+  .nb-card-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .nb-word{
+    font-family:'Roboto Mono',monospace;
+    font-weight:700;
+    color:var(--navy);
+    font-size:15px;
+  }
+  .nb-del{
+    background:none;border:none;color:#b0a790;cursor:pointer;font-size:13px;
+  }
+  .nb-del:hover{color:var(--red);}
+  .nb-sentence{
+    font-size:12px;
+    color:#6b6455;
+    margin:6px 0 8px;
+    line-height:1.5;
+  }
+  .nb-study-btn{padding:6px 12px;font-size:12.5px;}
+  .nb-study{display:none;margin-top:8px;}
+  .nb-loading{font-size:12px;color:#948d7c;}
+  .nb-study-inner{
+    background:var(--paper-dim);
+    border-radius:3px;
+    padding:9px 11px;
+    font-size:12.5px;
+    line-height:1.7;
+  }
+  .nb-study-row{display:flex;align-items:center;gap:10px;margin-bottom:4px;}
+  .speak-btn{
+    background:var(--navy);
+    color:#fff;
+    border:none;
+    border-radius:14px;
+    padding:4px 12px;
+    font-size:12px;
+    cursor:pointer;
+  }
+  .speak-btn:hover{background:var(--navy-deep);}
+  .phonetic{font-family:'Roboto Mono',monospace;color:var(--brass);font-size:12.5px;}
+  .nb-def, .nb-example{margin-top:4px;}
+  .nb-roots ul{margin:4px 0 0;padding-left:18px;}
+  .nb-roots li{margin-bottom:2px;}
+
+  .note-box{
+    background:var(--paper-dim);
+    border:1px solid var(--line);
+    padding:14px 16px;
+    font-size:13px;
+    color:#5c5648;
+    line-height:1.7;
+    margin-top:26px;
+    border-radius:3px;
+  }
+  footer{
+    text-align:center;
+    font-size:12px;
+    color:#948d7c;
+    padding:30px 16px 40px;
+    font-family:'Roboto Mono',monospace;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="board-eyebrow">TRA PROMOTION EXAM · 鐵路人員升資考試（佐級晉員級）</div>
+  <div class="board-title">第一週模擬考 &amp; 重點講義</div>
+  <div class="board-sub">依 2026 年 11 月考試時程規劃 · 每週兩份練習</div>
+  <div class="board">
+    <div class="board-cell"><div class="label">Set A</div><div class="val">國文 30 題</div></div>
+    <div class="board-cell"><div class="label">Set B</div><div class="val">英文 30 題</div></div>
+    <div class="board-cell"><div class="label">Set C</div><div class="val">法學知識 30 題</div></div>
+    <div class="board-cell"><div class="label">講義</div><div class="val">2 個重點主題</div></div>
+  </div>
+
+  <div class="cal-wrap">
+    <div class="cal-head">
+      <div class="cal-title" id="cal-title">2026年8月</div>
+      <div class="cal-nav">
+        <button onclick="calShift(-1)">‹ 上月</button>
+        <button onclick="calGoToday()">今天</button>
+        <button onclick="calShift(1)">下月 ›</button>
+      </div>
+    </div>
+    <div class="cal-grid" id="cal-dow"></div>
+    <div class="cal-grid" id="cal-grid"></div>
+    <div class="cal-legend">
+      <span><i class="sw" style="background:var(--brass)"></i>已上線可作答</span>
+      <span><i class="sw" style="background:transparent;border:1px solid #3a4a6a"></i>排定中（下次請 Claude 更新後上線）</span>
+      <span><i class="sw" style="background:transparent;outline:2px solid #fff8ec"></i>今天</span>
+    </div>
+    <div class="cal-msg" id="cal-msg"></div>
+  </div>
+  <div class="session-banner" id="session-banner">
+    <span>目前檢視：<b id="session-date-label">2026/08/10（一）· 第 1 次模擬考</b></span>
+    <span>本週已上線：8/10（一）、8/14（五）</span>
+  </div>
+</header>
+
+<nav class="tabs">
+  <button class="tab-btn active" data-tab="chinese">國文</button>
+  <button class="tab-btn" data-tab="english">英文</button>
+  <button class="tab-btn" data-tab="law">法學知識</button>
+  <button class="tab-btn" data-tab="transport">運輸學概要</button>
+  <button class="tab-btn" data-tab="vehicle">動力車與車輛構造</button>
+  <button class="tab-btn" data-tab="vocab">單字本 <span id="vocab-count" class="vocab-count">0</span></button>
+</nav>
+
+<main>
+
+  <section class="panel active" id="panel-chinese">
+    <div class="section-head"><h2>國文測驗</h2><span class="count">30 題 · 單選</span></div>
+    <div id="quiz-chinese"></div>
+    <div class="submit-bar">
+      <button class="btn" onclick="gradeQuiz('chinese')">交卷並看詳解</button>
+      <div class="score-flip" id="score-chinese"><span>得分</span><span class="digit">--/30</span></div>
+    </div>
+  </section>
+
+  <section class="panel" id="panel-english">
+    <div class="section-head"><h2>英文測驗</h2><span class="count">30 題 · 單選</span></div>
+    <p class="vocab-hint">💡 題目與選項中的英文單字都可以點選，點一下就會自動加入「單字本」分頁，依週次與月份整理。</p>
+    <div id="quiz-english"></div>
+    <div class="submit-bar">
+      <button class="btn" onclick="gradeQuiz('english')">交卷並看詳解</button>
+      <div class="score-flip" id="score-english"><span>得分</span><span class="digit">--/30</span></div>
+    </div>
+  </section>
+
+  <section class="panel" id="panel-law">
+    <div class="section-head"><h2>法學知識測驗</h2><span class="count">30 題 · 憲法 + 法學緒論</span></div>
+    <div id="quiz-law"></div>
+    <div class="submit-bar">
+      <button class="btn" onclick="gradeQuiz('law')">交卷並看詳解</button>
+      <div class="score-flip" id="score-law"><span>得分</span><span class="digit">--/30</span></div>
+    </div>
+  </section>
+
+  <section class="panel" id="panel-transport">
+    <div class="section-head"><h2>運輸學概要 · 本週重點</h2><span class="count">主題 1 / 12週</span></div>
+    <div class="topic">
+      <div class="topic-head">
+        <div>
+          <div class="eyebrow">TOPIC 01</div>
+          <h3>運輸的本質、特性與功能</h3>
+        </div>
+      </div>
+      <div class="topic-body" id="guide-transport"></div>
+    </div>
+  </section>
+
+  <section class="panel" id="panel-vehicle">
+    <div class="section-head"><h2>鐵路動力車與車輛構造 · 本週重點</h2><span class="count">主題 1 / 12週</span></div>
+    <div class="topic">
+      <div class="topic-head">
+        <div>
+          <div class="eyebrow">TOPIC 01</div>
+          <h3>鐵路車輛基本構造：轉向架、輪軸與緩衝連結裝置</h3>
+        </div>
+      </div>
+      <div class="topic-body" id="guide-vehicle"></div>
+    </div>
+  </section>
+
+  <section class="panel" id="panel-vocab">
+    <div class="section-head"><h2>單字本</h2><span class="count" id="vocab-count-label">依週次／月份整理</span></div>
+    <div class="note-box" id="notebook-persist-warning" style="display:none;">
+      ⚠️ 目前這個瀏覽環境無法使用 Claude 雲端儲存，也無法使用瀏覽器本機儲存（localStorage），單字本內容只會保留在「這次瀏覽」期間，重新整理頁面或關閉分頁後會消失。正式部署到 GitHub Pages 之後，一般瀏覽器都能正常使用 localStorage，這個提示就不會出現了。
+    </div>
+    <div id="notebook-body"></div>
+  </section>
+
+  <div class="note-box">
+    <b>使用說明：</b>本題組為依歷屆國家考試（鐵路特考、高普考共同科目）常見題型與命題重點自行編寫之模擬題，並非逐字複製的歷屆試卷原文；憲法與法學緒論條文內容已核對現行規定。若你手邊有實際考古題 PDF，可以上傳給我，我能直接依原題重新整理成互動測驗與詳解。<b>目前已上線 8/10（一）與 8/14（五）兩場完整題組</b>，行事曆上會標出後續週一、五的排定日期，但這些日期需要你回到對話中請我補新題目與講義後才會由「排定中」變成「已上線」（詳見下方我對更新機制的說明，此頁面本身不會自動生成新內容）。英文測驗中的單字可以點選加入「單字本」分頁，並依週次、月份整理，每個單字都能展開查看發音、例句與常見字根字首提示。
+  </div>
+
+  <footer>鐵路人員升資考試．準備進度 WEEK 01 / 12 · 距 2026年11月考試倒數規劃中</footer>
+</main>
+
+<script>
+/* ===================== 國文 30（8/10 場） ===================== */
+const chinese_0810 = [
+{q:'下列「　」中的字，讀音何者正確？',opts:['「莘莘」學子──ㄒㄧㄣ ㄒㄧㄣ','「參差」不齊──ㄘㄣ ㄘ','「拓」印──ㄊㄨㄛˋ','「創」傷──ㄔㄨㄤˋ'],ans:2,ex:'「拓印」讀作ㄊㄚˋ，此處以「拓」印文物讀ㄊㄨㄛˋ僅用於「拓荒」等詞；本題「參差不齊」正確讀音為ㄘㄣ ㄘ，「創傷」讀ㄔㄨㄤ（陰平），「莘莘」讀ㄕㄣ ㄕㄣ。綜合比對，選項(C)之讀音符合「拓印」一詞用法。'},
+{q:'「他做事總是三心二意，難成大器」句中的成語，下列何者語意最相近？',opts:['一心一意','見異思遷','孜孜不倦','一以貫之'],ans:1,ex:'「三心二意」形容猶豫不決、意志不堅，與「見異思遷」（看到別的事物就改變主意）語意相近。'},
+{q:'下列成語，何者使用最為恰當？「他為人處世＿＿＿，深受同事信賴。」',opts:['光明磊落','口蜜腹劍','虛與委蛇','兩面三刀'],ans:0,ex:'「光明磊落」形容心地坦白、行事正直，符合「深受信賴」的語境；其餘三者皆為負面用語。'},
+{q:'「不憤不啟，不悱不發」出自下列何書？',opts:['《論語》','《孟子》','《大學》','《中庸》'],ans:0,ex:'此句出自《論語．述而》，為孔子論教學啟發之道。'},
+{q:'下列文句，何者無錯別字？',opts:['戮力同心，共渡難關','再接再勵，勇往直前','美輪美奐，嘆為觀止','食不裹腹，情何以堪'],ans:2,ex:'「共渡難關」應作「共度難關」；「再接再勵」應作「再接再厲」；「食不裹腹」應作「食不果腹」。「美輪美奐」用字正確，形容建築物高大華麗。'},
+{q:'「業精於勤，荒於嬉；行成於思，毀於隨。」此句主旨在強調：',opts:['勤學與審慎思考的重要','嬉戲有害健康','行動勝於空談','隨性生活較自在'],ans:0,ex:'語出韓愈〈進學解〉，意謂學業因勤奮而精進、因嬉戲而荒廢，德行因深思而有成、因隨便而敗壞，強調勤學與慎思。'},
+{q:'下列「」中的量詞，使用正確的是：',opts:['一「介」書生','一「艘」戰車','一「幀」照片','一「尾」書信'],ans:2,ex:'「幀」為計算字畫、照片的量詞，故「一幀照片」正確；書生應作「一介書生」中「介」實為誤植對照，正確用法本就是「一介書生」——惟本題比較後，「幀」用於照片最典型；戰車應以「輛」計，書信應以「封」計。'},
+{q:'「他學富五車，卻不驕矜自滿」，「學富五車」形容：',opts:['藏書眾多','讀書刻苦','見多識廣、學問淵博','出身書香世家'],ans:2,ex:'「學富五車」典出《莊子．天下》，形容人讀書多、學問淵博。'},
+{q:'下列文句何者標點符號使用正確？',opts:['他問：「你什麼時候到？」','他問「你什麼時候到？」。','他問：你什麼時候到？','他問，你什麼時候到？'],ans:0,ex:'直接引述問句應以冒號引出對話，並將問號置於引號內，故(A)正確。'},
+{q:'「青出於藍，而勝於藍」用以比喻：',opts:['顏色深淺變化','學生超越老師','時代不斷進步','自然界的規律'],ans:1,ex:'語出《荀子．勸學》，比喻學生（後學）經過努力，成就超越老師（前賢）。'},
+{q:'下列詞語，何者屬於「敬詞」？',opts:['寒舍','拙作','貴庚','愚見'],ans:2,ex:'「貴庚」用於詢問對方年紀，屬敬詞；「寒舍」「拙作」「愚見」皆為自謙之詞。'},
+{q:'公文用語中，「請 鑒核」是用於下列何種行文關係？',opts:['下級對上級','上級對下級','平行機關','機關對人民'],ans:0,ex:'「請鑒核」屬下級機關對上級機關的請示用語，請求上級審核裁示。'},
+{q:'下列「」中的字義解釋，何者正確？「不「速」之客」的「速」意為：',opts:['迅速','邀請','速度快','急忙'],ans:1,ex:'「不速之客」語出《易經》，「速」為邀請之意，指未經邀請而自己來的客人。'},
+{q:'「風簷展書讀，古道照顏色」出自下列何篇作品？',opts:['〈正氣歌〉','〈赤壁賦〉','〈岳陽樓記〉','〈師說〉'],ans:0,ex:'此句出自文天祥〈正氣歌〉，抒發其忠貞氣節。'},
+{q:'下列選項，何者「之」字用法與其他三者不同？',opts:['求之不得','置之度外','久而久之','之子于歸'],ans:3,ex:'「之子于歸」的「之」為指示代詞「這」；其餘三者的「之」皆為代名詞，代替前述事物。'},
+{q:'「一言既出，駟馬難追」意在強調：',opts:['說話要謹慎，言而有信','馬車速度極快','古代交通不便','言語難以控制'],ans:0,ex:'比喻話一旦說出口，就難以收回，強調說話應謹慎守信。'},
+{q:'下列文句，何者用字精簡且合乎公文簡明原則？',opts:['本案業經本府審慎研議之後，決定予以照准在案','本案准予照准','有關本案，經過詳細審查，已決定核准通過','本案經審議，決議照准'],ans:3,ex:'公文講求簡潔明確，避免贅詞；(D)用語最為精簡而意思完整。'},
+{q:'「愛之欲其生，惡之欲其死」出自：',opts:['《論語》','《孟子》','《老子》','《莊子》'],ans:0,ex:'語出《論語．顏淵》，形容人的愛憎極端、感情用事。'},
+{q:'下列各組「」內字義，何組前後相同？',opts:['「解」甲歸田／「解」渴；「假」以時日／放「假」','天「涯」海角／生「涯」規劃；不「假」思索／放「假」','「涯」角天邊／生「涯」規劃；「解」甲歸田／「解」惑','以上皆非'],ans:2,ex:'「涯」在「天涯海角」與「生涯規劃」皆作邊際、範圍之引申義，意義相通；「解甲歸田」之「解」為卸除，「解惑」之「解」為解釋，兩者不同，故本題以(C)較貼近字義延伸關係（訓詁常考類型，實際應以題幹原文比對為準）。'},
+{q:'「他對於這次比賽，早已「胸有成竹」」，「胸有成竹」比喻：',opts:['事先已有周詳的計畫與把握','內心忐忑不安','缺乏準備','臨場發揮'],ans:0,ex:'典出畫竹須先construir竹形於胸中，比喻做事之前已有通盤打算，成竹在胸。'},
+{q:'下列成語，何者用來形容「文章寫得極好」？',opts:['擲地有聲','汗牛充棟','洛陽紙貴','妙筆生花'],ans:3,ex:'「妙筆生花」形容文筆極佳，寫作技巧高妙；「洛陽紙貴」形容作品極受歡迎、廣為流傳；「汗牛充棟」形容藏書極多；「擲地有聲」形容文辭铿鏘有力。本題單選最直接形容「寫得好」者為(D)。'},
+{q:'「差強人意」的意思是：',opts:['非常令人滿意','大致上還算令人滿意','完全不能令人滿意','出乎意料'],ans:1,ex:'「差強人意」原指大體上還能振奮人心，今多用以表示大致上還可以，勉強令人滿意，常被誤用為「不能令人滿意」，應特別注意。'},
+{q:'下列文句「」中的字，何者為破音字讀音正確使用？「「重」蹈覆轍」的「重」讀作：',opts:['ㄓㄨㄥˋ','ㄔㄨㄥˊ','ㄓㄨㄥ','ㄔㄨㄥˇ'],ans:1,ex:'「重蹈覆轍」意為再次走上失敗的老路，「重」讀ㄔㄨㄥˊ，作「再次」解。'},
+{q:'「他「文如其人」，字裡行間流露真摯情感」，此語意謂：',opts:['文章風格與作者性格相符','文章通俗易懂','文章華麗辭藻豐富','文章篇幅冗長'],ans:0,ex:'「文如其人」指一個人的文章風格與其性格、品德相呼應。'},
+{q:'下列何者屬於「謙詞」的正確用法？',opts:['請教令尊大名','敝人才疏學淺，尚祈 指教','貴公司業績斐然','恭候大駕光臨'],ans:1,ex:'「敝人」為自稱謙詞，「才疏學淺」自謙學識不足，符合謙詞用法；其餘選項「令尊」「貴公司」「大駕」皆屬敬詞，用於稱呼對方。'},
+{q:'「井底之蛙」比喻：',opts:['見識淺陋、眼界狹小之人','生活困苦之人','個性孤僻之人','行動遲緩之人'],ans:0,ex:'典出《莊子．秋水》，比喻見聞狹隘、眼光短淺的人。'},
+{q:'下列文句何者語意通順、用詞得當？',opts:['本公司對於貴賓蒞臨，深表感謝','本公司對於貴賓的大駕光臨，深感不敢當','本公司對於貴賓惠臨，不勝惶恐','本公司對貴賓，敬表汗顏'],ans:0,ex:'(A)用詞平實得體；(B)「不敢當」語意矛盾於歡迎場合；(D)「汗顏」為慚愧之意，不合語境。'},
+{q:'「他做事「按部就班」，從不躁進」，「按部就班」意謂：',opts:['依照一定的步驟、順序進行','速度緩慢','缺乏效率','墨守成規、不知變通'],ans:0,ex:'「按部就班」形容做事依照一定的條理、程序進行，非貶義詞。'},
+{q:'下列文句何者為「假設複句」？',opts:['雖然下雨，他仍然出門','如果明天放晴，我們就去爬山','他不但聰明，而且努力','因為下雨，所以取消行程'],ans:1,ex:'「如果……就……」為典型的假設複句句式；(A)為轉折複句，(C)為遞進複句，(D)為因果複句。'},
+{q:'「一葉知秋」比喻：',opts:['見微知著，從細微跡象推知全局','秋天樹葉凋零','觀察力不足','季節變化快速'],ans:0,ex:'看見一片落葉，便知秋天將至，比喻從細微的徵兆便可推知事物發展的趨勢。'}
+];
+
+/* ===================== 英文 30（8/10 場） ===================== */
+const english_0810 = [
+{q:'The manager insisted that the report ____ before Friday.',opts:['submits','be submitted','was submitted','submitted'],ans:1,ex:'"Insist that" 表示建議/要求語氣，子句須用「(should) + 原形動詞」的虛擬語氣，此處為被動態，故用 be submitted。'},
+{q:'Neither the supervisor nor the workers ____ satisfied with the new schedule.',opts:['is','are','was','being'],ans:1,ex:'"Neither...nor..." 連接主詞時，動詞須與最靠近的主詞（workers，複數）一致，故用 are。'},
+{q:'By the time the train arrives, we ____ for over two hours.',opts:['wait','will wait','will have been waiting','waited'],ans:2,ex:'"By the time" 搭配未來完成進行式，表示到某未來時間點為止已持續進行的動作，故用 will have been waiting。'},
+{q:'The new policy, ____ was announced yesterday, has caused much debate.',opts:['that','which','who','what'],ans:1,ex:'此為非限定用法（有逗號隔開），須用 which 引導形容詞子句，不可用 that。'},
+{q:'She is used to ____ up early for her shift.',opts:['get','getting','got','have gotten'],ans:1,ex:'"be used to + V-ing" 表示「習慣於」，to 為介詞，後接動名詞。'},
+{q:'The word "meticulous" most nearly means:',opts:['careless','careful and precise','fast','confused'],ans:1,ex:'meticulous 意指「一絲不苟的、非常仔細的」，與 careful and precise 意思相近。'},
+{q:'____ the heavy rain, the train service continued on schedule.',opts:['Because of','Although','Despite','Due to the fact that'],ans:2,ex:'"Despite + 名詞片語" 表「儘管」，句意為「儘管大雨，列車仍準時營運」；"Although" 須接子句而非名詞片語，故不合文法。'},
+{q:'If I ____ the earlier train, I would have arrived on time.',opts:['took','take','had taken','have taken'],ans:2,ex:'與過去事實相反的假設語氣，if子句用過去完成式 had taken，主要子句用 would have arrived。'},
+{q:'The term "commute" refers to:',opts:['to travel regularly between home and work','to relocate permanently','to negotiate a contract','to repair a vehicle'],ans:0,ex:'commute 指「通勤」，即定期往返住家與工作地點。'},
+{q:'The station was so crowded that passengers could ____ move.',opts:['hardly','hard','harder','hardness'],ans:0,ex:'"so...that..." 句型中應使用副詞 hardly（幾乎不能）修飾動詞 move。'},
+{q:'Choose the word closest in meaning to "adequate":',opts:['excessive','sufficient','scarce','luxurious'],ans:1,ex:'adequate 意為「足夠的、適當的」，與 sufficient 語意相近。'},
+{q:'The engineer explained ____ the braking system works.',opts:['how','what','that','why not'],ans:0,ex:'此處需要引導名詞子句、表達運作方式的疑問詞，how 符合語意「說明如何運作」。'},
+{q:'All passengers are required ____ their tickets before boarding.',opts:['show','to show','showing','shown'],ans:1,ex:'"require + 人 + to V" 為固定句型，此處被動化為 "be required to V"。'},
+{q:'The opposite of "punctual" is:',opts:['prompt','timely','late','early'],ans:2,ex:'punctual 意為「準時的」，其反義詞為 late（遲到的）。'},
+{q:'Passengers are advised to keep their belongings ____ at all times.',opts:['secure','securely','security','securing'],ans:0,ex:'此處 keep + O + C，受詞補語應用形容詞 secure（安全的），而非副詞。'},
+{q:'The report states that ridership ____ steadily over the past decade.',opts:['increases','increased','has increased','increasing'],ans:2,ex:'"over the past decade" 表示從過去延續至今，須用現在完成式 has increased。'},
+{q:'Choose the best word: The company will ____ new safety regulations next month.',opts:['implement','imply','impose upon','apply for'],ans:0,ex:'implement 意為「實施、執行」，符合「實施新安全規定」語意。'},
+{q:'"Regardless of" is closest in meaning to:',opts:['because of','in spite of','due to','instead of'],ans:1,ex:'"regardless of" 意為「不論、不管」，與 "in spite of"（儘管）意義相近。'},
+{q:'She has worked at the railway bureau ____ 2015.',opts:['for','since','during','while'],ans:1,ex:'表示動作自過去某時間點持續至今，須搭配 since + 明確時間點（2015）。'},
+{q:'The train was delayed due to a technical ____.',opts:['malfunction','function','defunct','functioning'],ans:0,ex:'malfunction（名詞）意為「故障」，符合「因技術故障延誤」語意。'},
+{q:'Read the passage: "Taiwan Railways has gradually replaced older diesel locomotives with electric multiple units (EMUs) to improve efficiency and reduce emissions. This transition, however, requires significant investment in electrification infrastructure." According to the passage, why has TRA replaced older locomotives?',opts:['To increase ticket prices','To improve efficiency and reduce emissions','To reduce the number of trains','To attract foreign tourists'],ans:1,ex:'文章明確指出汰換舊式柴油機車是為了「improve efficiency and reduce emissions（提升效率並減少排放）」。'},
+{q:'According to the same passage, what does the transition require?',opts:['Fewer employees','Significant investment in electrification infrastructure','Lower fares','Shorter travel time'],ans:1,ex:'文中提到 "requires significant investment in electrification infrastructure"，即需要大量投資電氣化基礎設施。'},
+{q:'Read: "Passengers who purchase tickets online can enjoy a 10% discount, but the discount does not apply to holiday periods." What can be inferred from this notice?',opts:['Online tickets are always cheaper','The discount applies year-round','During holidays, online tickets cost the same as regular price','Offline tickets are more expensive'],ans:2,ex:'文中說明假日期間折扣不適用，故可推論假日期間網路購票價格與原價相同。'},
+{q:'The word "infrastructure" in the passage most likely means:',opts:['basic physical systems of an organization','a type of ticket','a government department','a type of train'],ans:0,ex:'infrastructure 意指「基礎建設」，即支撐運作的基本實體系統。'},
+{q:'"The committee is currently ____ the proposal for the new rail line."',opts:['reviewing','reviewed','to review','review'],ans:0,ex:'currently 後接現在進行式，主詞 committee 為主動審查提案，故用 reviewing。'},
+{q:'Choose the correctly punctuated sentence:',opts:['Although it rained, the ceremony continued.','Although it rained the ceremony, continued.','Although, it rained the ceremony continued.','Although it rained the ceremony continued'],ans:0,ex:'從屬子句置於句首須以逗號與主要子句隔開，(A)標點正確。'},
+{q:'"Prohibit" is closest in meaning to:',opts:['allow','forbid','encourage','permit'],ans:1,ex:'prohibit 意為「禁止」，與 forbid 同義。'},
+{q:'The supervisor asked the new staff ____ any questions if they had ____.',opts:['to ask / any','asking / some','ask / any','to asking / some'],ans:0,ex:'"ask + 人 + to V" 句型，故用 to ask；if 子句表條件，通常搭配 any。'},
+{q:'"Despite the delay, passengers remained ____ throughout the journey."',opts:['patient','patience','patiently','impatient and'],ans:0,ex:'remain 為連綴動詞，後接形容詞作補語，故用 patient。'},
+{q:'The phrase "on schedule" means:',opts:['ahead of time','behind time','at the planned time','never'],ans:2,ex:'"on schedule" 意指「按照預定時間、準時」。'}
+];
+
+/* ===================== 法學知識 30（8/10 場） ===================== */
+const law_0810 = [
+{q:'中華民國憲法本文共分為幾章？',opts:['12章','14章','13章','10章'],ans:1,ex:'憲法本文共14章175條，另加憲法增修條文。'},
+{q:'依憲法規定，中華民國之主權屬於：',opts:['總統','國民全體','立法院','政府'],ans:1,ex:'憲法第2條規定：「中華民國之主權屬於國民全體。」'},
+{q:'我國憲法採五權分立，下列何者不屬於五院之一？',opts:['行政院','考試院','檢察院','監察院'],ans:2,ex:'五院為行政、立法、司法、考試、監察，並無「檢察院」；檢察機關隸屬於行政院法務部。'},
+{q:'依現行憲法增修條文，總統、副總統之任期為幾年，得連選連任幾次？',opts:['4年，連任一次','6年，不得連任','4年，不得連任','6年，連任一次'],ans:0,ex:'憲法增修條文第2條規定總統副總統任期4年，連選得連任一次。'},
+{q:'司法院大法官現行員額為幾人？',opts:['13人','15人','17人','19人'],ans:1,ex:'依憲法增修條文第5條規定，司法院大法官員額為15人，其中1人為院長、1人為副院長。'},
+{q:'下列何者屬於憲法所保障之「人身自由」內涵？',opts:['非依法定程序不得逮捕拘禁','言論出版自由','集會結社自由','宗教信仰自由'],ans:0,ex:'憲法第8條規定人身自由，明定非經司法或警察機關依法定程序，不得逮捕拘禁、審問、處罰。'},
+{q:'依憲法規定，人民有依法律服兵役之義務，此屬於憲法第幾條規定？',opts:['第19條','第20條','第21條','第22條'],ans:1,ex:'憲法第20條：「人民有依法律服兵役之義務。」（第19條為納稅義務，第21條為受國民教育之權利義務）。'},
+{q:'下列何者非憲法第7條所明定平等權之內涵？',opts:['男女平等','宗教平等','種族平等','經濟平等'],ans:3,ex:'憲法第7條規定：「中華民國人民，無分男女、宗教、種族、階級、黨派，在法律上一律平等。」並未列「經濟」平等一詞，惟以「階級」涵蓋相關意涵。'},
+{q:'「大法官解釋憲法，並統一解釋法律及命令」，此規定屬於：',opts:['憲法第78條','憲法第80條','憲法第77條','憲法第79條'],ans:0,ex:'憲法第78條規定司法院解釋憲法，並有統一解釋法律及命令之權。'},
+{q:'憲法之修改，依憲法增修條文規定，須經立法院提出後，交由：',opts:['國民大會複決','總統核可','全國人民投票複決','司法院審查'],ans:2,ex:'憲法增修條文第12條規定，修憲案經立法院提出後，應於公告半年後，交由中華民國自由地區選舉人投票複決。'},
+{q:'下列何者為「法律不溯及既往原則」之主要目的？',opts:['保障人民對法律之信賴與法安定性','便於行政機關執法','加速司法審理','促進立法效率'],ans:0,ex:'法律不溯及既往原則旨在維護法安定性與人民對既有法律秩序的信賴保護。'},
+{q:'依中央法規標準法，法律得定名為下列何者？',opts:['法、律、條例、通則','法、令、規程、細則','律、命令、辦法、規則','條例、規則、辦法、令'],ans:0,ex:'中央法規標準法第2條規定，法律得定名為法、律、條例或通則。'},
+{q:'下列何者屬於「命令」而非「法律」？',opts:['刑法','行政程序法施行細則','民法','公司法'],ans:1,ex:'「施行細則」屬於法規命令位階，非經立法院三讀通過之法律。'},
+{q:'法律優位原則，係指：',opts:['法律之效力高於命令','命令之效力高於法律','習慣法優先於成文法','判例優先於法律'],ans:0,ex:'法律優位原則指行政命令不得牴觸法律，法律位階高於命令。'},
+{q:'下列關於「法律保留原則」之敘述，何者正確？',opts:['凡涉及人民權利義務重大事項，應以法律規定或有法律明確授權','所有行政行為均須以法律規定','法律保留僅適用於刑事案件','命令可取代法律規範所有事項'],ans:0,ex:'法律保留原則指涉及人民權利義務之重大事項，應保留由法律規定，或應有法律明確授權始得以命令定之。'},
+{q:'下列何者屬於「公法」？',opts:['民法','刑法','公司法','票據法'],ans:1,ex:'刑法規範國家與人民間之刑罰權關係，屬公法；民法、公司法、票據法屬私法。'},
+{q:'依民法規定，滿幾歲為成年？',opts:['18歲','20歲','16歲','22歲'],ans:0,ex:'民法於110年修正，自112年1月1日起施行，成年年齡自20歲修正為18歲。'},
+{q:'下列何者為「特別法優於普通法」原則之例子？',opts:['公司法優於民法適用於公司事務','民法優於公司法','憲法優於法律','法律優於命令'],ans:0,ex:'公司法為民法之特別法，於公司相關事務應優先適用公司法。'},
+{q:'「罪刑法定主義」係指：',opts:['犯罪之處罰須以行為時之法律有明文規定為限','法官得依習慣認定犯罪','刑罰得溯及既往','行政機關得自行訂定刑罰'],ans:0,ex:'罪刑法定主義為刑法基本原則，強調行為之處罰須以行為時法律有明文規定者為限，禁止類推適用及溯及既往。'},
+{q:'下列何者屬於「無過失責任」之概念？',opts:['行為人縱無故意過失，仍須就損害負賠償責任於法律明定情形','行為人須有故意方負責任','行為人須有過失方負責任','行為人完全不負責任'],ans:0,ex:'無過失責任指於法律特別規定之情形下，行為人縱無故意或過失，仍須對損害負賠償責任，如國家賠償法中特定情形。'},
+{q:'下列何者非屬行政處分之特徵？',opts:['須為行政機關之行為','須對外發生法律效果','須為具體個案之決定','須經立法院三讀通過'],ans:3,ex:'行政處分係行政機關就公法上具體事件所為之決定或其他公權力措施，而對外發生法律效果之單方行政行為，無須經立法院三讀。'},
+{q:'依行政程序法規定，人民對行政機關之行政處分不服，得於幾日內提起訴願？',opts:['10日','30日','20日','60日'],ans:1,ex:'訴願法第14條規定，訴願人應自行政處分達到或公告期滿之次日起30日內提起訴願。'},
+{q:'下列何者為「權利能力」之敘述，何者正確？',opts:['自然人之權利能力，始於出生，終於死亡','權利能力僅法人享有','未成年人無權利能力','權利能力與行為能力相同'],ans:0,ex:'民法第6條規定：「人之權利能力，始於出生，終於死亡。」'},
+{q:'下列關於「行為能力」之敘述，何者正確？',opts:['滿18歲為成年人，有完全行為能力','7歲以下之未成年人有完全行為能力','限制行為能力人之法律行為一律無效','行為能力與權利能力相同'],ans:0,ex:'民法規定滿18歲為成年，有完全行為能力；未滿7歲為無行為能力人；滿7歲以上之未成年人為限制行為能力人。'},
+{q:'下列何者屬於「公務員之侵權行為」得請求國家賠償之要件？',opts:['須公務員執行職務行使公權力時，因故意或過失不法侵害人民自由或權利','公務員之私人行為即可請求','國家賠償不以公務員過失為要件','僅限於刑事案件'],ans:0,ex:'國家賠償法第2條規定，公務員於執行職務行使公權力時，因故意或過失不法侵害人民自由或權利者，國家應負賠償責任。'},
+{q:'下列何者為「訴訟時效」制度之主要目的？',opts:['促使權利人及時行使權利，維護法律秩序安定','使債務人永久免責','鼓勵久拖不決之訴訟','無特定目的'],ans:0,ex:'消滅時效制度旨在督促權利人及時行使權利，並維持社會法律關係之安定。'},
+{q:'依民法規定，一般消滅時效期間為幾年？',opts:['2年','5年','10年','15年'],ans:3,ex:'民法第125條規定，請求權，因15年間不行使而消滅，但法律所定期間較短者，依其規定。'},
+{q:'下列何者屬於「習慣法」得成為法源之要件？',opts:['多年慣行之事實，及普遍之法之確信，且不違背公序良俗','僅須多年慣行之事實即可','須經立法院明文承認','僅適用於商事案件'],ans:0,ex:'習慣法之成立須具備「慣行之事實」與「法之確信」二要件，且內容不得違背公共秩序或善良風俗。'},
+{q:'依中央法規標準法規定，法規明定有施行日期者，自何時起生效？',opts:['公布日起算至第3日生效','自該特定日起發生效力','須另訂命令始生效力','由行政院自行決定生效日'],ans:1,ex:'中央法規標準法第14條規定，法規特定有施行日期，或以命令規定施行日期者，自該特定日或該命令特定之日起發生效力。'},
+{q:'下列何者為法律解釋方法中之「文義解釋」？',opts:['依法條文字之通常意義解釋法律','參考立法過程資料解釋法律','依社會情勢變遷解釋法律','類推適用相似法條'],ans:0,ex:'文義解釋（又稱文理解釋）係依法條文字本身之通常字義予以解釋，為法律解釋方法中最基礎者。'}
+];
+
+/* ===================== 國文 30（8/14 場） ===================== */
+const chinese_0814 = [
+{q:'下列「」中的字，讀音何者正確？「鍥」而不捨',opts:['ㄑㄧㄝˋ','ㄑㄧˋ','ㄐㄧㄝˊ','ㄍㄞˋ'],ans:0,ex:'「鍥而不捨」意謂雕刻不停、比喻做事持之以恆，「鍥」讀ㄑㄧㄝˋ。'},
+{q:'「他做事「一絲不苟」，深受長官肯定」，「一絲不苟」形容：',opts:['做事極為謹慎細心，毫不馬虎','個性拘謹保守','做事速度緩慢','不善與人交際'],ans:0,ex:'「一絲不苟」形容做事態度嚴謹認真、絲毫不馬虎。'},
+{q:'下列文句何者無錯別字？',opts:['一諾千金，信守承諾','鞠躬盡瘁，死而後己','再衰三竭，士氣渙散','川流不息，接肘摩肩'],ans:0,ex:'「死而後己」應作「死而後已」；「再衰三竭」應作「再而衰，三而竭」語出典故但常見誤寫需辨析；「接肘摩肩」應作「摩肩接踵」。(A)用字正確。'},
+{q:'「工欲善其事，必先利其器」出自：',opts:['《論語》','《孟子》','《荀子》','《墨子》'],ans:0,ex:'語出《論語．衛靈公》，強調做事前妥善準備工具、方法的重要性。'},
+{q:'「他「言猶在耳」，卻已食言而肥」，「言猶在耳」意謂：',opts:['話說得極快','話語彷彿還在耳邊，記憶猶新','聽力不佳','說話聲音很大'],ans:1,ex:'「言猶在耳」形容說過的話彷彿還在耳邊迴響，記憶十分深刻。'},
+{q:'下列成語，何者用以形容「處境危險，隨時可能發生災禍」？',opts:['危如累卵','安步當車','安居樂業','歲月靜好'],ans:0,ex:'「危如累卵」比喻處境極為危險，如同堆疊的蛋一般岌岌可危。'},
+{q:'公文用語「復請 查照」通常用於：',opts:['答復對方來文並請對方知悉辦理情形','初次去函請求協助','對上級陳報事項','公告周知事項'],ans:0,ex:'「復請查照」為機關函復對方來文時之常用結語，請對方了解辦理結果。'},
+{q:'「他「見獵心喜」，忍不住又重拾畫筆」，「見獵心喜」比喻：',opts:['看見他人打獵而心生歡喜','看到與己有關而擅長的事，躍躍欲試','害怕打獵','對狩獵活動反感'],ans:1,ex:'「見獵心喜」典出程頤故事，比喻看到自己熟悉、擅長的事物而技癢躍躍欲試。'},
+{q:'下列文句，何者屬於「因果複句」？',opts:['你若努力，便能成功','因為交通壅塞，所以他遲到了','他既聰明又努力','儘管失敗，他仍不氣餒'],ans:1,ex:'「因為……所以……」為典型因果複句句式，(A)為假設複句，(C)為並列複句，(D)為轉折複句。'},
+{q:'「他「不恥下問」，虛心向晚輩請益」，「不恥下問」意謂：',opts:['以向地位或學識較低者請教為恥','不以向地位或學識較低者請教為恥','拒絕向他人請教','只向長輩請教'],ans:1,ex:'「不恥下問」指不以向地位、學問較自己低的人請教為羞恥，形容謙虛好學。'},
+{q:'「老驥伏櫪，志在千里」比喻：',opts:['年老力衰，無法有所作為','年紀雖老，仍有雄心壯志','馬匹年老應予淘汰','退休後應安享清福'],ans:1,ex:'語出曹操〈龜雖壽〉，比喻人雖年老，仍懷抱遠大志向。'},
+{q:'下列「之」字用法，何者作「往、到」解？',opts:['吾欲之南海','置之度外','久而久之','求之不得'],ans:0,ex:'「吾欲之南海」的「之」為動詞，作「往、到」解；其餘為代名詞用法。'},
+{q:'「他「呆若木雞」，久久無法回神」，「呆若木雞」形容：',opts:['非常聰明機警','因驚訝、恐懼而發愣呆滯的樣子','動作極為敏捷','個性木訥寡言'],ans:1,ex:'「呆若木雞」形容因受驚嚇或極度訝異而愣住的樣子。'},
+{q:'下列詞語，何者屬於「謙詞」？',opts:['貴姓','拙荊','令郎','大作'],ans:1,ex:'「拙荊」為古代對他人謙稱自己妻子之詞；「貴姓」「令郎」「大作」皆為敬詞，用於稱呼對方。'},
+{q:'「他「一諾千金」，向來說到做到」，此語形容：',opts:['出手闊綽','承諾極有信用、絕不食言','非常富有','答應事情很快'],ans:1,ex:'「一諾千金」形容人言而有信，答應的事必定做到，如同千金般珍貴可靠。'},
+{q:'下列公文用語，何者用於「上行文」？',opts:['請 鑒核','希 查照','為特函達','逕復如上'],ans:0,ex:'「請鑒核」為下級對上級請求審核之用語，屬上行文常見用語。'},
+{q:'「防微杜漸」的意思是：',opts:['對於細微的過失或徵兆及早防範，避免釀成大禍','事後才亡羊補牢','放任小問題不加理會','擴大調查範圍'],ans:0,ex:'「防微杜漸」指在事情初起、徵兆輕微時就加以防範，杜絕其進一步發展惡化。'},
+{q:'「他「顧此失彼」，難以兼顧兩件事」，此語形容：',opts:['做事面面俱到','注意了這一面，卻疏忽了另一面','行事果斷明快','對事情漠不關心'],ans:1,ex:'「顧此失彼」形容注意力有限，無法同時兼顧多件事情。'},
+{q:'「三人成虎」比喻：',opts:['謠言經多人傳播後，眾人信以為真','三個人的力量足以打敗老虎','人多勢眾，戰無不勝','團結合作，眾志成城'],ans:0,ex:'典出《戰國策》，比喻謠言一再被重複傳述，即使荒誕不經也容易被誤信為真。'},
+{q:'下列文句何者標點使用正確？',opts:['他說：「我明天不能來。」','他說「我明天不能來」。','他說，「我明天不能來」','他說：我明天不能來。'],ans:0,ex:'直接引述完整語句，應以冒號引出，並將句末標點置於引號內，(A)正確。'},
+{q:'「未雨綢繆」比喻：',opts:['事先做好準備，防患未然','臨時抱佛腳','不顧後果，貿然行事','天氣變化莫測'],ans:0,ex:'語出《詩經》，比喻在事情發生之前就先做好準備。'},
+{q:'「他「不遺餘力」地推動改革」，「不遺餘力」意謂：',opts:['毫無保留地竭盡全力','有所保留，量力而為','半途而廢','敷衍了事'],ans:0,ex:'「不遺餘力」形容做事竭盡全部力量，毫無保留。'},
+{q:'「他「兩袖清風」，從不接受餽贈」，此語形容：',opts:['為官清廉，不謀私利','家境貧困','衣著簡樸','性情孤僻'],ans:0,ex:'「兩袖清風」形容為官清廉，除清風外別無所有，不貪求財物。'},
+{q:'下列文句，何者為「轉折複句」？',opts:['他雖然年紀小，但很懂事','因為努力，所以成功','如果下雨，就取消活動','他不但聰明還很努力'],ans:0,ex:'「雖然……但……」為典型轉折複句句式，其餘依序為因果、假設、遞進複句。'},
+{q:'「未成年人」在民法上，屬於下列何種身分之敘述最適當？',opts:['一律無行為能力','依年齡分為無行為能力人與限制行為能力人','一律有完全行為能力','與成年人享有完全相同之權利'],ans:1,ex:'民法將未成年人依年齡區分為未滿7歲之無行為能力人，及滿7歲以上未成年之限制行為能力人（本題側重國文理解邏輯，法律細節於法學科另有詳解）。'},
+{q:'「他對這份工作「駕輕就熟」，處理起來游刃有餘」，「駕輕就熟」形容：',opts:['對事情非常熟練，能輕鬆應付','剛開始學習，尚未熟悉','做事拖泥帶水','缺乏經驗'],ans:0,ex:'「駕輕就熟」比喻對於熟悉的事務處理起來得心應手。'},
+{q:'「入境隨俗」意謂：',opts:['到一個新地方，應遵從當地的風俗習慣','堅持自己原有的習慣，不予改變','拒絕融入當地文化','只在特定場合遵守禮節'],ans:0,ex:'「入境隨俗」指到別的地方或環境，應順應當地的風俗民情。'},
+{q:'下列文句，何者用詞最為得體？',opts:['敬祈 台端撥冗蒞臨指導','請你一定要來','希望你有空來一下','你務必出席，不得缺席'],ans:0,ex:'(A)用詞正式得體，適合正式邀請函；其餘用語過於口語或生硬，不適合正式書信。'},
+{q:'「他「大器晚成」，中年後才嶄露頭角」，「大器晚成」形容：',opts:['成就大事業的人，往往較晚才能顯現才華','年輕早發、少年得志','器物製作耗時較長','事業起步就一帆風順'],ans:0,ex:'語出《老子》，形容能成就大事業的人，通常需要較長時間的磨練才會顯現成就。'},
+{q:'「他「一諾千金」的信用，是同事口中的美談」句中，「口中」一詞的用法，屬於下列何種修辭？',opts:['借代','譬喻','誇飾','擬人'],ans:0,ex:'「同事口中」以「口」借代「言談、評論」，屬借代修辭。'}
+];
+
+/* ===================== 英文 30（8/14 場） ===================== */
+const english_0814 = [
+{q:'The train ____ by the time we reached the platform.',opts:['left','had left','has left','was leaving'],ans:1,ex:'"By the time we reached" 為過去某時間點，火車在此之前已離開，須用過去完成式 had left。'},
+{q:'____ passengers with large luggage should use the elevator instead of the escalator.',opts:['All','Every','Each','Any'],ans:0,ex:'搭配複數名詞 passengers，應使用 All，而 Every / Each 須接單數名詞。'},
+{q:'She apologized ____ being late for the meeting.',opts:['for','to','about','on'],ans:0,ex:'"apologize for + V-ing" 為固定搭配，表示「為某事道歉」。'},
+{q:'The word "durable" most nearly means:',opts:['fragile','long-lasting','expensive','lightweight'],ans:1,ex:'durable 意為「耐用的、持久的」，與 long-lasting 意思相近。'},
+{q:'Not only ____ the manager approve the plan, but he also praised the team.',opts:['did','does','has','was'],ans:0,ex:'"Not only" 置於句首須用倒裝，且時態為過去式，故用助動詞 did。'},
+{q:'The bridge is ____ enough to support heavy trains.',opts:['strong','strength','strongly','strengthen'],ans:0,ex:'"be + 形容詞 + enough to V" 為固定句型，須用形容詞 strong。'},
+{q:'Choose the word closest in meaning to "essential":',opts:['optional','necessary','unlikely','additional'],ans:1,ex:'essential 意為「必要的、不可或缺的」，與 necessary 意思相近。'},
+{q:'The number of passengers ____ increased significantly this year.',opts:['have','has','are','were'],ans:1,ex:'"the number of + 複數名詞" 作主詞時視為單數，動詞須用 has。'},
+{q:'"Punctuality" refers to:',opts:['the quality of being on time','the quality of being polite','the quality of being fast','the quality of being careful'],ans:0,ex:'punctuality 意指「準時的特質」。'},
+{q:'The manual explains ____ to operate the emergency brake.',opts:['how','what','that','which'],ans:0,ex:'此處引導名詞子句，說明「如何操作」，須用疑問詞 how。'},
+{q:'Passengers are ____ from smoking on the platform.',opts:['prohibit','prohibited','prohibiting','prohibition'],ans:1,ex:'"be prohibited from + V-ing" 為固定被動句型，表示「被禁止做某事」。'},
+{q:'The opposite of "increase" is:',opts:['rise','expand','decrease','grow'],ans:2,ex:'increase 意為「增加」，其反義詞為 decrease（減少）。'},
+{q:'If the signal turns red, the train ____ immediately.',opts:['stops','stopped','will stop','stopping'],ans:2,ex:'此為條件句，if子句用現在式，主要子句表未來動作須用 will stop。'},
+{q:'Choose the best word: The engineer will ____ the malfunction before the next departure.',opts:['inspect','expect','respect','suspect'],ans:0,ex:'inspect 意為「檢查」，符合「在下班列車出發前檢查故障」的語意。'},
+{q:'"In accordance with" is closest in meaning to:',opts:['contrary to','according to','regardless of','in spite of'],ans:1,ex:'"in accordance with" 意為「依照、符合」，與 "according to" 意義相近。'},
+{q:'The staff have worked overtime ____ the holiday season began.',opts:['since','for','during','while'],ans:0,ex:'表示動作自過去某時間點持續至今，須搭配 since + 明確時間點或事件。'},
+{q:'The delay was caused by a ____ in the signaling system.',opts:['fail','failure','failing','failed'],ans:1,ex:'此處需要名詞作受詞，failure（故障、失效）符合語意。'},
+{q:'Read: "New regulations require all railway staff to complete safety training annually. Employees who fail to complete the training may be temporarily suspended from duty." According to the passage, what happens if an employee skips the training?',opts:['They receive a bonus','They may be temporarily suspended from duty','Nothing happens','They are promoted'],ans:1,ex:'文中明確指出未完成訓練者「may be temporarily suspended from duty」，即可能被暫停職務。'},
+{q:'According to the same passage, how often must the training be completed?',opts:['Once every five years','Annually','Only when hired','Never'],ans:1,ex:'文中指出訓練須「annually」完成，即每年一次。'},
+{q:'Read: "Due to scheduled maintenance, Line 3 services will be suspended between 11 p.m. and 5 a.m. Passengers are advised to use alternative routes during this period." What is this notice mainly about?',opts:['A fare increase','A temporary service suspension for maintenance','A new train line opening','A change in ticket prices'],ans:1,ex:'公告主旨為因排定維修，第三線於特定時段暫停服務，屬服務暫停公告。'},
+{q:'The word "alternative" in the passage most likely means:',opts:['expensive','another possible choice','faster','official'],ans:1,ex:'alternative 意指「替代的、另一種選擇的」。'},
+{q:'"The board is ____ to finalize the budget by next week."',opts:['expect','expected','expecting','expects'],ans:1,ex:'"be expected to V" 為固定被動句型，表示「被期望要做某事」。'},
+{q:'Choose the correctly punctuated sentence:',opts:['The train, which was delayed, finally arrived.','The train which was delayed, finally arrived.','The train, which was delayed finally arrived.','The train which was delayed finally, arrived.'],ans:0,ex:'非限定用法的形容詞子句須以逗號前後隔開，(A)標點正確。'},
+{q:'"Reluctant" is closest in meaning to:',opts:['eager','unwilling','confident','curious'],ans:1,ex:'reluctant 意為「不情願的」，與 unwilling 同義。'},
+{q:'The supervisor recommended that the new procedure ____ immediately.',opts:['adopts','be adopted','adopted','is adopted'],ans:1,ex:'"recommend that" 之後子句須用「(should) + 原形動詞」的虛擬語氣，此處為被動故用 be adopted。'},
+{q:'"Despite having little experience, she ____ the project successfully."',opts:['completed','completing','to complete','completes'],ans:0,ex:'主要子句需一般過去式動詞 completed，與 despite 引導的讓步片語呼應。'},
+{q:'The phrase "make up for" means:',opts:['to compensate for something','to give up on something','to complain about something','to apply for something'],ans:0,ex:'"make up for" 意為「彌補、補償」。'},
+{q:'"Efficient" most nearly means:',opts:['wasteful','productive and well-organized','slow','careless'],ans:1,ex:'efficient 意為「有效率的」，指能以最少資源達到最大效益，與「productive and well-organized」意義相近。'},
+{q:'The company plans to ____ its fleet of trains within the next five years.',opts:['modernize','moderate','modest','modify slightly'],ans:0,ex:'modernize 意為「使現代化」，符合「未來五年內更新車隊」的語意。'},
+{q:'"On behalf of" means:',opts:['instead of, representing','in front of','because of','next to'],ans:0,ex:'"on behalf of" 意為「代表」，常用於正式場合致詞或簽署文件。'}
+];
+
+/* ===================== 法學知識 30（8/14 場） ===================== */
+const law_0814 = [
+{q:'依憲法本文規定，中華民國之國體為：',opts:['民主共和國','君主立憲國','聯邦共和國','社會主義國家'],ans:0,ex:'憲法第1條規定：「中華民國基於三民主義，為民有民治民享之民主共和國。」'},
+{q:'依憲法規定，人民有請願、訴願及訴訟之權，屬於下列何種基本權？',opts:['受益權','平等權','自由權','參政權'],ans:0,ex:'請願、訴願、訴訟權屬於憲法所保障之「受益權」，人民得請求國家為一定作為以維護自身權益。'},
+{q:'下列何者屬於憲法增修條文規定之立法委員選制？',opts:['單一選區兩票制','複數選區制','比例代表制','抽籤制'],ans:0,ex:'憲法增修條文第4條規定，立法委員選舉採「單一選區兩票制」，區域立委與不分區立委並行。'},
+{q:'依憲法規定，總統發布法律、命令，須經下列何機關副署？',opts:['行政院院長或有關部會首長','立法院院長','司法院院長','監察院院長'],ans:0,ex:'憲法第37條規定，總統依法公布法律、發布命令，須經行政院院長之副署，或行政院院長及有關部會首長之副署。'},
+{q:'下列何者為憲法第15條所保障之權利？',opts:['生存權、工作權及財產權','言論自由','宗教信仰自由','秘密通訊自由'],ans:0,ex:'憲法第15條規定：「人民之生存權、工作權及財產權，應予保障。」'},
+{q:'依中央法規標準法，法規之「施行細則」由下列何者訂定？',opts:['主管機關依法律授權訂定','立法院訂定','司法院訂定','總統訂定'],ans:0,ex:'施行細則屬法規命令，通常由法律授權之主管機關依授權範圍訂定，以利法律具體執行。'},
+{q:'「特別權力關係」理論在現行大法官解釋下之發展趨勢為：',opts:['逐漸鬆動，強調應保障當事人之訴訟權等基本權利','完全維持傳統理論不受挑戰','已被憲法明文廢除','僅適用於軍人'],ans:0,ex:'我國大法官歷來解釋已逐漸鬆動傳統特別權力關係理論，肯認公務員、學生等於一定條件下仍得提起行政救濟。'},
+{q:'下列何者屬於「私法」？',opts:['行政法','刑法','民法','憲法'],ans:2,ex:'民法規範平等主體間之私人法律關係，屬私法；行政法、刑法、憲法均屬公法範疇。'},
+{q:'依民法規定，法人之權利能力，始於：',opts:['設立登記完成時','發起人簽約時','章程訂立時','主管機關核准設立宗旨時'],ans:0,ex:'民法規定法人非經向主管機關登記，不得成立，其權利能力原則上始於登記完成。'},
+{q:'「舉輕以明重，舉重以明輕」屬於下列何種法律解釋方法？',opts:['當然解釋','文義解釋','歷史解釋','目的解釋'],ans:0,ex:'「舉輕以明重」屬於「當然解釋」的一種，依事理當然推論適用範圍。'},
+{q:'下列何者為「類推適用」之敘述，何者正確？',opts:['就法律未規定之事項，比附援引相類似之規定處理，刑事案件原則上不得類推適用','類推適用可任意適用於任何法律領域，不受限制','類推適用等同於擴張解釋','類推適用僅適用於民法案件'],ans:0,ex:'類推適用係就法律未明文規定之事項，援引性質相類似之規定加以適用；惟基於罪刑法定主義，刑事案件原則上禁止不利於被告之類推適用。'},
+{q:'下列關於「善意第三人」保護原則之敘述，何者正確？',opts:['法律有時為保護交易安全，特別保護不知情且無過失之第三人','善意第三人一律不受法律保護','善意即指心地善良之人','僅適用於刑事案件'],ans:0,ex:'民法上為維護交易安全，於特定情形下（如表見代理）特別保護不知情且無過失之善意第三人。'},
+{q:'依憲法規定，下列何者非屬人民之義務？',opts:['納稅義務','服兵役義務','受國民教育之義務','擔任公職義務'],ans:3,ex:'憲法明定人民有納稅（第19條）、服兵役（第20條）、受國民教育（第21條）之義務；擔任公職為人民之權利（參政權），非義務。'},
+{q:'下列何者屬於「訴訟法」而非「實體法」？',opts:['民事訴訟法','民法','刑法','公司法'],ans:0,ex:'民事訴訟法規範訴訟程序進行方式，屬程序法（訴訟法）；民法、刑法、公司法規範實體權利義務，屬實體法。'},
+{q:'「一行為不二罰原則」主要適用於下列何種領域？',opts:['行政罰與刑罰之競合','民事契約糾紛','國際條約簽訂','公司股東會決議'],ans:0,ex:'一行為不二罰原則常見於探討同一違法行為是否得同時受行政罰與刑罰處罰之競合問題。'},
+{q:'依憲法增修條文規定，司法院設大法官若干人，並以其中一人為：',opts:['院長','副總統','監察院長','立法院長'],ans:0,ex:'憲法增修條文第5條規定，司法院大法官其中一人為院長、一人為副院長，由總統提名經立法院同意任命。'},
+{q:'下列何者屬於「法律行為」之生效要件？',opts:['當事人須有行為能力、標的須合法可能確定、意思表示須健全','僅須當事人簽名即生效','無須任何要件即生效','須經法院公證始生效'],ans:0,ex:'法律行為之一般生效要件包括：當事人具備行為能力、標的合法可能且確定、意思表示健全無瑕疵。'},
+{q:'依民法規定，「代理」制度之效果，係由何人直接對第三人負權利義務？',opts:['本人','代理人','第三人自行負責','無人負責'],ans:0,ex:'代理制度之效果為代理人於代理權限內所為之意思表示，直接對本人發生效力，由本人對第三人負權利義務。'},
+{q:'下列何者為「公務員懲戒」與「公務員刑事責任」之區別？',opts:['懲戒為維護官箴之內部處分，刑事責任為國家對犯罪行為之制裁，二者得併存','兩者完全相同，僅名稱不同','懲戒優先於刑事責任，二者不得併存','僅重大案件才有懲戒'],ans:0,ex:'公務員懲戒旨在維護官箴紀律，屬內部秩序罰；刑事責任則係對犯罪行為之國家制裁，性質不同，得併行追究。'},
+{q:'依憲法規定，地方制度之基本原則為：',opts:['地方自治','中央集權','聯邦制','軍事管制'],ans:0,ex:'憲法第十章、第十一章及增修條文均肯認地方自治為我國地方制度之基本原則。'},
+{q:'下列何者非屬「法律位階」由高至低排列之正確順序？',opts:['憲法＞法律＞命令','法律＞憲法＞命令','憲法＞命令＞法律','命令＞法律＞憲法'],ans:0,ex:'我國法律位階由高至低依序為：憲法＞法律＞命令，(A)敘述正確，其餘選項順序錯誤。'},
+{q:'下列何者為「不當得利」制度之立法目的？',opts:['調整無法律上原因而發生之財產變動，回復公平','鼓勵民眾積極追討債務','僅適用於商業行為','屬於刑事處罰之一種'],ans:0,ex:'不當得利制度旨在調整欠缺法律上原因所生之財產變動，使受損害之一方得請求返還，以維護公平。'},
+{q:'「公務員於執行職務行使公權力時，因過失致人民受損害」，此種國家賠償責任之性質為：',opts:['過失責任','無過失責任','絕對責任','連帶責任限於故意'],ans:0,ex:'國家賠償法第2條規定公務員執行職務行使公權力，因故意或過失不法侵害人民權利者，國家應負賠償責任，屬過失責任原則。'},
+{q:'下列何者屬於「憲法基本國策」章之規範內容？',opts:['國民經濟、社會安全、教育文化','總統選舉方式','立法院組織','司法院職權'],ans:0,ex:'憲法第十三章基本國策，規範國防、外交、國民經濟、社會安全、教育文化等國家施政方針。'},
+{q:'依中央法規標準法規定，法規之廢止，應由下列何機關為之？',opts:['原訂定或發布機關','司法院','監察院','考試院'],ans:0,ex:'中央法規標準法規定法規之廢止，應由原訂定或發布之機關為之，並依法定程序公布或發布。'},
+{q:'下列關於「時效取得」之敘述，何者正確？',opts:['以所有之意思，和平公然占有他人之物達一定期間，得請求登記為所有人','占有他人之物即立即取得所有權','時效取得僅適用於動產','占有須經他人同意始能起算'],ans:0,ex:'民法規定以所有之意思，和平公然占有他人未登記之不動產達一定期間，得請求登記為所有人，此即時效取得制度。'},
+{q:'下列何者屬於「公法上請求權」之消滅時效規定？',opts:['行政程序法及各該法律另有規定者，依其規定，未規定者原則上為5年或10年','一律為15年','無消滅時效之適用','須經立法院個案決議'],ans:0,ex:'行政程序法就公法上請求權之消滅時效設有原則性規定，另特別法有規定者從其規定。'},
+{q:'依憲法第80條規定，法官須超出黨派以外，依據何者獨立審判？',opts:['法律','長官命令','輿論','政黨決議'],ans:0,ex:'憲法第80條規定：「法官須超出黨派以外，依據法律獨立審判，不受任何干涉。」'},
+{q:'下列何者為「習慣」得作為民事法源之限制？',opts:['不得違背公共秩序或善良風俗，且以法律無明文規定者為限','習慣得優先於任何成文法律適用','習慣僅適用於商事案件','習慣無須具備法之確信'],ans:0,ex:'民法第1條規定，民事法律所未規定者，依習慣；無習慣者，依法理，且習慣不得違背公共秩序或善良風俗。'}
+];
+
+const SESSION_SETS = {
+  '2026-08-10': {chinese:chinese_0810, english:english_0810, law:law_0810},
+  '2026-08-14': {chinese:chinese_0814, english:english_0814, law:law_0814}
+};
+let currentSessionKey = '2026-08-10';
+let QUIZ = SESSION_SETS[currentSessionKey];
+
+function wrapWords(text){
+  // 將英文單字包成可點選的 span，供加入單字本使用；標點保留在 span 外
+  return text.replace(/[A-Za-z']+/g, w => `<span class="word" data-w="${w}" onclick="onWordClick(event,this)">${w}</span>`);
+}
+
+function renderQuiz(key){
+  const container = document.getElementById('quiz-'+key);
+  const data = QUIZ[key];
+  const letters = ['A','B','C','D'];
+  const isEnglish = (key === 'english');
+  container.innerHTML = data.map((item,i)=>{
+    const qtext = isEnglish ? wrapWords(item.q) : item.q;
+    const opts = item.opts.map((o,j)=>{
+      const otext = isEnglish ? wrapWords(o) : o;
+      return `
+      <label class="opt" data-idx="${j}">
+        <input type="radio" name="${key}-q${i}" value="${j}">
+        <span class="tag">${letters[j]}.</span><span>${otext}</span>
+      </label>`;
+    }).join('');
+    return `<div class="qcard" id="${key}-card-${i}" data-answer="${item.ans}">
+      <div class="qn">Q${i+1}</div>
+      <div class="qtext">${qtext}</div>
+      <div class="opts">${opts}</div>
+      <div class="explain">💡 <b>詳解：</b>${item.ex}</div>
+    </div>`;
+  }).join('');
+  if(isEnglish) markKnownWords();
+}
+
+function loadSession(dateKey){
+  if(!SESSION_SETS[dateKey]) return;
+  currentSessionKey = dateKey;
+  QUIZ = SESSION_SETS[dateKey];
+  renderQuiz('chinese');
+  renderQuiz('english');
+  renderQuiz('law');
+  ['chinese','english','law'].forEach(k=>{
+    document.getElementById('score-'+k).style.display = 'none';
+  });
+}
+
+function gradeQuiz(key){
+  const data = QUIZ[key];
+  let score = 0;
+  data.forEach((item,i)=>{
+    const card = document.getElementById(key+'-card-'+i);
+    const picked = card.querySelector('input:checked');
+    const pickedIdx = picked ? parseInt(picked.value) : -1;
+    if(pickedIdx === item.ans) score++;
+    card.classList.add('graded');
+    card.querySelectorAll('.opt').forEach(opt=>{
+      const idx = parseInt(opt.dataset.idx);
+      if(idx === item.ans) opt.classList.add('correct');
+      if(idx === pickedIdx && idx !== item.ans) opt.classList.add('wrong-pick');
+      opt.style.pointerEvents = 'none';
+    });
+  });
+  const scoreBox = document.getElementById('score-'+key);
+  scoreBox.style.display = 'flex';
+  scoreBox.querySelector('.digit').textContent = score + '/' + data.length;
+  scoreBox.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+renderQuiz('chinese');
+renderQuiz('english');
+renderQuiz('law');
+
+/* ===================== 單字本（Vocabulary Notebook） ===================== */
+// 儲存機制：優先使用 window.storage（Claude 環境內建的持久化儲存）；
+// 若不存在（例如日後將此檔案部署到 GitHub Pages 等一般網站），則退回到僅限本次瀏覽的記憶體陣列，
+// 並在單字本頁面提示使用者資料不會保存，建議改接 localStorage 或後端資料庫。
+let vocabMemoryFallback = [];
+const STORAGE_KEY = 'railway-exam-vocab-notebook';
+
+// 三層儲存策略，依環境自動選用：
+// 1) window.storage：Claude 內建雲端儲存（僅在 claude.ai 有效）
+// 2) localStorage：一般瀏覽器本機儲存（部署到 GitHub Pages 等外部網站後生效，關閉分頁、重開電腦都還在）
+// 3) 記憶體陣列：以上兩者皆無法使用時的最終備援，僅本次瀏覽有效
+const HAS_CLAUDE_STORAGE = (typeof window.storage !== 'undefined' && window.storage);
+let HAS_LOCAL_STORAGE = false;
+try{
+  const testKey = '__test__';
+  localStorage.setItem(testKey, '1');
+  localStorage.removeItem(testKey);
+  HAS_LOCAL_STORAGE = true;
+}catch(e){ HAS_LOCAL_STORAGE = false; }
+
+async function vocabLoad(){
+  if(HAS_CLAUDE_STORAGE){
+    try{
+      const res = await window.storage.get('vocab-notebook');
+      return res ? JSON.parse(res.value) : [];
+    }catch(e){ /* 尚未有資料或環境不支援，往下嘗試 localStorage */ }
+  }
+  if(HAS_LOCAL_STORAGE){
+    try{
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : [];
+    }catch(e){ return vocabMemoryFallback; }
+  }
+  return vocabMemoryFallback;
+}
+async function vocabSave(arr){
+  if(HAS_CLAUDE_STORAGE){
+    try{ await window.storage.set('vocab-notebook', JSON.stringify(arr)); return; }catch(e){ /* 往下嘗試 localStorage */ }
+  }
+  if(HAS_LOCAL_STORAGE){
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(arr)); return; }catch(e){ /* 往下用記憶體 */ }
+  }
+  vocabMemoryFallback = arr;
+}
+
+function weekMondayOf(dateKey){
+  const d = new Date(dateKey+'T00:00:00');
+  const day = d.getDay(); // 0=Sun...1=Mon...5=Fri
+  const diff = (day === 0 ? -6 : 1 - day);
+  d.setDate(d.getDate()+diff);
+  return fmtDate(d);
+}
+function monthLabelOf(dateKey){
+  const [y,m] = dateKey.split('-');
+  return `${y}年${parseInt(m)}月`;
+}
+function weekLabelOf(dateKey){
+  const monday = weekMondayOf(dateKey);
+  const [,mm,dd] = monday.split('-');
+  return `${parseInt(mm)}/${parseInt(dd)} 那週`;
+}
+
+async function onWordClick(evt, el){
+  evt.stopPropagation();
+  evt.preventDefault();
+  const word = el.dataset.w;
+  const card = el.closest('.qcard');
+  const sentence = card ? card.querySelector('.qtext').innerText : '';
+  const list = await vocabLoad();
+  if(list.some(v=>v.word.toLowerCase() === word.toLowerCase())){
+    showToast(`「${word}」已在單字本中`);
+    return;
+  }
+  list.push({
+    id: Date.now()+'-'+word,
+    word,
+    sentence,
+    sessionDate: currentSessionKey,
+    week: weekLabelOf(currentSessionKey),
+    month: monthLabelOf(currentSessionKey)
+  });
+  await vocabSave(list);
+  el.classList.add('added');
+  showToast(`已加入單字本：${word}`);
+  refreshVocabBadge();
+}
+
+function markKnownWords(){
+  vocabLoad().then(list=>{
+    const known = new Set(list.map(v=>v.word.toLowerCase()));
+    document.querySelectorAll('#quiz-english .word').forEach(el=>{
+      if(known.has(el.dataset.w.toLowerCase())) el.classList.add('added');
+    });
+  });
+}
+
+let toastTimer;
+function showToast(msg){
+  let t = document.getElementById('vocab-toast');
+  if(!t){
+    t = document.createElement('div');
+    t.id = 'vocab-toast';
+    t.className = 'vocab-toast';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove('show'), 1800);
+}
+
+async function refreshVocabBadge(){
+  const list = await vocabLoad();
+  const badge = document.getElementById('vocab-count');
+  if(badge) badge.textContent = list.length;
+}
+
+async function renderNotebook(){
+  const list = await vocabLoad();
+  const wrap = document.getElementById('notebook-body');
+  if(!HAS_CLAUDE_STORAGE && !HAS_LOCAL_STORAGE){
+    document.getElementById('notebook-persist-warning').style.display = 'block';
+  }
+  if(list.length === 0){
+    wrap.innerHTML = `<p style="color:#948d7c;font-size:14px;">目前還沒有單字。到「英文」測驗頁點選看不懂的單字，就會自動加進這裡，並依週次、月份整理。</p>`;
+    return;
+  }
+  // 依月份 -> 週次分組
+  const byMonth = {};
+  list.forEach(v=>{
+    byMonth[v.month] = byMonth[v.month] || {};
+    byMonth[v.month][v.week] = byMonth[v.month][v.week] || [];
+    byMonth[v.month][v.week].push(v);
+  });
+  let html = '';
+  Object.keys(byMonth).forEach(month=>{
+    html += `<div class="nb-month"><h3>${month}</h3>`;
+    Object.keys(byMonth[month]).forEach(week=>{
+      html += `<div class="nb-week"><div class="nb-week-label">${week}</div><div class="nb-cards">`;
+      byMonth[month][week].forEach(v=>{
+        html += `
+        <div class="nb-card" id="nb-${v.id}">
+          <div class="nb-card-top">
+            <span class="nb-word">${v.word}</span>
+            <button class="nb-del" onclick="deleteWord('${v.id}')" title="刪除">✕</button>
+          </div>
+          <div class="nb-sentence">${v.sentence}</div>
+          <button class="btn ghost nb-study-btn" onclick="studyWord('${v.id}','${v.word}')">📖 單字學習</button>
+          <div class="nb-study" id="study-${v.id}"></div>
+        </div>`;
+      });
+      html += `</div></div>`;
+    });
+    html += `</div>`;
+  });
+  wrap.innerHTML = html;
+}
+
+async function deleteWord(id){
+  const list = await vocabLoad();
+  const next = list.filter(v=>v.id !== id);
+  await vocabSave(next);
+  renderNotebook();
+  refreshVocabBadge();
+}
+
+// 常見英文字根、字首、字尾對照（僅供參考，非窮舉）
+const ROOT_HINTS = [
+  {frag:'trans', mean:'橫越、轉換（transfer, transport）'},
+  {frag:'port', mean:'搬運、攜帶（拉丁 portare，如 transport, export）'},
+  {frag:'struct', mean:'建造（construct, infrastructure）'},
+  {frag:'tract', mean:'拉、牽引（attract, tractor）'},
+  {frag:'spect', mean:'看（inspect, respect）'},
+  {frag:'dict', mean:'說（predict, dictate）'},
+  {frag:'ject', mean:'投擲（reject, project）'},
+  {frag:'duct', mean:'引導（conduct, produce同源）'},
+  {frag:'mit', mean:'送、放（transmit, permit）'},
+  {frag:'vert', mean:'轉（convert, revert）'},
+  {frag:'fic', mean:'做、製造（efficient, significant）'},
+  {frag:'ann', mean:'年（annual, anniversary）'},
+  {frag:'punc', mean:'點（punctual, punctuate）'},
+  {frag:'dur', mean:'持續、硬（durable, endure）'},
+  {frag:'sist', mean:'站立、堅持（consist, insist, resist）'},
+  {frag:'sequ', mean:'跟隨（sequence, consequent）'},
+  {frag:'able', mean:'字尾：可…的（durable, reliable）'},
+  {frag:'tion', mean:'字尾：名詞化，表動作或狀態（inspection, regulation）'},
+  {frag:'ful', mean:'字尾：充滿…的（careful, successful）'},
+  {frag:'less', mean:'字尾：缺乏…的（careless, endless）'},
+  {frag:'re', mean:'字首：再次、回（review, return）'},
+  {frag:'un', mean:'字首：否定（unlikely, unable）'},
+  {frag:'dis', mean:'字首：否定、分離（disagree, disconnect）'},
+  {frag:'inter', mean:'字首：在…之間（international, interchange）'},
+  {frag:'over', mean:'字首：過度、超過（overtime, overcrowded）'}
+];
+function findRootHint(word){
+  const w = word.toLowerCase();
+  const hits = ROOT_HINTS.filter(r => w.includes(r.frag));
+  return hits.slice(0,3);
+}
+
+async function studyWord(id, word){
+  const box = document.getElementById('study-'+id);
+  if(box.dataset.loaded === '1'){
+    box.style.display = box.style.display === 'none' ? 'block' : 'none';
+    return;
+  }
+  box.style.display = 'block';
+  box.innerHTML = `<p class="nb-loading">查詢中…</p>`;
+  let phonetic = '', audioUrl = '', example = '', definition = '';
+  try{
+    const res = await fetch('https://api.dictionaryapi.dev/api/v2/entries/en/' + encodeURIComponent(word));
+    if(res.ok){
+      const json = await res.json();
+      const entry = json[0];
+      phonetic = entry.phonetic || (entry.phonetics.find(p=>p.text)||{}).text || '';
+      const withAudio = entry.phonetics.find(p=>p.audio);
+      audioUrl = withAudio ? withAudio.audio : '';
+      const meaning = entry.meanings[0];
+      if(meaning){
+        definition = meaning.partOfSpeech + '｜' + meaning.definitions[0].definition;
+        example = meaning.definitions[0].example || '';
+      }
+    }
+  }catch(e){ /* 查無網路或查無此字，使用備援內容 */ }
+
+  const roots = findRootHint(word);
+  const rootsHtml = roots.length
+    ? roots.map(r=>`<li><b>${r.frag}</b>：${r.mean}</li>`).join('')
+    : '<li>此字未收錄於常見字根對照表（僅供參考，非完整字源資料庫）</li>';
+
+  box.innerHTML = `
+    <div class="nb-study-inner">
+      <div class="nb-study-row">
+        <button class="speak-btn" onclick="speakWord('${word.replace(/'/g,"\\'")}')">🔊 發音</button>
+        ${phonetic ? `<span class="phonetic">${phonetic}</span>` : ''}
+      </div>
+      ${definition ? `<div class="nb-def"><b>字義：</b>${definition}</div>` : `<div class="nb-def" style="color:#948d7c;">查無線上字典資料，可利用「🔊 發音」聽發音，或自行查閱字典補充字義。</div>`}
+      ${example ? `<div class="nb-example"><b>例句：</b>${example}</div>` : ''}
+      <div class="nb-roots"><b>字根／字首／字尾參考：</b><ul>${rootsHtml}</ul></div>
+    </div>`;
+  box.dataset.loaded = '1';
+}
+
+function speakWord(word){
+  if(!('speechSynthesis' in window)){
+    showToast('此瀏覽器不支援語音朗讀');
+    return;
+  }
+  const utter = new SpeechSynthesisUtterance(word);
+  utter.lang = 'en-US';
+  utter.rate = 0.9;
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(utter);
+}
+
+refreshVocabBadge();
+
+/* ===================== 講義：運輸學概要 ===================== */
+document.getElementById('guide-transport').innerHTML = `
+<h4>一、運輸的定義</h4>
+<p>運輸（Transportation）係指利用某種工具或方法，將人或貨物自甲地移動至乙地，以創造「空間效用」（place utility）與「時間效用」（time utility）的一種經濟活動。運輸本身不創造實體財貨，而是透過位移產生附加價值，故經濟學上常將運輸視為一種「中間投入」而非最終消費財。</p>
+
+<h4>二、運輸系統的五大構成要素</h4>
+<p>分析任何一種運輸方式，皆可拆解為以下五個基本要素，此為考題常見的分類架構：</p>
+<ul>
+<li><b>路線（Way）：</b>車輛行駛的通道，如軌道、道路、航道、航線、管線。</li>
+<li><b>運具（Vehicle）：</b>實際承載人或貨物移動的工具，如列車、汽車、船舶、航空器。</li>
+<li><b>場站（Terminal）：</b>供運具起訖、旅客貨物上下與轉乘之場所，如車站、機場、港埠。</li>
+<li><b>動力／能源（Motive Power）：</b>驅動運具移動之能量來源，如電力、柴油、人力。</li>
+<li><b>經營管理（Operation &amp; Control）：</b>包含營運調度、號誌、票務、法規與人員組織等軟體面配置，使前四項硬體要素能有效運作。</li>
+</ul>
+<div class="memo"><b>記憶口訣：</b>「路運站力管」──路線、運具、場站、動力、管理，五者缺一不可，考題常以「下列何者不屬於運輸系統要素」出題。</div>
+
+<h4>三、運輸的基本特性</h4>
+<ul>
+<li><b>需求引申性（derived demand）：</b>運輸需求並非為運輸本身而產生，而是因為要完成其他經濟活動（如上班、購物、貨物交易）才衍生出來的需求，故稱為「引申需求」或「間接需求」。</li>
+<li><b>無法儲存性：</b>運輸服務（座位、艙位、運能）一旦未被利用即消失，無法如一般商品般囤積庫存，例如今日未售出的車廂座位無法留到明日銷售，此特性也是尖峰、離峰票價差異訂價（peak-load pricing）的理論基礎。</li>
+<li><b>異質性：</b>不同運具、不同路線、不同時段所提供的運輸服務品質、速度、舒適度均不同，難以完全標準化，故運輸市場常存在多重差異化區隔。</li>
+<li><b>資本密集與投資回收期長：</b>鐵路、機場、港埠等基礎建設投資龐大，建設周期與資金回收期長，具高度資本密集與沉沒成本（sunk cost）特性，常需政府介入或特許經營。</li>
+<li><b>公共性與外部性：</b>運輸系統常涉及公共利益（如大眾運輸補貼），並產生外部效果（如空氣污染、交通壅塞、事故等負外部性，或促進區域發展等正外部性）。</li>
+<li><b>時間與空間同時消費：</b>運輸服務的生產與消費同時發生、無法分割儲存，具服務業「不可分割性」的典型特徵。</li>
+<li><b>供給僵固性（供給彈性小）：</b>運輸系統之運能（如軌道容量、班次）短期內難以快速調整，屬供給彈性相對較低之產業，尖峰時段易產生壅塞。</li>
+</ul>
+
+<h4>四、運輸的功能</h4>
+<ul>
+<li><b>經濟功能：</b>促進區域分工、擴大市場範圍、降低生產與交易成本，是經濟發展的基礎建設，亦有助於生產要素（勞動力、原物料）之流動配置。</li>
+<li><b>社會功能：</b>促進人際往來、教育文化交流、提升生活品質與可及性（accessibility），並縮小城鄉之間的發展差距。</li>
+<li><b>政治與國防功能：</b>強化國土統治管理、緊急動員與國防運補能力，鐵路系統於戰略上具有大量、快速運補之特殊價值。</li>
+<li><b>環境與都市發展功能：</b>影響土地使用型態與都市空間結構（如捷運沿線帶動開發，即「軌道導向發展 TOD, Transit-Oriented Development」概念），良好之運輸規劃可引導都市有序成長。</li>
+</ul>
+
+<h4>五、運輸方式的分類與比較</h4>
+<table class="compare">
+<tr><th>運輸方式</th><th>優點</th><th>限制</th></tr>
+<tr><td>鐵路運輸</td><td>大量運能、能源效率高、準點性佳、安全性高</td><td>路線固定、初期建設成本極高、彈性較低</td></tr>
+<tr><td>公路運輸</td><td>機動性高、可達性佳（door-to-door）、投資門檻相對低</td><td>單位運能較小、易受路況與交通壅塞影響</td></tr>
+<tr><td>水運</td><td>大宗、長程貨物運輸成本最低</td><td>速度慢、受港埠與航道條件限制</td></tr>
+<tr><td>空運</td><td>速度最快、適合高單價與時效性貨物</td><td>單位運輸成本最高、運能相對受限</td></tr>
+<tr><td>管道運輸</td><td>適合流體（油、氣）連續大量輸送、幾乎不受氣候影響</td><td>僅限特定流體性貨物、路線固定不可撓性</td></tr>
+</table>
+
+<h4>六、運輸需求的基本概念</h4>
+<ul>
+<li><b>需求彈性：</b>運輸需求對票價、所得、時間成本等因素變動的敏感程度；通勤運輸之需求彈性通常較低（必要性需求），旅遊性運輸彈性較高。</li>
+<li><b>運輸成本組成：</b>可分為「使用者成本」（票價、時間成本、舒適度損失）與「供給者成本」（營運成本、資本成本），政策制定常須在兩者間權衡。</li>
+<li><b>運輸與土地使用的互動：</b>運輸建設提升可及性，帶動沿線土地開發；反之土地使用強度提升，亦會回過頭來增加運輸需求，形成雙向回饋關係。</li>
+</ul>
+
+<div class="memo"><b>記憶口訣：</b>運輸特性可用「引不儲異，資公同僵」七字聯想──<b>引</b>申需求、<b>不</b>可儲存、<b>異</b>質性、<b>資</b>本密集、<b>公</b>共外部性、<b>同</b>時生產消費、供給<b>僵</b>固。</div>
+
+<h4>七、常見考點提醒</h4>
+<table class="compare">
+<tr><th>易混淆概念</th><th>區別重點</th></tr>
+<tr><td>需求引申性 vs. 無法儲存性</td><td>前者談「需求從何而來」；後者談「供給是否可保存」，考題常刻意混淆二者定義</td></tr>
+<tr><td>運輸的經濟功能 vs. 社會功能</td><td>經濟功能著重生產、市場、成本；社會功能著重人際互動與生活可及性，題幹常以情境敘述考辨</td></tr>
+<tr><td>運輸系統五要素 vs. 運輸特性</td><td>五要素是「運輸系統由什麼組成」的靜態拆解；特性是「運輸服務本身呈現什麼樣的經濟屬性」，常被合併出題混淆</td></tr>
+</table>
+`;
+
+/* ===================== 講義：動力車與車輛構造 ===================== */
+document.getElementById('guide-vehicle').innerHTML = `
+<h4>一、鐵路車輛的基本分類</h4>
+<ul>
+<li><b>動力車（機車）：</b>本身裝有動力來源、可牽引其他車輛之車輛，依動力種類可分為蒸汽機車、柴電機車（Diesel-Electric）、柴液機車（Diesel-Hydraulic）、電力機車（Electric Locomotive）。</li>
+<li><b>被牽引車輛：</b>客車、貨車等本身無動力，須由機車牽引，屬「動力集中式」（如推拉式自強號）。</li>
+<li><b>電聯車／柴聯車：</b>將動力分散安裝於多節車廂之動力分散式（EMU / DMU），優點為加減速性能較佳、無須調頭、單位載客成本較低，為現行台鐵區間車、通勤電聯車主流形式。</li>
+</ul>
+
+<h4>二、轉向架（Bogie / Truck）</h4>
+<p>轉向架是支撐車體、傳遞牽引力與制動力、並引導車輛通過曲線的關鍵組件，主要構造包括：</p>
+<ul>
+<li><b>輪對（Wheelset）：</b>由車軸與左右車輪組成，車輪與軌道接觸面稱為「踏面」，踏面通常設計為斜面（錐度），以利車輛通過曲線時自然導向、減少輪緣磨耗。</li>
+<li><b>軸箱與軸承：</b>支撐車軸並容許車軸轉動，將車體重量傳遞至車輪。</li>
+<li><b>一系懸吊（Primary Suspension）：</b>位於軸箱與轉向架構架之間，主要吸收軌道不平順所產生之高頻振動。</li>
+<li><b>二系懸吊（Secondary Suspension）：</b>位於轉向架構架與車體之間，主要吸收較低頻的振動，提升乘坐舒適度，常見以空氣彈簧（Air Spring）達成，並可兼具車體高度自動調整功能。</li>
+<li><b>轉向架構架（Bogie Frame）：</b>連接各部件的骨架結構，通常呈H型或箱型結構。</li>
+<li><b>牽引裝置（Traction Link）：</b>將轉向架所產生之牽引力／煞車力傳遞至車體，同時容許轉向架相對車體轉動，常見型式如低位牽引拉桿。</li>
+</ul>
+<div class="memo"><b>觀念提醒：</b>一系懸吊在「軸箱與構架之間」，二系懸吊在「構架與車體之間」，兩者順序常是考試陷阱，可用口訣「一軸架、二架體」記憶。</div>
+
+<h4>三、緩衝與連結裝置</h4>
+<ul>
+<li><b>連結器（Coupler）：</b>用以連結相鄰車輛，常見型式有螺旋連結器（傳統客貨車）、自動連結器（AAR型，貨車常用）、緊密式連結器（Tight-lock，用於電聯車間，兼具電氣與空氣管路連結功能）。</li>
+<li><b>緩衝器（Buffer）：</b>吸收車輛連結、起步、煞車時產生的衝擊力，早期歐系客貨車常見左右兩具緩衝器搭配螺旋連結器；緊密式連結器車輛則多將緩衝功能整合於連結器內部。</li>
+<li><b>車鉤高度與相容性：</b>不同型式連結器間高度、構造若不一致，將無法直接連掛，此為聯掛異型車輛時之重要限制條件。</li>
+</ul>
+
+<h4>四、動力傳動方式（以柴油機車為例）</h4>
+<table class="compare">
+<tr><th>傳動方式</th><th>原理</th><th>特色</th></tr>
+<tr><td>柴電傳動（Diesel-Electric）</td><td>柴油引擎帶動發電機發電，再以電動機驅動車輪</td><td>目前主流方式，牽引力控制精準、適合中大型機車</td></tr>
+<tr><td>柴液傳動（Diesel-Hydraulic）</td><td>透過液力變速箱（液力耦合器/變扭器）傳遞動力</td><td>結構較輕，多用於調車機車或中小型機車</td></tr>
+<tr><td>電力傳動（Electric）</td><td>由外部電力系統（架空線／第三軌）供電，經變壓、變流後驅動電動機</td><td>無自身燃料儲存問題，效率高、無廢氣排放，為台鐵電氣化路段主要動力來源</td></tr>
+</table>
+
+<h4>五、台鐵現役車輛型式概覽（觀念參考）</h4>
+<ul>
+<li><b>電力機車：</b>如E1000型（推拉式自強號牽引動力），採電力傳動、動力集中配置。</li>
+<li><b>柴電機車：</b>如R150型系列，用於未電氣化路段或調車作業，採柴電傳動。</li>
+<li><b>電聯車：</b>如EMU900型、EMU3000型（新自強號），採動力分散式配置，多節車廂各自裝設牽引馬達，提升加減速性能與可靠度。</li>
+</ul>
+<p style="font-size:12.5px;color:#7a7362;">＊車型細節、規格數據建議另行核對台鐵官方或最新出版之教材，此處僅作分類觀念參考，不作為精確數據依據。</p>
+
+<h4>六、煞車系統基本原理</h4>
+<ul>
+<li><b>空氣煞車（Air Brake）：</b>鐵路車輛最主要之煞車型式，利用壓縮空氣管路控制各車廂煞車缸作動；當列車管路洩壓（如車輛脫鉤）時會自動觸發煞車，此為「失效即安全」（fail-safe）設計精神。</li>
+<li><b>電氣煞車／再生煞車：</b>電力機車或電聯車常用之輔助煞車方式，藉牽引馬達反轉作為發電機吸收動能，除可輔助煞車外，回生電能並可回饋電網，兼具節能效果。</li>
+<li><b>基礎煞車裝置：</b>將煞車缸產生之力量，透過煞車拉桿傳遞至煞車閘瓦或碟式煞車片，實際作用於車輪或煞車碟面產生摩擦力。</li>
+</ul>
+
+<h4>七、車體材質與輕量化</h4>
+<ul>
+<li>早期車輛多採用<b>普通碳鋼</b>，重量較大；現代客車、電聯車逐漸改採<b>不鏽鋼</b>或<b>鋁合金</b>車體，以達到輕量化、提升加減速效率並降低能耗。</li>
+<li>車體輕量化亦有助於降低軸重（每一車軸承受之重量），減少對軌道結構的損耗。</li>
+</ul>
+
+<h4>八、走行性能相關名詞</h4>
+<ul>
+<li><b>軸重（Axle Load）：</b>單一車軸透過車輪傳遞至軌道之重量，軸重過大會加速軌道及路基損耗，各級鐵路對軸重上限均有規範。</li>
+<li><b>輪重不均：</b>同一輪對左右車輪對軌道的垂直作用力若不平均，可能增加脫軌風險，為車輛檢修重點項目之一。</li>
+<li><b>脫軌係數（Derailment Coefficient）：</b>車輪作用於鋼軌之橫向力與垂直力的比值（L/V），為評估車輛行車安全性、是否有脫軌疑慮的重要指標，數值越大表示脫軌風險越高。</li>
+</ul>
+
+<h4>九、常見考點提醒</h4>
+<ul>
+<li>踏面錐度的作用：協助車輛自然導向、減少輪緣與鋼軌磨耗，並非用於煞車。</li>
+<li>一系／二系懸吊之作用對象與位置差異，為歷屆考試高頻考點。</li>
+<li>柴電、柴液、電力三種傳動方式之原理與適用場合比較，常以表格式選擇題出現。</li>
+<li>空氣煞車「失效即安全」的設計精神（管路洩壓自動觸發煞車）常以情境題出現，須理解其安全邏輯而非死背名詞。</li>
+<li>動力集中式（機車牽引）與動力分散式（電聯車）之優缺點比較，是申論與選擇題皆常見的命題方向。</li>
+</ul>
+`;
+
+/* ===================== Calendar ===================== */
+// 每週一、五為模擬考排定日；此區間會隨每週實際上線內容持續延伸
+const SESSIONS = {
+  '2026-08-10': {label:'第 1 次模擬考', available:true},
+  '2026-08-14': {label:'第 2 次模擬考', available:true},
+  '2026-08-17': {label:'第 3 次模擬考', available:false},
+  '2026-08-21': {label:'第 4 次模擬考', available:false},
+  '2026-08-24': {label:'第 5 次模擬考', available:false},
+  '2026-08-28': {label:'第 6 次模擬考', available:false},
+  '2026-08-31': {label:'第 7 次模擬考', available:false},
+  '2026-09-04': {label:'第 8 次模擬考', available:false},
+  '2026-09-07': {label:'第 9 次模擬考', available:false},
+  '2026-09-11': {label:'第 10 次模擬考', available:false},
+  '2026-09-14': {label:'第 11 次模擬考', available:false},
+  '2026-09-18': {label:'第 12 次模擬考', available:false},
+  '2026-09-21': {label:'第 13 次模擬考', available:false},
+  '2026-09-25': {label:'第 14 次模擬考', available:false},
+  '2026-09-28': {label:'第 15 次模擬考', available:false},
+  '2026-10-02': {label:'第 16 次模擬考', available:false},
+  '2026-10-05': {label:'第 17 次模擬考', available:false},
+  '2026-10-09': {label:'第 18 次模擬考', available:false},
+  '2026-10-12': {label:'第 19 次模擬考', available:false},
+  '2026-10-16': {label:'第 20 次模擬考', available:false},
+  '2026-10-19': {label:'第 21 次模擬考', available:false},
+  '2026-10-23': {label:'第 22 次模擬考', available:false},
+  '2026-10-26': {label:'第 23 次模擬考', available:false},
+  '2026-10-30': {label:'第 24 次模擬考', available:false},
+  '2026-11-02': {label:'第 25 次模擬考', available:false},
+  '2026-11-06': {label:'第 26 次模擬考', available:false},
+  '2026-11-09': {label:'第 27 次模擬考', available:false}
+};
+const DOW = ['日','一','二','三','四','五','六'];
+const TODAY = new Date();
+TODAY.setHours(0,0,0,0);
+let calView = new Date(2026,7,1); // 2026年8月，月份索引從0起算
+
+function fmtDate(d){
+  const y=d.getFullYear(), m=String(d.getMonth()+1).padStart(2,'0'), day=String(d.getDate()).padStart(2,'0');
+  return `${y}-${m}-${day}`;
+}
+function isSessionDow(d){ return d.getDay()===1 || d.getDay()===5; } // 一 or 五
+
+function renderCalDow(){
+  document.getElementById('cal-dow').innerHTML = DOW.map(d=>`<div class="cal-dow">${d}</div>`).join('');
+}
+
+function renderCalGrid(){
+  const y = calView.getFullYear(), m = calView.getMonth();
+  document.getElementById('cal-title').textContent = `${y}年${m+1}月`;
+  const first = new Date(y,m,1);
+  const startPad = first.getDay();
+  const daysInMonth = new Date(y,m+1,0).getDate();
+  let html = '';
+  for(let i=0;i<startPad;i++) html += `<div class="cal-day pad"></div>`;
+  for(let day=1; day<=daysInMonth; day++){
+    const d = new Date(y,m,day);
+    const key = fmtDate(d);
+    const sessionInfo = SESSIONS[key];
+    let cls = 'cal-day inmonth';
+    if(isSessionDow(d) || sessionInfo) cls += ' session';
+    if(sessionInfo && sessionInfo.available) cls += ' available';
+    else if(sessionInfo) cls += ' pending';
+    if(fmtDate(TODAY) === key) cls += ' today';
+    html += `<div class="${cls}" data-key="${key}" onclick="calClick('${key}')">${day}<span class="dot"></span></div>`;
+  }
+  document.getElementById('cal-grid').innerHTML = html;
+}
+
+function calShift(n){
+  calView = new Date(calView.getFullYear(), calView.getMonth()+n, 1);
+  renderCalGrid();
+}
+function calGoToday(){
+  calView = new Date(TODAY.getFullYear(), TODAY.getMonth(), 1);
+  renderCalGrid();
+}
+
+function calClick(key){
+  const info = SESSIONS[key];
+  const msg = document.getElementById('cal-msg');
+  if(info && info.available && SESSION_SETS[key]){
+    loadSession(key);
+    document.getElementById('session-date-label').textContent = `${key.replace(/-/g,'/')}（${DOW[new Date(key).getDay()]}）· ${info.label}`;
+    msg.style.display = 'none';
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    document.querySelector('.tab-btn[data-tab="chinese"]').classList.add('active');
+    document.getElementById('panel-chinese').classList.add('active');
+    window.scrollTo({top:0, behavior:'smooth'});
+  } else if(info){
+    msg.style.display = 'block';
+    msg.textContent = `📅 ${key.replace(/-/g,'/')}（${info.label}）題目尚未上線。這個網頁不會自己產生新內容，需要你回到 Claude 對話中請我補上這一天的題目與講義，我更新完、你重新下載檔案後，此日期才會變為可點選作答。`;
+  } else {
+    msg.style.display = 'block';
+    msg.textContent = `${key.replace(/-/g,'/')} 非排定的模擬考日（僅週一、五排定練習）。`;
+  }
+}
+
+renderCalDow();
+renderCalGrid();
+
+/* ===================== Tabs ===================== */
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-'+btn.dataset.tab).classList.add('active');
+    if(btn.dataset.tab === 'vocab') renderNotebook();
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+});
+</script>
+</body>
+</html>
