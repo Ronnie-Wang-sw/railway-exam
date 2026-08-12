@@ -521,8 +521,57 @@
   .speak-btn:hover{background:var(--navy-deep);}
   .phonetic{font-family:'Roboto Mono',monospace;color:var(--brass);font-size:12.5px;}
   .nb-def, .nb-example{margin-top:4px;}
+  .nb-translation{
+    margin-top:4px;
+    font-size:13.5px;
+    font-weight:700;
+    color:var(--navy);
+    background:#fdf6e8;
+    border-left:2px solid var(--brass);
+    padding:3px 8px;
+    border-radius:2px;
+  }
   .nb-roots ul{margin:4px 0 0;padding-left:18px;}
   .nb-roots li{margin-bottom:2px;}
+
+  /* ---------- Grammar section ---------- */
+  .grammar-section{margin-top:34px;}
+  .gram-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-left:4px solid var(--brass);
+    border-radius:2px;
+    padding:14px 18px;
+    margin-bottom:10px;
+  }
+  .gram-card .gram-no{
+    font-family:'Roboto Mono',monospace;
+    font-size:11px;
+    color:var(--brass);
+    font-weight:700;
+  }
+  .gram-card .gram-pattern{
+    font-family:'Roboto Mono',monospace;
+    font-size:15.5px;
+    font-weight:700;
+    color:var(--navy);
+    margin:4px 0 6px;
+  }
+  .gram-card .gram-explain{
+    font-size:13.5px;
+    color:#4a4638;
+    margin-bottom:8px;
+    line-height:1.6;
+  }
+  .gram-card .gram-example{
+    background:var(--paper-dim);
+    border-left:2px solid var(--navy);
+    padding:8px 10px;
+    font-size:13.5px;
+    line-height:1.6;
+  }
+  .gram-card .gram-example .en{color:var(--navy);font-weight:500;}
+  .gram-card .gram-example .zh{color:#6b6455;margin-top:3px;}
 
   .note-box{
     background:var(--paper-dim);
@@ -607,6 +656,11 @@
     <div class="submit-bar">
       <button class="btn" onclick="gradeQuiz('english')">交卷並看詳解</button>
       <div class="score-flip" id="score-english"><span>得分</span><span class="digit">--/30</span></div>
+    </div>
+
+    <div class="grammar-section">
+      <div class="section-head"><h2>本日文法整理</h2><span class="count">10 個常用文法</span></div>
+      <div id="grammar-list"></div>
     </div>
   </section>
 
@@ -864,6 +918,55 @@ const law_0814 = [
 {q:'下列何者為「習慣」得作為民事法源之限制？',opts:['不得違背公共秩序或善良風俗，且以法律無明文規定者為限','習慣得優先於任何成文法律適用','習慣僅適用於商事案件','習慣無須具備法之確信'],ans:0,ex:'民法第1條規定，民事法律所未規定者，依習慣；無習慣者，依法理，且習慣不得違背公共秩序或善良風俗。'}
 ];
 
+/* ===================== 每日常用文法（10 個／場） ===================== */
+const grammar_0810 = [
+{pattern:'be used to + V-ing', explain:'表示「習慣於做某事」，to 是介詞，後面須接動名詞；注意與 "used to + 原形動詞"（過去習慣做某事）不同。', en:'She is used to getting up early for her shift.', zh:'她已經習慣為了輪班而早起。'},
+{pattern:'require + 人 + to V', explain:'表示「要求某人做某事」；被動態常寫成 be required to V（被要求做某事）。', en:'All passengers are required to show their tickets before boarding.', zh:'所有乘客登車前都被要求出示車票。'},
+{pattern:'so + 形容詞/副詞 + that + 子句', explain:'表示「如此…以至於…」，前後為因果關係。', en:'The station was so crowded that passengers could hardly move.', zh:'車站擁擠到乘客幾乎無法移動。'},
+{pattern:'neither A nor B', explain:'表示「A和B都不」；當主詞為 "neither...nor..." 時，動詞須與最接近的主詞一致。', en:'Neither the supervisor nor the workers are satisfied with the new schedule.', zh:'主管和員工都對新班表不滿意。'},
+{pattern:'by the time + 子句', explain:'表示「到…的時候」，常搭配未來完成式（描述未來某時間點前已完成的動作）或過去完成式（描述過去某時間點前已完成的動作）。', en:'By the time the train arrives, we will have been waiting for over two hours.', zh:'到火車抵達時，我們將已經等了超過兩個小時。'},
+{pattern:'despite + N / V-ing', explain:'表示「儘管」，despite 為介詞，後面直接接名詞或動名詞，不可直接接子句（子句須用 although / though）。', en:'Despite the heavy rain, the train service continued on schedule.', zh:'儘管下大雨，列車服務仍按時運行。'},
+{pattern:'if 子句表與過去事實相反的假設', explain:'if 子句用過去完成式（had + p.p.），主要子句用 "would/could have + p.p."，表示對過去已發生事實的假設與遺憾。', en:'If I had taken the earlier train, I would have arrived on time.', zh:'如果我當時搭了較早的那班車，我就會準時到達了。'},
+{pattern:'not only...but also...（句首倒裝）', explain:'"Not only" 置於句首時，其後子句須採用「助動詞＋主詞」的倒裝結構。', en:'Not only did the manager approve the plan, but he also praised the team.', zh:'經理不但核准了這個計畫，還稱讚了整個團隊。'},
+{pattern:'keep + O + 形容詞', explain:'"keep" 為連綴動詞句型，受詞後接形容詞作補語，表示「使某物保持某狀態」。', en:'Passengers are advised to keep their belongings secure at all times.', zh:'建議乘客隨時將個人物品放置妥當。'},
+{pattern:'be advised to V', explain:'表示「被建議去做某事」，為常見的公告、標語用語，語氣較 "should" 更正式委婉。', en:'Passengers are advised to use alternative routes during the maintenance period.', zh:'建議乘客在維修期間改道行駛其他路線。'}
+];
+
+const grammar_0814 = [
+{pattern:'by the time + 過去式子句', explain:'當 by the time 引導的子句為過去式時，主要子句須用過去完成式，表示「到過去某時間點之前已經完成的動作」。', en:'The train had left by the time we reached the platform.', zh:'我們到達月台時，火車已經開走了。'},
+{pattern:'the number of + 複數名詞 + 單數動詞', explain:'"the number of"（…的數量）作主詞時，視為單數，動詞須用單數形式；勿與 "a number of"（許多，視為複數）混淆。', en:'The number of passengers has increased significantly this year.', zh:'今年乘客數量已顯著增加。'},
+{pattern:'be prohibited from + V-ing', explain:'表示「被禁止做某事」，from 為介詞，後面須接動名詞。', en:'Passengers are prohibited from smoking on the platform.', zh:'乘客被禁止在月台上吸菸。'},
+{pattern:'so + 形容詞 + enough to V', explain:'"be + 形容詞 + enough to V" 表示「足夠…以至於能夠做某事」，enough 置於形容詞之後。', en:'The bridge is strong enough to support heavy trains.', zh:'這座橋夠堅固，足以承載重型列車。'},
+{pattern:'in accordance with', explain:'表示「依照、符合」，為正式公文、規章常用片語，相當於 according to。', en:'The new procedure was implemented in accordance with safety regulations.', zh:'新程序是依照安全規定實施的。'},
+{pattern:'recommend that + (should) + 原形動詞', explain:'表示「建議」的動詞（recommend, suggest, insist, require 等）之後的子句，須使用「(should) + 原形動詞」的虛擬語氣，不受主詞人稱與時態影響。', en:'The supervisor recommended that the new procedure be adopted immediately.', zh:'主管建議立刻採用這項新程序。'},
+{pattern:'despite + V-ing 引導讓步', explain:'despite 之後除了接名詞，也可直接接動名詞片語，表示「儘管做了某事」。', en:'Despite having little experience, she completed the project successfully.', zh:'儘管經驗不多，她仍成功完成了這個專案。'},
+{pattern:'make up for + N', explain:'片語動詞，表示「彌補、補償」某事物。', en:'Extra staff were assigned to make up for the delay.', zh:'額外的人手被派來彌補延誤造成的影響。'},
+{pattern:'on behalf of', explain:'表示「代表」，常用於正式場合致詞、簽署文件，置於句首或句中皆可。', en:'On behalf of the railway bureau, he thanked all passengers for their patience.', zh:'他代表鐵路局感謝所有乘客的耐心等候。'},
+{pattern:'be expected to V', explain:'表示「被期望、預計要做某事」，為正式報告、公告常見句型。', en:'The board is expected to finalize the budget by next week.', zh:'董事會預計將在下週前敲定預算。'}
+];
+
+const GRAMMAR_SETS = {
+  '2026-08-10': grammar_0810,
+  '2026-08-14': grammar_0814
+};
+
+function renderGrammar(dateKey){
+  const list = GRAMMAR_SETS[dateKey];
+  const wrap = document.getElementById('grammar-list');
+  if(!list){ wrap.innerHTML = ''; return; }
+  wrap.innerHTML = list.map((g,i)=>`
+    <div class="gram-card">
+      <div class="gram-no">文法 ${i+1}</div>
+      <div class="gram-pattern">${g.pattern}</div>
+      <div class="gram-explain">${g.explain}</div>
+      <div class="gram-example">
+        <div class="en">${wrapWords(g.en)}</div>
+        <div class="zh">${g.zh}</div>
+      </div>
+    </div>`).join('');
+  markKnownWords();
+}
+
 const SESSION_SETS = {
   '2026-08-10': {chinese:chinese_0810, english:english_0810, law:law_0810},
   '2026-08-14': {chinese:chinese_0814, english:english_0814, law:law_0814}
@@ -908,6 +1011,7 @@ function loadSession(dateKey){
   renderQuiz('chinese');
   renderQuiz('english');
   renderQuiz('law');
+  renderGrammar(dateKey);
   ['chinese','english','law'].forEach(k=>{
     document.getElementById('score-'+k).style.display = 'none';
   });
@@ -938,6 +1042,7 @@ function gradeQuiz(key){
 renderQuiz('chinese');
 renderQuiz('english');
 renderQuiz('law');
+renderGrammar(currentSessionKey);
 
 /* ===================== 單字本（Vocabulary Notebook） ===================== */
 // 儲存機制：優先使用 window.storage（Claude 環境內建的持久化儲存）；
@@ -1005,8 +1110,12 @@ async function onWordClick(evt, el){
   evt.stopPropagation();
   evt.preventDefault();
   const word = el.dataset.w;
-  const card = el.closest('.qcard');
-  const sentence = card ? card.querySelector('.qtext').innerText : '';
+  const card = el.closest('.qcard') || el.closest('.gram-card');
+  let sentence = '';
+  if(card){
+    const qtextEl = card.querySelector('.qtext') || card.querySelector('.gram-example .en');
+    sentence = qtextEl ? qtextEl.innerText : '';
+  }
   const list = await vocabLoad();
   if(list.some(v=>v.word.toLowerCase() === word.toLowerCase())){
     showToast(`「${word}」已在單字本中`);
@@ -1029,7 +1138,7 @@ async function onWordClick(evt, el){
 function markKnownWords(){
   vocabLoad().then(list=>{
     const known = new Set(list.map(v=>v.word.toLowerCase()));
-    document.querySelectorAll('#quiz-english .word').forEach(el=>{
+    document.querySelectorAll('#quiz-english .word, #grammar-list .word').forEach(el=>{
       if(known.has(el.dataset.w.toLowerCase())) el.classList.add('added');
     });
   });
@@ -1147,7 +1256,7 @@ async function studyWord(id, word){
   }
   box.style.display = 'block';
   box.innerHTML = `<p class="nb-loading">查詢中…</p>`;
-  let phonetic = '', audioUrl = '', example = '', definition = '';
+  let phonetic = '', audioUrl = '', example = '', definition = '', translation = '';
   try{
     const res = await fetch('https://api.dictionaryapi.dev/api/v2/entries/en/' + encodeURIComponent(word));
     if(res.ok){
@@ -1164,6 +1273,18 @@ async function studyWord(id, word){
     }
   }catch(e){ /* 查無網路或查無此字，使用備援內容 */ }
 
+  try{
+    const tRes = await fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(word) + '&langpair=en|zh-TW');
+    if(tRes.ok){
+      const tJson = await tRes.json();
+      const raw = tJson.responseData && tJson.responseData.translatedText;
+      // 過濾掉翻譯服務找不到結果時常見的英文提示字串
+      if(raw && !/^[A-Za-z0-9\s.,!?'"-]+$/.test(raw)){
+        translation = raw;
+      }
+    }
+  }catch(e){ /* 翻譯服務無法使用時，僅顯示英文字義 */ }
+
   const roots = findRootHint(word);
   const rootsHtml = roots.length
     ? roots.map(r=>`<li><b>${r.frag}</b>：${r.mean}</li>`).join('')
@@ -1175,7 +1296,8 @@ async function studyWord(id, word){
         <button class="speak-btn" onclick="speakWord('${word.replace(/'/g,"\\'")}')">🔊 發音</button>
         ${phonetic ? `<span class="phonetic">${phonetic}</span>` : ''}
       </div>
-      ${definition ? `<div class="nb-def"><b>字義：</b>${definition}</div>` : `<div class="nb-def" style="color:#948d7c;">查無線上字典資料，可利用「🔊 發音」聽發音，或自行查閱字典補充字義。</div>`}
+      ${translation ? `<div class="nb-translation"><b>中文翻譯：</b>${translation}</div>` : `<div class="nb-translation" style="color:#948d7c;">查無自動翻譯，請參考下方英文字義或自行查閱字典。</div>`}
+      ${definition ? `<div class="nb-def"><b>英文字義：</b>${definition}</div>` : `<div class="nb-def" style="color:#948d7c;">查無線上字典資料，可利用「🔊 發音」聽發音，或自行查閱字典補充字義。</div>`}
       ${example ? `<div class="nb-example"><b>例句：</b>${example}</div>` : ''}
       <div class="nb-roots"><b>字根／字首／字尾參考：</b><ul>${rootsHtml}</ul></div>
     </div>`;
