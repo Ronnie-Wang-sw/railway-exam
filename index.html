@@ -397,6 +397,34 @@
   table.compare th,table.compare td{border:1px solid var(--line);padding:7px 9px;text-align:left;}
   table.compare th{background:var(--paper-dim);color:var(--navy);font-family:'Noto Serif TC',serif;}
 
+  .fig-wrap{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:16px 14px 12px;
+    margin:14px 0;
+  }
+  .fig-wrap svg{display:block;width:100%;height:auto;}
+  .fig-caption{
+    font-family:'Roboto Mono',monospace;
+    font-size:11.5px;
+    color:#7a7362;
+    text-align:center;
+    margin-top:8px;
+  }
+  .fig-legend{
+    display:flex;
+    gap:18px;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin-top:6px;
+    font-size:12px;
+    font-family:'Roboto Mono',monospace;
+    color:#4a4638;
+  }
+  .fig-legend span{display:flex;align-items:center;gap:5px;}
+  .fig-legend .ln{width:16px;height:0;border-top:3px solid;display:inline-block;}
+
   /* ---------- Vocab click / notebook ---------- */
   .vocab-hint{
     font-size:12.5px;
@@ -625,7 +653,7 @@
   </div>
   <div class="session-banner" id="session-banner">
     <span>目前檢視：<b id="session-date-label">2026/08/10（一）· 第 1 次模擬考</b></span>
-    <span>本週已上線：8/10（一）、8/14（五）</span>
+    <span>已上線：8/10、8/14、8/17、8/21</span>
   </div>
 </header>
 
@@ -674,12 +702,12 @@
   </section>
 
   <section class="panel" id="panel-transport">
-    <div class="section-head"><h2>運輸學概要 · 本週重點</h2><span class="count">主題 1 / 12週</span></div>
+    <div class="section-head"><h2>運輸學概要 · 本週重點</h2><span class="count" id="transport-count">主題 1 / 12週</span></div>
     <div class="topic">
       <div class="topic-head">
         <div>
-          <div class="eyebrow">TOPIC 01</div>
-          <h3>運輸的本質、特性與功能</h3>
+          <div class="eyebrow" id="transport-eyebrow">TOPIC 01</div>
+          <h3 id="transport-title">運輸的本質、特性與功能</h3>
         </div>
       </div>
       <div class="topic-body" id="guide-transport"></div>
@@ -687,12 +715,12 @@
   </section>
 
   <section class="panel" id="panel-vehicle">
-    <div class="section-head"><h2>鐵路動力車與車輛構造 · 本週重點</h2><span class="count">主題 1 / 12週</span></div>
+    <div class="section-head"><h2>鐵路動力車與車輛構造 · 本週重點</h2><span class="count" id="vehicle-count">主題 1 / 12週</span></div>
     <div class="topic">
       <div class="topic-head">
         <div>
-          <div class="eyebrow">TOPIC 01</div>
-          <h3>鐵路車輛基本構造：轉向架、輪軸與緩衝連結裝置</h3>
+          <div class="eyebrow" id="vehicle-eyebrow">TOPIC 01</div>
+          <h3 id="vehicle-title">鐵路車輛基本構造：轉向架、輪軸與緩衝連結裝置</h3>
         </div>
       </div>
       <div class="topic-body" id="guide-vehicle"></div>
@@ -708,13 +736,28 @@
   </section>
 
   <div class="note-box">
-    <b>使用說明：</b>本題組為依歷屆國家考試（鐵路特考、高普考共同科目）常見題型與命題重點自行編寫之模擬題，並非逐字複製的歷屆試卷原文；憲法與法學緒論條文內容已核對現行規定。若你手邊有實際考古題 PDF，可以上傳給我，我能直接依原題重新整理成互動測驗與詳解。<b>目前已上線 8/10（一）與 8/14（五）兩場完整題組</b>，行事曆上會標出後續週一、五的排定日期，但這些日期需要你回到對話中請我補新題目與講義後才會由「排定中」變成「已上線」（詳見下方我對更新機制的說明，此頁面本身不會自動生成新內容）。英文測驗中的單字可以點選加入「單字本」分頁，並依週次、月份整理，每個單字都能展開查看發音、例句與常見字根字首提示。
+    <b>使用說明：</b>本題組為依歷屆國家考試（鐵路特考、高普考共同科目）常見題型與命題重點自行編寫之模擬題，並非逐字複製的歷屆試卷原文；憲法與法學緒論條文內容已核對現行規定。若你手邊有實際考古題 PDF，可以上傳給我，我能直接依原題重新整理成互動測驗與詳解。<b>目前已上線 8/10、8/14、8/17、8/21 共四場完整題組</b>，運輸學概要、動力車與車輛構造講義也已更新到第2週主題。行事曆上會標出後續週一、五的排定日期，但這些日期需要你回到對話中請我補新題目與講義後才會由「排定中」變成「已上線」（此頁面本身不會自動生成新內容）。英文測驗與文法例句中的單字都可以點選加入「單字本」分頁，依週次、月份整理，每個單字都能展開查看發音、中英文字義、例句與常見字根字首提示。
   </div>
 
   <footer>鐵路人員升資考試．準備進度 WEEK 01 / 12 · 距 2026年11月考試倒數規劃中</footer>
 </main>
 
 <script>
+// 單字本儲存機制偵測（放在最前面，確保任何渲染流程呼叫到單字本相關函式時已就緒）：
+// 1) window.storage：Claude 內建雲端儲存（僅在 claude.ai 有效）
+// 2) localStorage：一般瀏覽器本機儲存（部署到 GitHub Pages 等外部網站後生效，關閉分頁、重開電腦都還在）
+// 3) 記憶體陣列：以上兩者皆無法使用時的最終備援，僅本次瀏覽有效
+let vocabMemoryFallback = [];
+const STORAGE_KEY = 'railway-exam-vocab-notebook';
+const HAS_CLAUDE_STORAGE = (typeof window.storage !== 'undefined' && window.storage);
+let HAS_LOCAL_STORAGE = false;
+try{
+  const testKey = '__test__';
+  localStorage.setItem(testKey, '1');
+  localStorage.removeItem(testKey);
+  HAS_LOCAL_STORAGE = true;
+}catch(e){ HAS_LOCAL_STORAGE = false; }
+
 /* ===================== 國文 30（8/10 場） ===================== */
 const chinese_0810 = [
 {q:'下列「　」中的字，讀音何者正確？',opts:['「莘莘」學子──ㄒㄧㄣ ㄒㄧㄣ','「參差」不齊──ㄘㄣ ㄘ','「拓」印──ㄊㄨㄛˋ','「創」傷──ㄔㄨㄤˋ'],ans:2,ex:'「拓印」讀作ㄊㄚˋ，此處以「拓」印文物讀ㄊㄨㄛˋ僅用於「拓荒」等詞；本題「參差不齊」正確讀音為ㄘㄣ ㄘ，「創傷」讀ㄔㄨㄤ（陰平），「莘莘」讀ㄕㄣ ㄕㄣ。綜合比對，選項(C)之讀音符合「拓印」一詞用法。'},
@@ -945,11 +988,6 @@ const grammar_0814 = [
 {pattern:'be expected to V', explain:'表示「被期望、預計要做某事」，為正式報告、公告常見句型。', en:'The board is expected to finalize the budget by next week.', zh:'董事會預計將在下週前敲定預算。'}
 ];
 
-const GRAMMAR_SETS = {
-  '2026-08-10': grammar_0810,
-  '2026-08-14': grammar_0814
-};
-
 function renderGrammar(dateKey){
   const list = GRAMMAR_SETS[dateKey];
   const wrap = document.getElementById('grammar-list');
@@ -967,9 +1005,240 @@ function renderGrammar(dateKey){
   markKnownWords();
 }
 
+/* ===================== 國文 30（8/17 場） ===================== */
+const chinese_0817 = [
+{q:'下列「」中的字，讀音何者正確？「間」不容髮',opts:['ㄐㄧㄢ','ㄐㄧㄢˋ','ㄐㄧㄢˇ','ㄐㄧㄤ'],ans:0,ex:'「間不容髮」形容事態危急、間隙極小，「間」讀ㄐㄧㄢ（陰平），指空隙。'},
+{q:'「他做事「按圖索驥」，缺乏變通」，「按圖索驥」比喻：',opts:['依照現成的方法或線索去尋求，不知變通','積極創新，勇於嘗試','按部就班，穩紮穩打','善於觀察，觸類旁通'],ans:0,ex:'典出《漢書》，比喻拘泥成法、按照舊有的線索尋求，缺乏靈活變通。'},
+{q:'下列文句何者無錯別字？',opts:['一諾千金，信守不逾','再接再厲，勇往直前','世外桃園，與世無爭','一枕黃樑，夢醒成空'],ans:1,ex:'「世外桃園」應作「世外桃源」；「一枕黃樑」應作「一枕黃粱」。(B)用字正確。'},
+{q:'「他山之石，可以攻錯」出自：',opts:['《詩經》','《論語》','《孟子》','《禮記》'],ans:0,ex:'語出《詩經．小雅．鶴鳴》，比喻別人的意見或經驗，可以作為自己修正錯誤的借鏡。'},
+{q:'「他「首鼠兩端」，遲遲無法做出決定」，「首鼠兩端」形容：',opts:['猶豫不決，遲疑觀望','態度強硬，堅持己見','行動迅速果決','兩面討好，八面玲瓏'],ans:0,ex:'「首鼠兩端」形容遇事猶豫不決、瞻前顧後的樣子。'},
+{q:'下列成語，何者用來形容「文章或言論邏輯嚴謹，無懈可擊」？',opts:['天衣無縫','畫蛇添足','東施效顰','班門弄斧'],ans:0,ex:'「天衣無縫」原指仙女的衣服沒有縫線，後比喻事物完美無缺、渾然天成。'},
+{q:'公文用語「函請 查照辦理」，最常用於下列何種行文關係？',opts:['平行機關互相行文','下級對上級陳報','機關內部簽呈','對人民之公告'],ans:0,ex:'「函」為平行機關間常用的公文文別，「請查照辦理」為平行文常見結語。'},
+{q:'「他「投鼠忌器」，不敢貿然行動」，「投鼠忌器」比喻：',opts:['做事顧慮太多，缺乏魄力','想除去禍害，卻因有所顧忌而不敢下手','行動迅速，毫不遲疑','個性膽小，害怕老鼠'],ans:1,ex:'典出《漢書》，比喻要打擊壞人卻怕傷及無辜或有所顧忌而投鼠忌器，不敢下手。'},
+{q:'下列文句何者屬於「排比」修辭？',opts:['他既是老師，也是朋友，更是我的貴人','他像一陣風，來去無蹤','風簷展書讀，古道照顏色','山重水複疑無路，柳暗花明又一村'],ans:0,ex:'「既是……也是……更是……」以結構相似、語氣一貫的句子排列而成，屬排比修辭。'},
+{q:'「他「守株待兔」，不知變通應變」，「守株待兔」比喻：',opts:['固守狹隘經驗，不知變通而妄想僥倖獲得','勤奮努力，堅持不懈','善於等待時機','熱愛大自然'],ans:0,ex:'典出《韓非子》，比喻拘泥於偶然的僥倖經驗，不知變通、妄想不勞而獲。'},
+{q:'「山雨欲來風滿樓」比喻：',opts:['重大事件發生前，已有徵兆浮現','氣候即將轉變','登山活動應注意天氣','風景優美的山中景色'],ans:0,ex:'語出許渾詩句，比喻重大事件即將發生之前，已顯露出徵兆。'},
+{q:'下列「之」字用法，何者作代名詞，代替前述事物？',opts:['求之不得','之子于歸','吾欲之南海','以上皆是'],ans:0,ex:'「求之不得」的「之」代替前文所提及的事物，為代名詞用法；其餘二者分別為指示詞、動詞用法。'},
+{q:'「他「杞人憂天」，為不必要的事煩惱」，「杞人憂天」比喻：',opts:['為不必要或不切實際的事情過度憂慮','對未來充滿信心','善於未雨綢繆','個性樂觀開朗'],ans:0,ex:'典出《列子》，比喻不必要的、過度的憂慮。'},
+{q:'下列詞語，何者屬於「敬詞」？',opts:['寒舍','府上','舍弟','拙見'],ans:1,ex:'「府上」用於稱呼對方的住處，屬敬詞；「寒舍」「舍弟」「拙見」皆為自謙之詞。'},
+{q:'「他「切磋琢磨」，學問日益精進」，「切磋琢磨」原指：',opts:['加工玉石骨角的方法，引申為相互研討、精益求精','切割食物的技巧','雕刻藝術品','磨練意志力'],ans:0,ex:'語出《詩經》，原指加工骨角玉石的方法，引申為相互研究討論，共同精進學問。'},
+{q:'下列公文用語，何者用於「下行文」？',opts:['希 查照','請 鑒核','敬悉','謹呈'],ans:0,ex:'「希查照」為上級對下級之常用用語，屬下行文用語；「請鑒核」「謹呈」屬上行文用語。'},
+{q:'「螳臂當車」比喻：',opts:['不自量力，以弱抗強','勇敢無畏，挺身而出','善用策略，以小博大','懂得保護自己'],ans:0,ex:'典出《莊子》，比喻不自量力，想以微弱的力量抵抗強大的力量。'},
+{q:'「他「囫圇吞棗」，讀書不求甚解」，「囫圇吞棗」形容：',opts:['讀書或做事不加以消化理解，含糊籠統','細嚼慢嚥，仔細品味','讀書速度極快','記憶力極佳'],ans:0,ex:'比喻學習時未經消化理解，含糊籠統地全盤接受。'},
+{q:'下列文句何者標點使用正確？',opts:['他說：「明天再見！」','他說：「明天再見！」。','他說「明天再見！」','他說明天再見！'],ans:0,ex:'完整引述語句應以冒號引出，並將標點置於引號內，(A)正確；(B)引號後多加句點，重複標點。'},
+{q:'「亡羊補牢」比喻：',opts:['事情發生後及時補救，尚不算晚','事情已無法挽回','事先做好準備','放棄治療'],ans:0,ex:'語出《戰國策》，比喻事情出了差錯後，及時想辦法補救，還不算太晚。'},
+{q:'「他「一意孤行」，不聽任何勸告」，「一意孤行」形容：',opts:['固執己見，不顧他人反對，執意行事','虛心接受他人建議','行事猶豫不決','善於團隊合作'],ans:0,ex:'形容不顧他人反對意見，堅持按自己的想法去做。'},
+{q:'「錦上添花」與下列何者語意相對？',opts:['雪中送炭','畫蛇添足','如虎添翼','火上加油'],ans:0,ex:'「錦上添花」指在美好的事物上再添加美好，「雪中送炭」則指在困難時給予及時的幫助，兩者語境相對。'},
+{q:'下列文句，何者為「並列複句」？',opts:['他既聰明又努力','雖然下雨，他仍出門','如果努力，就能成功','因為生病，所以請假'],ans:0,ex:'「既……又……」為並列複句常見句式，表示兩種情況同時存在。'},
+{q:'「民為邦本，本固邦寧」出自：',opts:['《尚書》','《論語》','《孟子》','《荀子》'],ans:0,ex:'語出《尚書．五子之歌》，意謂人民是國家的根本，根本穩固，國家才能安寧。'},
+{q:'「他「畫地自限」，不願嘗試新事物」，「畫地自限」形容：',opts:['自我設限，不敢突破現況','積極開創新局','勇於冒險犯難','樂於接受挑戰'],ans:0,ex:'比喻自己劃定範圍，限制自己的能力或發展，不敢跨越突破。'},
+{q:'「他「按圖施工」，確保工程品質」句中，「按圖」意謂：',opts:['依照設計圖','按摩圖畫','依照個人喜好','隨意發揮'],ans:0,ex:'「按圖」意指依照設計圖施作，確保工程符合規劃標準。'},
+{q:'下列成語，何者形容「說話或做事非常有條理」？',opts:['井井有條','雜亂無章','支離破碎','語無倫次'],ans:0,ex:'「井井有條」形容事物排列整齊、有條不紊。'},
+{q:'「工欲善其事，必先利其器」與下列何者意涵最相近？',opts:['做事前應做好充分準備','事必躬親，方能成功','熟能生巧，勤能補拙','量力而為，不強求'],ans:0,ex:'兩者皆強調做事之前應先做好準備、備妥工具方法，事半功倍。'},
+{q:'「他「東施效顰」，模仿他人卻適得其反」，「東施效顰」比喻：',opts:['盲目模仿他人，卻不得其法，反而弄巧成拙','虛心學習，勇於效法他人優點','善於觀察，觸類旁通','獨具創意，不隨波逐流'],ans:0,ex:'典出《莊子》，比喻盲目胡亂模仿，不僅學不到精髓，反而弄巧成拙。'}
+];
+
+/* ===================== 英文 30（8/17 場） ===================== */
+const english_0817 = [
+{q:'The maintenance crew ____ the tracks every night before the first train departs.',opts:['inspect','inspects','inspecting','to inspect'],ans:1,ex:'主詞 "the maintenance crew" 視為單數集合名詞，動詞須用第三人稱單數 inspects。'},
+{q:'____ of the passengers were aware of the schedule change.',opts:['Few','A few','Little','A little'],ans:1,ex:'"a few" 用於可數名詞（passengers），表示「有一些」；"few" 則強調「幾乎沒有」，語意不同。'},
+{q:'The technician is responsible ____ maintaining the signal system.',opts:['of','for','to','with'],ans:1,ex:'"be responsible for + N/V-ing" 為固定搭配，表示「對……負責」。'},
+{q:'The word "vicinity" most nearly means:',opts:['a nearby area','a distant place','a busy street','a quiet town'],ans:0,ex:'vicinity 意為「附近地區、鄰近一帶」。'},
+{q:'Hardly ____ the train left the station when the storm began.',opts:['had','has','did','was'],ans:0,ex:'"Hardly...when..." 表示「一……就……」，句首為 Hardly 時須倒裝，且時態用過去完成式，故用 had。'},
+{q:'The new timetable will ____ effect starting next Monday.',opts:['take','make','do','have'],ans:0,ex:'"take effect" 為固定片語，意為「生效」。'},
+{q:'Choose the word closest in meaning to "substantial":',opts:['minor','considerable','temporary','uncertain'],ans:1,ex:'substantial 意為「相當大的、可觀的」，與 considerable 意思相近。'},
+{q:'Neither of the two routes ____ shorter than the other.',opts:['is','are','were','have been'],ans:0,ex:'"neither of + 複數名詞" 作主詞時，動詞原則上須用單數形式 is。'},
+{q:'"Congestion" refers to:',opts:['a state of being overcrowded, causing delay','a type of vehicle','a ticket discount','a maintenance schedule'],ans:0,ex:'congestion 意指「壅塞、擁塞」的狀態，常用於描述交通壅塞。'},
+{q:'The report clarifies ____ the accident occurred.',opts:['why','what','which','whom'],ans:0,ex:'此處說明「為何發生事故」，須用引導原因子句的疑問詞 why。'},
+{q:'The passengers were ____ to remain seated during the delay.',opts:['ask','asking','asked','to ask'],ans:2,ex:'"be asked to V" 為被動句型，表示「被要求做某事」。'},
+{q:'The opposite of "arrival" is:',opts:['departure','delay','platform','schedule'],ans:0,ex:'arrival（抵達）的反義詞為 departure（出發、離開）。'},
+{q:'Unless the fault ____ repaired soon, services will be further delayed.',opts:['is','was','will be','being'],ans:0,ex:'unless 引導條件子句，須用現在式表示未來的條件，故用 is。'},
+{q:'Choose the best word: The agency will ____ a new fare structure next year.',opts:['adopt','adapt','adept','opt'],ans:0,ex:'adopt 意為「採用、採納」，符合「明年將採用新票價結構」的語意。'},
+{q:'"With regard to" is closest in meaning to:',opts:['regarding','regardless of','in spite of','because of'],ans:0,ex:'"with regard to" 意為「關於」，與 regarding 意義相近。'},
+{q:'The staff have been trained ____ handling emergency situations.',opts:['in','on','at','by'],ans:0,ex:'"be trained in + N/V-ing" 為固定搭配，表示「接受某方面的訓練」。'},
+{q:'The delay was mainly attributed ____ severe weather conditions.',opts:['to','for','with','on'],ans:0,ex:'"be attributed to" 為固定被動句型，意為「歸因於」。'},
+{q:'Read: "Starting next month, passengers can use a single card for both bus and rail transfers. The new system aims to reduce waiting time at transfer stations." What is the main purpose of the new system?',opts:['To increase fares','To reduce waiting time at transfer stations','To eliminate bus services','To require paper tickets'],ans:1,ex:'文章明確指出新系統的目的是「reduce waiting time at transfer stations（減少轉乘站的等待時間）」。'},
+{q:'According to the passage, what will passengers be able to do starting next month?',opts:['Use a single card for both bus and rail transfers','Ride for free','Book seats in advance','Avoid all transfers'],ans:0,ex:'文中指出乘客將能使用同一張卡片進行公車與鐵路的轉乘。'},
+{q:'Read: "Employees are reminded that overtime must be pre-approved by a supervisor. Unapproved overtime will not be compensated." What happens if overtime is not pre-approved?',opts:['It will be compensated at a higher rate','It will not be compensated','The employee will be promoted','Nothing changes'],ans:1,ex:'文中明確說明未經核准的加班將不予支付報酬。'},
+{q:'The word "compensated" in the passage most likely means:',opts:['punished','paid for','ignored','recorded'],ans:1,ex:'compensated 意指「獲得補償、獲得支付」。'},
+{q:'"The board members are ____ concerned about the rising maintenance costs."',opts:['increase','increasing','increasingly','increased'],ans:2,ex:'此處修飾形容詞 concerned，須用副詞 increasingly（日益、越來越）。'},
+{q:'Choose the correctly punctuated sentence:',opts:['Mr. Chen, the station manager, approved the plan.','Mr. Chen the station manager approved the plan.','Mr. Chen, the station manager approved the plan.','Mr. Chen the station manager, approved the plan.'],ans:0,ex:'同位語「the station manager」須以逗號前後隔開，(A)標點正確。'},
+{q:'"Ambiguous" is closest in meaning to:',opts:['clear','unclear or open to more than one interpretation','certain','simple'],ans:1,ex:'ambiguous 意為「模糊不清的、有歧義的」。'},
+{q:'It is essential that every staff member ____ the new safety protocol.',opts:['follows','follow','followed','will follow'],ans:1,ex:'"It is essential that..." 之後子句須用虛擬語氣「(should) + 原形動詞」，故用 follow。'},
+{q:'"Having reviewed the report, the manager ____ several changes."',opts:['proposes','proposed','propose','proposing'],ans:1,ex:'分詞構句 "Having reviewed..." 表示動作已完成，主要子句應搭配過去式動詞 proposed，語意連貫。'},
+{q:'The phrase "in the long run" means:',opts:['immediately','eventually, over a long period of time','never','only once'],ans:1,ex:'"in the long run" 意為「從長遠來看」。'},
+{q:'"Feasible" most nearly means:',opts:['impossible','practical and achievable','expensive','risky'],ans:1,ex:'feasible 意為「可行的」，指切實可行、能夠達成的。'},
+{q:'The city plans to ____ the outdated railway signaling system.',opts:['upgrade','downgrade','degrade','grade'],ans:0,ex:'upgrade 意為「升級、改善」，符合「升級過時的號誌系統」語意。'},
+{q:'"Take into account" means:',opts:['to ignore something','to consider something','to calculate money','to remove something'],ans:1,ex:'"take into account" 意為「將…納入考慮」。'}
+];
+
+/* ===================== 法學知識 30（8/17 場） ===================== */
+const law_0817 = [
+{q:'依憲法規定，行政院對立法院負責之方式，不包括下列何者？',opts:['提出施政方針及施政報告','移請覆議','解散國民大會','接受立法委員質詢'],ans:2,ex:'憲法增修條文規定行政院對立法院負責之方式包括提出施政報告、接受質詢、覆議等；「國民大會」已於憲法增修條文中停止運作，非現行制度。'},
+{q:'依憲法規定，下列何者有權提出法律案？',opts:['行政院','人民團體','私人企業','外國政府'],ans:0,ex:'憲法明定行政院、考試院、司法院、監察院及立法委員均得提出法律案，人民團體及私人企業則無此權限。'},
+{q:'憲法第23條規定，限制人民自由權利，除為防止妨礙他人自由、避免緊急危難、維持社會秩序或增進公共利益所必要者外，不得以何種方式為之？',opts:['法律限制之','命令限制之','習慣限制之','行政指導限制之'],ans:1,ex:'憲法第23條規定限制人民自由權利須「以法律限制之」，反面言之，不得僅以命令限制。'},
+{q:'下列何者屬於「監察院」之職權？',opts:['彈劾、糾舉及審計權','解釋憲法','考選公務人員','制定法律'],ans:0,ex:'憲法規定監察院行使彈劾、糾舉及審計權，為國家最高監察機關。'},
+{q:'依民法規定，「無效」之法律行為，其效力為：',opts:['自始、當然、確定不生效力','須經法院判決始不生效力','效力未定，得補正','僅得請求撤銷'],ans:0,ex:'無效之法律行為，自始、當然、確定不發生法律效力，無須經任何人主張。'},
+{q:'下列何者屬於「得撤銷」之法律行為？',opts:['因被詐欺或脅迫而為之意思表示','違反強制或禁止規定之行為','違背公序良俗之行為','通謀虛偽意思表示'],ans:0,ex:'民法規定因被詐欺或脅迫而為意思表示者，表意人得撤銷其意思表示，屬得撤銷之法律行為；其餘選項原則上屬無效。'},
+{q:'「法律不明確者，應為有利於行為人之解釋」主要體現於下列何種原則？',opts:['罪疑唯輕原則','法律不溯及既往原則','法律優位原則','特別法優於普通法原則'],ans:0,ex:'「罪疑唯輕」（罪疑惟輕）為刑事訴訟基本原則，於事實或法律有疑義時，應為有利於被告之認定。'},
+{q:'依中央法規標準法規定，法規對於特定人、事、地、時所定之特別規定，於下列何種情形應優先適用？',opts:['與普通規定牴觸時，優先適用特別規定','一律優先適用普通規定','由行政機關自行決定','須經立法院另行決議'],ans:0,ex:'中央法規標準法第16條規定，法規對其他法規所規定之同一事項而為特別之規定者，應優先適用之，即特別法優於普通法原則。'},
+{q:'下列何者為「行政契約」之敘述，何者正確？',opts:['行政機關與人民間，為設定、變更或消滅公法上法律關係所訂立之契約','僅限於私法契約','行政機關不得與人民締結契約','行政契約無須遵守法定方式'],ans:0,ex:'行政程序法規定行政契約係行政機關與人民或機關間，為設定、變更或消滅公法上法律關係所締結之契約。'},
+{q:'依憲法規定，總統於下列何種情形得經行政院會議之決議發布緊急命令？',opts:['國家遇有天然災害、癘疫或財政經濟上重大變故，須為急速處分','為提升國家經濟發展','為擴大總統職權','為解決政黨紛爭'],ans:0,ex:'憲法增修條文第2條規定，總統為避免國家或人民遭遇緊急危難或應付財政經濟上重大變故，得經行政院會議決議發布緊急命令。'},
+{q:'下列關於「公法人」之敘述，何者正確？',opts:['國家、地方自治團體及依法設立之公法上社團、財團，均得為公法人','僅國家本身為公法人','公法人不具權利能力','公法人僅存在於中央政府層級'],ans:0,ex:'國家、地方自治團體（如直轄市、縣市、鄉鎮市）及依法設立行使公權力之團體，均得具備公法人地位。'},
+{q:'依民法規定，「契約」之成立，原則上須具備下列何種要件？',opts:['當事人互相表示意思一致','須經公證','須以書面為之','須經第三人見證'],ans:0,ex:'民法第153條規定，當事人互相表示意思一致者，無論其為明示或默示，契約即為成立，原則上不要求特定方式。'},
+{q:'下列何者屬於「行政罰」而非「刑罰」？',opts:['違反道路交通管理處罰條例之罰鍰','有期徒刑','拘役','沒收（刑法上）'],ans:0,ex:'罰鍰為行政罰之一種，由行政機關依法裁處；有期徒刑、拘役、沒收則屬刑罰，須經法院判決。'},
+{q:'「一事不再理原則」主要適用於下列何種程序？',opts:['同一案件經確定判決後，不得就同一事實再行起訴或處罰','行政機關得就同一案件反覆處分','立法院得就同一法案反覆表決','監察院得就同一案件反覆彈劾'],ans:0,ex:'一事不再理原則旨在避免對同一案件重複追訴、審判或處罰，維護法安定性與被告權益。'},
+{q:'依憲法增修條文規定，地方制度之相關事項，由下列何者以法律定之？',opts:['直接以法律定之，不受憲法本文第十章、十一章之限制','僅由地方自治團體自行決定','僅由行政院決定','僅由監察院決定'],ans:0,ex:'憲法增修條文第9條規定，省縣自治另以法律定之，不受憲法本文相關條文之限制。'},
+{q:'下列何者為「無因管理」之定義？',opts:['未受委任，並無義務，而為他人管理事務者','受委任而管理他人事務','管理自己事務','管理公司財產'],ans:0,ex:'民法第172條規定，未受委任，並無義務，而為他人管理事務者，其管理應依本人明示或可得推知之意思，以有利於本人之方法為之。'},
+{q:'依民法規定，「連帶債務」之敘述，何者正確？',opts:['數債務人負同一債務，對於債權人各負全部給付責任','數債務人僅各負部分給付責任','連帶債務僅存在於契約關係','連帶債務人中一人清償後，其他人責任仍未消滅'],ans:0,ex:'民法規定數人負同一債務，明示對於債權人各負全部給付之責任者，為連帶債務，債權人得對其中任一人請求全部給付。'},
+{q:'「依法行政原則」主要包含下列哪兩項子原則？',opts:['法律優位原則與法律保留原則','罪刑法定原則與比例原則','信賴保護原則與誠信原則','特別法原則與普通法原則'],ans:0,ex:'依法行政原則主要包含「法律優位原則」（行政行為不得牴觸法律）及「法律保留原則」（重要事項須有法律授權），為行政法基本原則。'},
+{q:'下列何者非屬「比例原則」之內涵？',opts:['適當性原則','必要性原則','狹義比例原則（衡量性原則）','溯及既往原則'],ans:3,ex:'比例原則包含適當性、必要性及狹義比例原則（衡量性）三個子原則；溯及既往原則與比例原則性質不同，非其內涵。'},
+{q:'依民事訴訟法規定，「管轄權」之意義為：',opts:['特定法院對特定案件有權審理之權限','法官個人審理案件之能力','律師代理訴訟之資格','當事人選擇法官之權利'],ans:0,ex:'管轄權係指依法律規定，特定法院對於特定訴訟事件有審判之權限。'},
+{q:'下列何者屬於「行政執行」之方法？',opts:['直接強制、間接強制、即時強制','僅限於罰鍰處分','僅限於刑事處罰','僅限於行政訴訟程序'],ans:0,ex:'行政執行法規定行政執行方法包括公法上金錢給付義務之執行、行為或不行為義務之執行（直接強制、間接強制）及即時強制。'},
+{q:'「誠信原則」在民法上之地位為：',opts:['帝王條款，貫穿民法各領域之最高指導原則','僅適用於買賣契約','僅適用於侵權行為','效力低於其他民法規定'],ans:0,ex:'誠信原則（民法第148條）被稱為「帝王條款」，為行使權利、履行義務之最高指導原則，貫穿整部民法。'},
+{q:'依憲法規定，司法院大法官組成憲法法庭，審理下列何種案件？',opts:['總統、副總統之彈劾及政黨違憲之解散事項','一般民事案件','一般刑事案件','行政訴訟案件'],ans:0,ex:'憲法增修條文第5條規定，司法院大法官組成憲法法庭，審理總統、副總統之彈劾及政黨違憲解散事項。'},
+{q:'下列何者屬於「意思表示不一致」之情形？',opts:['真意保留、虛偽表示、錯誤','詐欺、脅迫','以上皆是','以上皆非'],ans:2,ex:'意思表示之瑕疵可分為「意思表示不一致」（如真意保留、虛偽表示、錯誤）與「意思表示不自由」（如詐欺、脅迫）兩大類。'},
+{q:'依民法規定，「時效中斷」之效果為：',opts:['已經過之期間歸於無效，重新起算','時效期間暫停計算，扣除中斷期間後繼續計算','時效立即完成','債權消滅'],ans:0,ex:'民法規定時效因請求、承認、起訴等事由而中斷者，已經過之期間歸於無效，自中斷事由終止時重新起算時效期間。'},
+{q:'下列何者屬於「憲法訴訟法」施行後，取代原「大法官會議解釋」制度之新機制？',opts:['憲法法庭判決','行政法院判決','最高法院判例','檢察官起訴書'],ans:0,ex:'憲法訴訟法於110年施行後，大法官組成憲法法庭，以「判決」形式取代原本的「解釋」制度。'},
+{q:'依國家賠償法規定，公有公共設施因設置或管理有欠缺，致人民生命、身體或財產受損害，國家：',opts:['應負損害賠償責任','僅於故意時負責任','一律不負責任','須經立法院個案決議'],ans:0,ex:'國家賠償法第3條規定，公有公共設施因設置或管理有欠缺，致人民受損害者，國家應負損害賠償責任，屬於一種相對客觀的責任。'},
+{q:'下列何者為「法律上推定」之效果？',opts:['得提出反證推翻','絕對不得推翻，視為法律事實','僅適用於刑事案件','無任何法律效果'],ans:0,ex:'法律上之推定原則上得由當事人提出反證推翻，此與「視為」（法律擬制）不同，後者原則上不得舉反證推翻。'}
+];
+
+/* ===================== 國文 30（8/21 場） ===================== */
+const chinese_0821 = [
+{q:'下列「」中的字，讀音何者正確？「「肖」像畫」',opts:['ㄒㄧㄠˋ','ㄒㄧㄠ','ㄒㄧㄠˇ','ㄑㄧㄠˋ'],ans:0,ex:'「肖像」的「肖」讀ㄒㄧㄠˋ，意指與本人相似的畫像或照片。'},
+{q:'「他做事「畫龍點睛」，總能在關鍵處提升整體效果」，「畫龍點睛」比喻：',opts:['在文章或事物的關鍵處，稍加點染便使全體生動精采','事事求全，鉅細靡遺','大刀闊斧，全面翻修','按部就班，穩步推進'],ans:0,ex:'典出張僧繇畫龍的故事，比喻在關鍵地方稍加點染，使整體更加生動精采。'},
+{q:'下列文句何者無錯別字？',opts:['一鼓作氣，勢如破竹','蓄勢代發，一觸即發','再接再勵，愈挫愈勇','川流不昔，日夜奔騰'],ans:0,ex:'「蓄勢代發」應作「蓄勢待發」；「再接再勵」應作「再接再厲」；「川流不昔」應作「川流不息」。(A)用字正確。'},
+{q:'「窮則變，變則通，通則久」出自：',opts:['《易經》','《論語》','《孟子》','《大學》'],ans:0,ex:'語出《易經．繫辭下》，說明事物發展到極致便會產生變化，變化才能通達長久。'},
+{q:'「他「刻舟求劍」，不知變通應對」，「刻舟求劍」比喻：',opts:['拘泥固執，不知隨情勢變化而變通','積極進取，勇於突破','善於規劃，按部就班','謹慎行事，三思而後行'],ans:0,ex:'典出《呂氏春秋》，比喻拘泥成見，不知隨客觀情勢變化而變通處事。'},
+{q:'下列成語，何者用來形容「兩者實力相當，難分高下」？',opts:['勢均力敵','以卵擊石','眾寡懸殊','摧枯拉朽'],ans:0,ex:'「勢均力敵」形容雙方力量相當，難分軒輊。'},
+{q:'公文用語「檢送」通常用於：',opts:['隨函附送相關文件或資料','請求對方回復','表達歉意','公告事項'],ans:0,ex:'「檢送」為公文常用語，指隨同來文附上相關文件、資料。'},
+{q:'「他「削足適履」，勉強配合不合理的規定」，「削足適履」比喻：',opts:['不知變通，勉強遷就，反而弄巧成拙','量身訂做，恰到好處','靈活應變，隨機應變','腳踏實地，穩紮穩打'],ans:0,ex:'比喻不顧實際情況，生硬地遷就現成的條件，反而造成不良後果。'},
+{q:'下列文句何者屬於「映襯」修辭？',opts:['朱門酒肉臭，路有凍死骨','他像一陣風，來去無蹤','山重水複疑無路，柳暗花明又一村','風簷展書讀，古道照顏色'],ans:0,ex:'「朱門酒肉臭」與「路有凍死骨」形成貧富對比，屬映襯修辭。'},
+{q:'「他「畫餅充飢」，用空泛的承諾安撫下屬」，「畫餅充飢」比喻：',opts:['用空想或不切實際的方法自我安慰，無法解決實際問題','制定周詳計畫','積極解決問題','慷慨大方，樂於分享'],ans:0,ex:'典出《三國志》，比喻用空想的辦法來安慰自己，無法真正解決問題。'},
+{q:'「千里之行，始於足下」出自：',opts:['《老子》','《論語》','《墨子》','《韓非子》'],ans:0,ex:'語出《老子》，比喻遠大的目標，須從眼前的小事、第一步開始累積。'},
+{q:'下列「之」字用法，何者與「送孟浩然之廣陵」的「之」相同？',opts:['吾欲之南海','置之度外','久而久之','求之不得'],ans:0,ex:'「之廣陵」的「之」作動詞「往、到」解，與「吾欲之南海」用法相同。'},
+{q:'「他「杯弓蛇影」，過度疑神疑鬼」，「杯弓蛇影」形容：',opts:['因過度懷疑而自相驚擾，庸人自擾','細心謹慎，防患未然','勇於面對困難','善於分析判斷'],ans:0,ex:'典出《晉書》，比喻疑神疑鬼、自相驚擾。'},
+{q:'下列詞語，何者屬於「謙詞」？',opts:['貴幹','薄禮','令堂','大駕'],ans:1,ex:'「薄禮」為自謙禮物微薄之詞，屬謙詞；「貴幹」「令堂」「大駕」皆為敬詞。'},
+{q:'「他「集思廣益」，廣納各方意見」，「集思廣益」意謂：',opts:['集合眾人智慧，擴大效益','獨斷專行，一意孤行','保守謹慎，不輕易改變','各行其是，缺乏共識'],ans:0,ex:'指集合眾人的思慮和意見，以獲得更好的效果。'},
+{q:'下列公文用語，何者用於「平行文」結尾？',opts:['請 查照','請 鑒核','希 照辦','謹陳'],ans:0,ex:'「請查照」常用於平行機關間之函文結尾用語；「請鑒核」屬上行文，「希照辦」屬下行文。'},
+{q:'「畫蛇添足」比喻：',opts:['多此一舉，反而壞事','錦上添花，更臻完美','精益求精，力求完美','按部就班，穩紮穩打'],ans:0,ex:'典出《戰國策》，比喻做了多餘不必要的事，反而弄巧成拙。'},
+{q:'「他「囊螢映雪」，苦讀成才」，此語用以形容：',opts:['家境清寒仍勤奮向學','天資聰穎，過目不忘','出身書香世家','喜好夜間活動'],ans:0,ex:'典出車胤囊螢、孫康映雪苦讀的故事，形容家境貧困仍刻苦勤學。'},
+{q:'下列文句何者標點符號使用正確？',opts:['他問：「你吃飯了嗎？」','他問：「你吃飯了嗎？」！','他問，你吃飯了嗎？','他問「你吃飯了嗎」？'],ans:0,ex:'完整問句應以冒號引出，並將問號置於引號內，(A)使用正確。'},
+{q:'「塞翁失馬，焉知非福」比喻：',opts:['禍福相倚，一時的損失未必不是好事','命運早已註定，無法改變','應對挫折保持樂觀','馬匹遺失難以尋回'],ans:0,ex:'典出《淮南子》，比喻一時的得失禍福，常會轉化，難以斷定絕對好壞。'},
+{q:'「他「班門弄斧」，在專家面前賣弄」，「班門弄斧」比喻：',opts:['在行家面前賣弄本領，不自量力','虛心求教，樂於學習','技藝高超，深藏不露','謙虛謹慎，從不誇耀'],ans:0,ex:'比喻在行家面前賣弄自己微薄的本領，不自量力。'},
+{q:'「良藥苦口利於病，忠言逆耳利於行」意謂：',opts:['有益的勸告雖然不中聽，卻對人有幫助','藥物味道往往苦澀難嚥','忠誠的部屬應直言不諱','聽話應選擇順耳的言論'],ans:0,ex:'語出《孔子家語》，比喻誠懇正直的勸告雖然逆耳，卻對人有實質幫助。'},
+{q:'下列文句，何者為「遞進複句」？',opts:['他不但聰明，而且勤奮','他雖然貧窮，但很快樂','如果努力，就能成功','因為下雨，所以取消'],ans:0,ex:'「不但……而且……」為典型遞進複句句式，語意層層遞進加強。'},
+{q:'「他「臨渴掘井」，事到臨頭才倉促應對」，「臨渴掘井」比喻：',opts:['事到臨頭才倉促準備，為時已晚','未雨綢繆，事先準備','沉著冷靜，從容應對','善於規劃，按部就班'],ans:0,ex:'比喻平時不準備，事到臨頭才急忙應付，往往為時已晚。'},
+{q:'「他「胼手胝足」，一步一腳印打拚事業」，「胼手胝足」形容：',opts:['辛勤勞動，不辭辛苦','手腳靈活，動作敏捷','體格健壯，孔武有力','經驗豐富，游刃有餘'],ans:0,ex:'形容因長期辛勤勞動，手腳長滿了厚繭，比喻刻苦耐勞。'},
+{q:'下列成語，何者形容「見識廣博，學問淵博」？',opts:['博古通今','孤陋寡聞','井底之蛙','管窺蠡測'],ans:0,ex:'「博古通今」形容通曉古今的事理，學識淵博。'},
+{q:'「他「明察秋毫」，觀察力極為敏銳」，「明察秋毫」形容：',opts:['觀察入微，連極細微之處也能看清','記憶力極佳','行動迅速果決','個性謹慎小心'],ans:0,ex:'典出《孟子》，形容目光敏銳，連秋天鳥獸新生的細毛都能看清，比喻觀察力極強。'}
+];
+
+/* ===================== 英文 30（8/21 場） ===================== */
+const english_0821 = [
+{q:'The revised policy will ____ into effect once approved by the board.',opts:['come','coming','comes','came'],ans:0,ex:'"come into effect" 為固定片語表「生效」，此處為未來將發生的動作，須用原形動詞 come（搭配助動詞 will）。'},
+{q:'The manager, along with two assistants, ____ reviewing the proposal.',opts:['is','are','were','have been'],ans:0,ex:'"along with" 引導的附加語不影響主詞單複數，主詞為 manager（單數），動詞用 is。'},
+{q:'The company is known ____ its excellent safety record.',opts:['for','to','with','of'],ans:0,ex:'"be known for" 表示「以……而聞名」，for 為固定搭配介詞。'},
+{q:'The word "meticulously" most nearly means:',opts:['carelessly','with great attention to detail','quickly','loudly'],ans:1,ex:'meticulously 意為「一絲不苟地、極其仔細地」。'},
+{q:'Rarely ____ such a comprehensive plan been proposed before.',opts:['has','have','did','was'],ans:0,ex:'"Rarely" 置於句首須倒裝；主詞 "such a comprehensive plan" 為單數，須搭配 has。'},
+{q:'The construction project is expected to ____ completion by next spring.',opts:['reach','arrive','achieve','attain'],ans:0,ex:'"reach completion" 為常見搭配，意為「達到完工、竣工」。'},
+{q:'Choose the word closest in meaning to "inevitable":',opts:['avoidable','unavoidable','optional','uncertain'],ans:1,ex:'inevitable 意為「不可避免的」，與 unavoidable 意思相近。'},
+{q:'A number of proposals ____ submitted for review last week.',opts:['was','were','has been','is'],ans:1,ex:'"a number of + 複數名詞" 作主詞時視為複數，動詞須用複數形式 were。'},
+{q:'"Allocate" refers to:',opts:['to distribute for a specific purpose','to destroy something','to postpone an event','to celebrate an achievement'],ans:0,ex:'allocate 意指「分配、撥配」，常用於資源、預算分配之語境。'},
+{q:'The instructions specify ____ the equipment should be stored.',opts:['how','what','who','whom'],ans:0,ex:'此處說明「應如何存放」，須用引導方式子句的疑問詞 how。'},
+{q:'The proposal was ____ rejected due to budget constraints.',opts:['ultimate','ultimately','ultimatum','ultimating'],ans:1,ex:'此處修飾動詞 rejected，須用副詞 ultimately（最終、最後）。'},
+{q:'The opposite of "expand" is:',opts:['grow','extend','contract','increase'],ans:2,ex:'expand（擴張、擴大）的反義詞為 contract（收縮、縮減）。'},
+{q:'Provided that safety standards ____ met, the project can proceed.',opts:['are','were','will be','being'],ans:0,ex:'"provided that" 引導條件子句，語意近似 if，須用現在式表未來條件，故用 are。'},
+{q:'Choose the best word: The board will ____ the merits of both proposals before deciding.',opts:['weigh','wear','weight','way'],ans:0,ex:'weigh 意為「權衡、斟酌」，符合「權衡兩項提案的優劣」語意。'},
+{q:'"By virtue of" is closest in meaning to:',opts:['because of','instead of','regardless of','in front of'],ans:0,ex:'"by virtue of" 意為「由於、憑藉」，與 because of 意義相近，常見於正式文件。'},
+{q:'The company has been recognized ____ its contribution to public transportation.',opts:['for','to','with','on'],ans:0,ex:'"be recognized for" 表示「因……而受到肯定」，for 為固定搭配。'},
+{q:'The proposal was met ____ strong opposition from local residents.',opts:['with','by','from','of'],ans:0,ex:'"be met with" 為固定搭配，表示「遭遇、受到（某種反應）」。'},
+{q:'Read: "The city council approved a plan to extend the metro line by 2028. Officials say the extension will reduce traffic congestion in the eastern districts." What is the goal of the metro extension?',opts:['To increase property taxes','To reduce traffic congestion in the eastern districts','To close existing bus routes','To relocate the city council'],ans:1,ex:'文章明確指出延伸捷運線的目標是「reduce traffic congestion in the eastern districts（減少東區的交通壅塞）」。'},
+{q:'According to the passage, when is the extension expected to be completed?',opts:['By 2028','Next month','Within a year','It has already been completed'],ans:0,ex:'文中指出計畫在2028年前完成延伸。'},
+{q:'Read: "Due to a power outage, several stations experienced temporary service disruptions this morning. Normal operations resumed by 10 a.m." What caused the disruption?',opts:['A power outage','A labor strike','Bad weather','A ticketing error'],ans:0,ex:'文中明確指出停電是造成服務中斷的原因。'},
+{q:'The word "resumed" in the passage most likely means:',opts:['stopped permanently','started again','was cancelled','was delayed indefinitely'],ans:1,ex:'resumed 意指「恢復、重新開始」。'},
+{q:'"The committee members are ____ to submit their reports by Friday."',opts:['require','required','requiring','requires'],ans:1,ex:'"be required to V" 為固定被動句型，表示「被要求做某事」。'},
+{q:'Choose the correctly punctuated sentence:',opts:['The report, in my opinion, was well written.','The report in my opinion, was well written.','The report, in my opinion was well written.','The report in my opinion was, well written.'],ans:0,ex:'插入語「in my opinion」須以逗號前後隔開，(A)標點正確。'},
+{q:'"Deteriorate" is closest in meaning to:',opts:['improve','worsen','stabilize','remain'],ans:1,ex:'deteriorate 意為「惡化、變差」，與 worsen 同義。'},
+{q:'The regulation requires that all vehicles ____ inspected annually.',opts:['are','be','were','being'],ans:1,ex:'"require that" 之後子句須用虛擬語氣「(should) + 原形動詞」，此處為被動故用 be inspected。'},
+{q:'"Given the circumstances, the team ____ decided to postpone the launch."',opts:['have','has','having','had'],ans:1,ex:'主詞 team 視為單數集合名詞，動詞須用 has；given 為分詞構句，表示「考量到…情況」。'},
+{q:'The phrase "account for" means:',opts:['to explain the cause of something','to open a bank account','to ignore something','to celebrate something'],ans:0,ex:'"account for" 意為「說明、解釋（原因）」，亦可表示「佔（比例）」。'},
+{q:'"Redundant" most nearly means:',opts:['essential','no longer needed, superfluous','urgent','popular'],ans:1,ex:'redundant 意為「多餘的、不再需要的」。'},
+{q:'The agency will ____ a public hearing before finalizing the route.',opts:['conduct','contact','construct','convert'],ans:0,ex:'"conduct a hearing" 為固定搭配，意為「舉行聽證會」。'},
+{q:'"With a view to" means:',opts:['with the intention of','without considering','in contrast to','as opposed to'],ans:0,ex:'"with a view to + V-ing" 意為「為了……的目的」，常見於正式書面語。'}
+];
+
+/* ===================== 法學知識 30（8/21 場） ===================== */
+const law_0821 = [
+{q:'依憲法規定，人民之秘密通訊自由，規定於憲法第幾條？',opts:['第10條','第11條','第12條','第13條'],ans:2,ex:'憲法第12條規定：「人民有秘密通訊之自由。」'},
+{q:'下列何者屬於憲法第14條所保障之權利？',opts:['集會及結社之自由','居住及遷徙自由','言論、講學、著作及出版之自由','宗教信仰自由'],ans:0,ex:'憲法第14條規定：「人民有集會及結社之自由。」'},
+{q:'依憲法增修條文規定，立法院對總統、副總統得提出彈劾案，須經全體立法委員多少比例提議？',opts:['二分之一','三分之一','四分之一','三分之二'],ans:1,ex:'憲法增修條文第4條規定，立法院對總統、副總統之彈劾案，須經全體立法委員二分之一以上之提議。（原文為全體立委二分之一以上提議、三分之二以上決議）'},
+{q:'下列何者非屬「法律優位原則」之內涵？',opts:['命令不得牴觸法律','法律不得牴觸憲法','行政處分須有法律授權始得作成','命令牴觸法律者無效'],ans:2,ex:'「行政處分須有法律授權始得作成」屬於「法律保留原則」之內涵，而非「法律優位原則」；法律優位原則側重於下位規範不得牴觸上位規範。'},
+{q:'依民法規定，「代理權」之授與，得以下列何種方式為之？',opts:['以意思表示向代理人或向代理人對之為代理行為之第三人為之','僅得以書面為之','僅得以公證方式為之','須經法院核准'],ans:0,ex:'民法第167條規定，代理權係以法律行為授與者，其授與應向代理人或向代理人對之為代理行為之第三人，以意思表示為之。'},
+{q:'下列何者為「間接故意」（未必故意）之定義？',opts:['行為人對於構成犯罪之事實，預見其發生而其發生並不違背其本意','行為人明知並有意使其發生','行為人對於結果毫無預見','行為人對於結果之發生應注意並能注意而不注意'],ans:0,ex:'刑法第13條第2項規定間接故意（未必故意），指行為人對於構成犯罪之事實，預見其發生，而其發生並不違背其本意者。'},
+{q:'依憲法規定，下列何者為「考試院」之職權？',opts:['公務人員之考試、銓敘、保障、撫卹、退休等事項','制定法律','審計權','解釋憲法'],ans:0,ex:'憲法增修條文第6條規定，考試院掌理考試，以及公務人員之銓敘、保障、撫卹、退休等相關事項。'},
+{q:'下列何者為「不作為犯」之定義？',opts:['行為人負有作為義務，能履行而不履行，因而發生犯罪結果','行為人積極作為造成犯罪結果','行為人過失導致結果發生','行為人教唆他人犯罪'],ans:0,ex:'不作為犯指行為人依法負有作為義務，能履行而不履行，因而發生與作為犯相同之犯罪結果者。'},
+{q:'依民法規定，「消滅時效完成」之效果為：',opts:['債務人得拒絕給付，但債權本身並未消滅','債權當然消滅','債務人之給付視為無效','債權人喪失起訴權利'],ans:0,ex:'民法規定消滅時效完成後，債務人得拒絕給付（發生抗辯權），但債權本身並不因此當然消滅，若債務人仍為給付，不得請求返還。'},
+{q:'「法律不溯及既往原則」之例外情形，下列何者正確？',opts:['基於公益或為保障人民權益，法律得明文規定溯及適用','法律絕對不得溯及既往，無任何例外','僅刑事法律得溯及既往','僅有利於國庫之規定得溯及既往'],ans:0,ex:'法律不溯及既往原則並非絕對，於特殊情形下，若基於公益考量或有利於人民權益，法律得明文規定其溯及效力。'},
+{q:'依憲法規定，下列何者為司法院之職權？',opts:['解釋憲法，並統一解釋法律及命令；掌理民事、刑事、行政訴訟之審判','制定法律','考選公務人員','審計權'],ans:0,ex:'憲法第77條規定，司法院為國家最高司法機關，掌理民事、刑事、行政訴訟之審判，及公務員之懲戒。'},
+{q:'下列何者屬於「侵權行為」之成立要件？',opts:['須有加害行為、須有損害發生、行為與損害間須有因果關係、須具備故意或過失','僅須有損害發生即可','僅須有加害行為即可，不論有無損害','須經法院事前核准'],ans:0,ex:'民法第184條規定，一般侵權行為之成立，須具備加害行為、損害發生、因果關係及故意或過失等要件。'},
+{q:'依中央法規標準法規定，法規之解釋，下列何者正確？',opts:['法規主管機關得就法規所定事項為之解釋','僅司法院得解釋所有法規','僅立法院得解釋法規','解釋權專屬於總統'],ans:0,ex:'中央法規標準法第19條規定，各機關依其職掌就有關法規為釋示之行為，得由法規主管機關為之。'},
+{q:'下列何者屬於「訴訟外紛爭解決機制（ADR）」？',opts:['調解、仲裁','起訴、上訴','聲請釋憲','彈劾'],ans:0,ex:'調解與仲裁均屬訴訟外紛爭解決機制，透過第三人協助或裁決，於訴訟程序外解決紛爭。'},
+{q:'依民法規定，「所有權」之權能，不包括下列何者？',opts:['使用、收益、處分','占有','立法','排除他人干涉'],ans:2,ex:'所有權之權能包括使用、收益、處分、占有及排除他人干涉，「立法」非屬所有權之私法上權能。'},
+{q:'「一罪不二罰」與「一事不再理」之區別，下列敘述何者正確？',opts:['前者著重實體法上禁止重複處罰，後者著重程序法上禁止重複追訴審判','兩者完全相同，僅用語不同','前者適用於民事，後者適用於刑事','兩者互無關聯'],ans:0,ex:'「一罪不二罰」側重實體法層面，禁止對同一行為重複處罰；「一事不再理」則側重程序法層面，禁止對同一案件重複追訴或審判。'},
+{q:'依憲法規定，下列何者非屬地方自治團體？',opts:['直轄市','縣（市）','鄉（鎮、市）','中央部會'],ans:3,ex:'地方自治團體依地方制度法規定包括直轄市、縣（市）、鄉（鎮、市），中央部會屬於中央行政機關，非地方自治團體。'},
+{q:'下列何者屬於「行政指導」之特徵？',opts:['不具法律上強制力，係行政機關輔導、協助人民之非權力性行為','具有強制執行力','屬於行政處分之一種','須經立法院授權始得為之'],ans:0,ex:'行政程序法規定行政指導係行政機關在職權範圍內，為實現一定行政目的，以輔導、協助、勸告等方法，促請特定人為一定作為或不作為之行為，不具法律上強制力。'},
+{q:'依民法規定，「共有」之型態，包括下列何者？',opts:['分別共有與公同共有','僅有分別共有','僅有公同共有','共有僅存在於不動產'],ans:0,ex:'民法規定共有型態分為「分別共有」（各共有人按其應有部分對共有物享有權利）與「公同共有」（依法律規定或契約，基於公同關係共有一物）。'},
+{q:'「權力分立原則」之主要目的為：',opts:['避免權力過度集中，藉由制衡防止濫權','提升行政效率','簡化政府組織','擴大總統職權'],ans:0,ex:'權力分立原則旨在避免國家權力集中於單一機關，藉由不同機關間的制衡，防止權力濫用，保障人民權益。'},
+{q:'依憲法規定，下列何者為人民之自由權，非屬「積極受益權」？',opts:['言論自由','受國民教育之權利','請願權','訴訟權'],ans:0,ex:'言論自由屬於「消極自由權」，強調國家不得干預；受國民教育、請願、訴訟權則屬「積極受益權」，人民得請求國家為一定作為。'},
+{q:'下列何者屬於「公務員」身分之取得方式？',opts:['依法考試及格並經分發任用','僅須經選舉產生','僅限於志願役軍人','無須任何法定程序'],ans:0,ex:'依公務人員任用法規定，公務人員之任用原則上須經依法考試及格，並依法完成分發、任用程序。'},
+{q:'依民法規定，「地上權」之定義為：',opts:['以在他人土地上有建築物或其他工作物為目的而使用其土地之權','對他人土地耕作或畜牧之權','以擔保債權為目的，占有債務人動產之權','向他人請求給付之權利'],ans:0,ex:'民法第832條規定，普通地上權係以在他人土地上有建築物或其他工作物為目的，而使用其土地之權。'},
+{q:'「法律漏洞」之填補方法，下列何者正確？',opts:['類推適用、目的性限縮、目的性擴張等','僅得以立法方式填補，法官不得自行填補','法律漏洞不得填補','僅得依習慣法填補'],ans:0,ex:'法律漏洞之填補方法包括類推適用、目的性限縮、目的性擴張及法理補充等，為法學方法論重要課題。'},
+{q:'依憲法規定，人民之「應考試服公職之權」，屬於下列何種基本權？',opts:['參政權','自由權','平等權','受益權'],ans:0,ex:'憲法第18條規定：「人民有應考試服公職之權。」屬於參政權之一環，使人民得參與國家治理。'},
+{q:'下列何者屬於「合夥」之定義？',opts:['二人以上互約出資以經營共同事業之契約','一人單獨經營之事業','公司法人組織','僅限於營利性質之組織'],ans:0,ex:'民法第667條規定，合夥係指二人以上互約出資，以經營共同事業之契約，出資得以金錢、其他財產權、勞務、信用或其他利益代之。'},
+{q:'依中央法規標準法規定，各機關發布之命令，應視其性質分別下達或發布，並應：',opts:['刊登政府公報或新聞紙','由總統親自簽署','經立法院三讀通過','報請司法院備查'],ans:0,ex:'中央法規標準法第7條規定，命令發布時應視其性質分別下達或發布，並即送立法院；依法應公布之命令，應刊登政府公報或新聞紙。'}
+];
+
+/* ===================== 每日常用文法（8/17、8/21） ===================== */
+const grammar_0817 = [
+{pattern:'be responsible for + N/V-ing', explain:'表示「對……負責」，for 為固定搭配介詞，後接名詞或動名詞。', en:'The technician is responsible for maintaining the signal system.', zh:'這位技師負責維護號誌系統。'},
+{pattern:'Hardly...when...（倒裝句）', explain:'表示「一……就……」，句首為 Hardly 時須採用「助動詞＋主詞」倒裝，主要子句常用過去完成式，when 引導的子句用過去式。', en:'Hardly had the train left the station when the storm began.', zh:'火車才剛離站，暴風雨就開始了。'},
+{pattern:'take effect', explain:'固定片語，意為「生效」，常用於描述法規、政策、新制度開始施行。', en:'The new timetable will take effect starting next Monday.', zh:'新時刻表將從下週一開始生效。'},
+{pattern:'neither of + 複數名詞（動詞用單數）', explain:'"neither of" 作主詞時，強調兩者之中「都不」，動詞原則上須用單數形式。', en:'Neither of the two routes is shorter than the other.', zh:'這兩條路線都沒有比另一條短。'},
+{pattern:'unless + 現在式（表未來條件）', explain:'unless 意為「除非」，引導條件子句時須用現在式表示未來的假設情況。', en:'Unless the fault is repaired soon, services will be further delayed.', zh:'除非故障很快被修復，否則服務將進一步延誤。'},
+{pattern:'be attributed to + N', explain:'固定被動搭配，意為「歸因於」，to 為介詞，後須接名詞或動名詞。', en:'The delay was mainly attributed to severe weather conditions.', zh:'這次延誤主要歸因於惡劣的天氣狀況。'},
+{pattern:'be trained in + N/V-ing', explain:'表示「接受某方面的訓練」，in 為固定搭配介詞。', en:'The staff have been trained in handling emergency situations.', zh:'員工已接受過處理緊急狀況的訓練。'},
+{pattern:'it is essential that + (should) + 原形動詞', explain:'"it is essential/necessary/important that..." 之後的子句，須使用「(should) + 原形動詞」的虛擬語氣。', en:'It is essential that every staff member follow the new safety protocol.', zh:'每位員工都務必遵守新的安全規範。'},
+{pattern:'having + p.p.（完成式分詞構句）', explain:'表示「在做了……之後」，強調動作先於主要子句發生，常用於正式書面英文。', en:'Having reviewed the report, the manager proposed several changes.', zh:'審閱完報告後，經理提出了幾項變更建議。'},
+{pattern:'take into account', explain:'片語，意為「將……納入考量」，常用於決策、規劃相關語境。', en:'The committee will take into account public feedback before finalizing the plan.', zh:'委員會在確定計畫前，將把民眾的意見納入考量。'}
+];
+
+const grammar_0821 = [
+{pattern:'come into effect', explain:'固定片語，意為「（法規、政策）生效」，與 take effect 同義，可交替使用。', en:'The revised policy will come into effect once approved by the board.', zh:'修訂後的政策一經董事會核准即生效。'},
+{pattern:'along with（附加語，不影響主詞單複數）', explain:'"along with" 引導的附加成分不影響句子主詞的單複數判斷，動詞仍依主詞本身決定。', en:'The manager, along with two assistants, is reviewing the proposal.', zh:'經理和兩位助理正在審閱這份提案。'},
+{pattern:'be known for + N', explain:'表示「以……而聞名」，for 為固定搭配介詞。', en:'The company is known for its excellent safety record.', zh:'這家公司以優異的安全紀錄聞名。'},
+{pattern:'Rarely...（倒裝句）', explain:'"Rarely" 置於句首表強調「很少……」，須採用倒裝結構，主要動詞常用完成式。', en:'Rarely has such a comprehensive plan been proposed before.', zh:'先前很少提出過如此全面的計畫。'},
+{pattern:'a number of + 複數名詞（動詞用複數）', explain:'"a number of"（許多）作主詞時，動詞須用複數形式，與 "the number of"（…的數量，動詞用單數）須加以區分。', en:'A number of proposals were submitted for review last week.', zh:'上週提交了許多提案供審查。'},
+{pattern:'provided that + 現在式（表未來條件）', explain:'"provided that"（假如、只要）引導條件子句，語意近似 if，須用現在式表示未來的條件。', en:'Provided that safety standards are met, the project can proceed.', zh:'只要符合安全標準，這個專案就可以進行。'},
+{pattern:'be met with + N', explain:'固定被動搭配，意為「遭遇、受到（某種反應或情況）」。', en:'The proposal was met with strong opposition from local residents.', zh:'這項提案遭到當地居民的強烈反對。'},
+{pattern:'require that + (should) + 原形動詞', explain:'"require that..." 之後的子句須採用虛擬語氣「(should) + 原形動詞」，被動時寫成 be + p.p.。', en:'The regulation requires that all vehicles be inspected annually.', zh:'該規定要求所有車輛每年須接受檢驗。'},
+{pattern:'given + N（分詞構句，表「考量到…」）', explain:'"given" 在此作介系詞用，意為「考量到、鑑於」，後接名詞或名詞子句。', en:'Given the circumstances, the team has decided to postpone the launch.', zh:'考量到目前的情況，團隊已決定延後發表。'},
+{pattern:'with a view to + V-ing', explain:'表示「為了……的目的」，to 為介詞，後須接動名詞，常見於正式書面英文。', en:'The agency revised the schedule with a view to reducing passenger complaints.', zh:'該機構修改時刻表是為了減少乘客的抱怨。'}
+];
+
+const GRAMMAR_SETS = {
+  '2026-08-10': grammar_0810,
+  '2026-08-14': grammar_0814,
+  '2026-08-17': grammar_0817,
+  '2026-08-21': grammar_0821
+};
+
 const SESSION_SETS = {
   '2026-08-10': {chinese:chinese_0810, english:english_0810, law:law_0810},
-  '2026-08-14': {chinese:chinese_0814, english:english_0814, law:law_0814}
+  '2026-08-14': {chinese:chinese_0814, english:english_0814, law:law_0814},
+  '2026-08-17': {chinese:chinese_0817, english:english_0817, law:law_0817},
+  '2026-08-21': {chinese:chinese_0821, english:english_0821, law:law_0821}
 };
 let currentSessionKey = '2026-08-10';
 let QUIZ = SESSION_SETS[currentSessionKey];
@@ -1012,6 +1281,7 @@ function loadSession(dateKey){
   renderQuiz('english');
   renderQuiz('law');
   renderGrammar(dateKey);
+  renderGuides(dateKey);
   ['chinese','english','law'].forEach(k=>{
     document.getElementById('score-'+k).style.display = 'none';
   });
@@ -1048,21 +1318,6 @@ renderGrammar(currentSessionKey);
 // 儲存機制：優先使用 window.storage（Claude 環境內建的持久化儲存）；
 // 若不存在（例如日後將此檔案部署到 GitHub Pages 等一般網站），則退回到僅限本次瀏覽的記憶體陣列，
 // 並在單字本頁面提示使用者資料不會保存，建議改接 localStorage 或後端資料庫。
-let vocabMemoryFallback = [];
-const STORAGE_KEY = 'railway-exam-vocab-notebook';
-
-// 三層儲存策略，依環境自動選用：
-// 1) window.storage：Claude 內建雲端儲存（僅在 claude.ai 有效）
-// 2) localStorage：一般瀏覽器本機儲存（部署到 GitHub Pages 等外部網站後生效，關閉分頁、重開電腦都還在）
-// 3) 記憶體陣列：以上兩者皆無法使用時的最終備援，僅本次瀏覽有效
-const HAS_CLAUDE_STORAGE = (typeof window.storage !== 'undefined' && window.storage);
-let HAS_LOCAL_STORAGE = false;
-try{
-  const testKey = '__test__';
-  localStorage.setItem(testKey, '1');
-  localStorage.removeItem(testKey);
-  HAS_LOCAL_STORAGE = true;
-}catch(e){ HAS_LOCAL_STORAGE = false; }
 
 async function vocabLoad(){
   if(HAS_CLAUDE_STORAGE){
@@ -1329,8 +1584,8 @@ function speakWord(word){
 
 refreshVocabBadge();
 
-/* ===================== 講義：運輸學概要 ===================== */
-document.getElementById('guide-transport').innerHTML = `
+/* ===================== 講義：運輸學概要（第1週 / TOPIC 01） ===================== */
+const guide_transport_0810 = `
 <h4>一、運輸的定義</h4>
 <p>運輸（Transportation）係指利用某種工具或方法，將人或貨物自甲地移動至乙地，以創造「空間效用」（place utility）與「時間效用」（time utility）的一種經濟活動。運輸本身不創造實體財貨，而是透過位移產生附加價值，故經濟學上常將運輸視為一種「中間投入」而非最終消費財。</p>
 
@@ -1392,8 +1647,8 @@ document.getElementById('guide-transport').innerHTML = `
 </table>
 `;
 
-/* ===================== 講義：動力車與車輛構造 ===================== */
-document.getElementById('guide-vehicle').innerHTML = `
+/* ===================== 講義：動力車與車輛構造（第1週 / TOPIC 01） ===================== */
+const guide_vehicle_0810 = `
 <h4>一、鐵路車輛的基本分類</h4>
 <ul>
 <li><b>動力車（機車）：</b>本身裝有動力來源、可牽引其他車輛之車輛，依動力種類可分為蒸汽機車、柴電機車（Diesel-Electric）、柴液機車（Diesel-Hydraulic）、電力機車（Electric Locomotive）。</li>
@@ -1413,6 +1668,40 @@ document.getElementById('guide-vehicle').innerHTML = `
 </ul>
 <div class="memo"><b>觀念提醒：</b>一系懸吊在「軸箱與構架之間」，二系懸吊在「構架與車體之間」，兩者順序常是考試陷阱，可用口訣「一軸架、二架體」記憶。</div>
 
+<div class="fig-wrap">
+<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" style="font-family:'Noto Sans TC',sans-serif;">
+  <rect x="60" y="18" width="280" height="32" rx="3" fill="#1b2a44"/>
+  <text x="200" y="39" text-anchor="middle" font-size="13" fill="#f6f3ec" font-weight="700">車體 Car Body</text>
+
+  <polyline points="112,50 104,58 120,66 104,74 120,82 112,90" fill="none" stroke="#c08a3e" stroke-width="3"/>
+  <polyline points="288,50 280,58 296,66 280,74 296,82 288,90" fill="none" stroke="#c08a3e" stroke-width="3"/>
+  <text x="200" y="74" text-anchor="middle" font-size="11.5" fill="#1b2a44">二系懸吊（空氣彈簧）</text>
+
+  <rect x="40" y="90" width="320" height="22" fill="#ece7db" stroke="#1b2a44" stroke-width="2"/>
+  <text x="200" y="105" text-anchor="middle" font-size="12.5" fill="#1b2a44" font-weight="700">轉向架構架 Bogie Frame</text>
+
+  <polyline points="112,112 104,120 120,128 104,136 120,144 112,152" fill="none" stroke="#1b2a44" stroke-width="3"/>
+  <polyline points="288,112 280,120 296,128 280,136 296,144 288,152" fill="none" stroke="#1b2a44" stroke-width="3"/>
+  <text x="200" y="136" text-anchor="middle" font-size="11.5" fill="#1b2a44">一系懸吊</text>
+
+  <rect x="94" y="152" width="36" height="16" rx="2" fill="#fff" stroke="#1b2a44" stroke-width="2"/>
+  <text x="112" y="163" text-anchor="middle" font-size="9.5" fill="#1b2a44">軸箱</text>
+  <rect x="270" y="152" width="36" height="16" rx="2" fill="#fff" stroke="#1b2a44" stroke-width="2"/>
+  <text x="288" y="163" text-anchor="middle" font-size="9.5" fill="#1b2a44">軸箱</text>
+
+  <line x1="60" y1="180" x2="340" y2="180" stroke="#1b2a44" stroke-width="4"/>
+  <text x="200" y="196" text-anchor="middle" font-size="11" fill="#4a4638">輪軸 Axle</text>
+
+  <circle cx="112" cy="230" r="34" fill="#f6f3ec" stroke="#1b2a44" stroke-width="3"/>
+  <circle cx="112" cy="230" r="7" fill="#c08a3e"/>
+  <circle cx="288" cy="230" r="34" fill="#f6f3ec" stroke="#1b2a44" stroke-width="3"/>
+  <circle cx="288" cy="230" r="7" fill="#c08a3e"/>
+  <text x="112" y="278" text-anchor="middle" font-size="11" fill="#1b2a44">車輪</text>
+  <text x="288" y="278" text-anchor="middle" font-size="11" fill="#1b2a44">車輪</text>
+</svg>
+<div class="fig-caption">圖1．轉向架懸吊系統示意圖（側視簡化圖）</div>
+</div>
+
 <h4>三、緩衝與連結裝置</h4>
 <ul>
 <li><b>連結器（Coupler）：</b>用以連結相鄰車輛，常見型式有螺旋連結器（傳統客貨車）、自動連結器（AAR型，貨車常用）、緊密式連結器（Tight-lock，用於電聯車間，兼具電氣與空氣管路連結功能）。</li>
@@ -1427,6 +1716,45 @@ document.getElementById('guide-vehicle').innerHTML = `
 <tr><td>柴液傳動（Diesel-Hydraulic）</td><td>透過液力變速箱（液力耦合器/變扭器）傳遞動力</td><td>結構較輕，多用於調車機車或中小型機車</td></tr>
 <tr><td>電力傳動（Electric）</td><td>由外部電力系統（架空線／第三軌）供電，經變壓、變流後驅動電動機</td><td>無自身燃料儲存問題，效率高、無廢氣排放，為台鐵電氣化路段主要動力來源</td></tr>
 </table>
+
+<div class="fig-wrap">
+<svg viewBox="0 0 560 210" xmlns="http://www.w3.org/2000/svg" style="font-family:'Noto Sans TC',sans-serif;">
+  <defs>
+    <marker id="arrowhead1" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+      <polygon points="0 0, 10 4, 0 8" fill="#1b2a44"/>
+    </marker>
+  </defs>
+
+  <rect x="20" y="55" width="130" height="90" rx="6" fill="#fff" stroke="#1b2a44" stroke-width="2.5"/>
+  <circle cx="85" cy="90" r="26" fill="#f6f3ec" stroke="#c08a3e" stroke-width="3"/>
+  <line x1="85" y1="90" x2="85" y2="68" stroke="#c08a3e" stroke-width="2.5"/>
+  <line x1="85" y1="90" x2="103" y2="100" stroke="#c08a3e" stroke-width="2.5"/>
+  <line x1="85" y1="90" x2="67" y2="100" stroke="#c08a3e" stroke-width="2.5"/>
+  <circle cx="85" cy="90" r="4" fill="#1b2a44"/>
+  <text x="85" y="130" text-anchor="middle" font-size="12" fill="#1b2a44" font-weight="700">牽引馬達</text>
+  <text x="85" y="144" text-anchor="middle" font-size="9.5" fill="#4a4638">Traction Motor</text>
+
+  <path d="M150 100 H196" stroke="#1b2a44" stroke-width="2.5" marker-end="url(#arrowhead1)"/>
+
+  <rect x="200" y="55" width="130" height="90" rx="6" fill="#fff" stroke="#1b2a44" stroke-width="2.5"/>
+  <circle cx="250" cy="95" r="17" fill="none" stroke="#c08a3e" stroke-width="3"/>
+  <circle cx="278" cy="95" r="11" fill="none" stroke="#c08a3e" stroke-width="3"/>
+  <text x="265" y="130" text-anchor="middle" font-size="12" fill="#1b2a44" font-weight="700">齒輪箱</text>
+  <text x="265" y="144" text-anchor="middle" font-size="9.5" fill="#4a4638">Gearbox</text>
+
+  <path d="M330 100 H376" stroke="#1b2a44" stroke-width="2.5" marker-end="url(#arrowhead1)"/>
+
+  <rect x="380" y="55" width="160" height="90" rx="6" fill="#fff" stroke="#1b2a44" stroke-width="2.5"/>
+  <line x1="405" y1="95" x2="515" y2="95" stroke="#1b2a44" stroke-width="4"/>
+  <circle cx="425" cy="95" r="20" fill="#f6f3ec" stroke="#1b2a44" stroke-width="2.5"/>
+  <circle cx="425" cy="95" r="5" fill="#c08a3e"/>
+  <circle cx="495" cy="95" r="20" fill="#f6f3ec" stroke="#1b2a44" stroke-width="2.5"/>
+  <circle cx="495" cy="95" r="5" fill="#c08a3e"/>
+  <text x="460" y="130" text-anchor="middle" font-size="12" fill="#1b2a44" font-weight="700">輪軸帶動車輪</text>
+  <text x="460" y="144" text-anchor="middle" font-size="9.5" fill="#4a4638">Wheelset / Wheel</text>
+</svg>
+<div class="fig-caption">圖2．牽引動力傳動路徑示意圖：馬達旋轉動力經齒輪箱減速後，驅動輪軸使車輪轉動</div>
+</div>
 
 <h4>五、台鐵現役車輛型式概覽（觀念參考）</h4>
 <ul>
@@ -1466,13 +1794,215 @@ document.getElementById('guide-vehicle').innerHTML = `
 </ul>
 `;
 
-/* ===================== Calendar ===================== */
+/* ===================== 講義：運輸學概要（第2週 / TOPIC 02） ===================== */
+const guide_transport_0817 = `
+<h4>一、運輸需求的意義與特性</h4>
+<p>運輸需求（Transport Demand）係指在特定時間、特定價格下，使用者願意且能夠消費的運輸服務數量。承接上一主題「需求引申性」的概念，本週進一步討論運輸需求如何被量化分析，以及供給面的成本結構如何與需求互動，形成市場均衡。</p>
+
+<h4>二、影響運輸需求的主要因素</h4>
+<ul>
+<li><b>票價（Fare）：</b>票價上升，需求量通常下降，兩者呈反向關係，符合一般需求法則。</li>
+<li><b>所得水準：</b>所得提高，人們對品質較佳、速度較快的運輸方式（如高鐵、航空）需求增加。</li>
+<li><b>旅行時間與可靠度：</b>旅行時間越短、準點率越高，該運具之相對吸引力越大。</li>
+<li><b>替代運具的價格與服務水準：</b>其他運具（如公路客運、私人汽車）票價或服務改變，會透過替代效果影響鐵路需求。</li>
+<li><b>目的地吸引力與社經活動分布：</b>就業機會、觀光資源、學校分布等土地使用型態，直接牽動運輸需求的產生地點與規模。</li>
+</ul>
+
+<h4>三、需求彈性（Elasticity of Demand）</h4>
+<ul>
+<li><b>價格彈性：</b>需求變動百分比除以價格變動百分比。通勤運輸屬於「生活必需」性質，價格彈性通常較小（缺乏彈性）；旅遊、休閒運輸則彈性較大（對價格較敏感）。</li>
+<li><b>所得彈性：</b>衡量所得變動對需求的影響；一般而言，高鐵、航空等較高品質運具的所得彈性為正且較大，屬「正常財」甚至「奢侈財」性質。</li>
+<li><b>交叉彈性：</b>衡量某運具價格變動，對另一運具需求量的影響；若交叉彈性為正，兩運具互為替代關係（如公路客運漲價，鐵路需求上升）。</li>
+</ul>
+<div class="memo"><b>記憶提醒：</b>通勤族群「不得不搭」，彈性小；觀光客「可搭可不搭」，彈性大——用「必要性 vs. 可選擇性」來判斷彈性大小，是解題的關鍵直覺。</div>
+
+<h4>四、運輸供給與成本結構</h4>
+<ul>
+<li><b>固定成本（Fixed Cost）：</b>不隨營運量變動之成本，如軌道、車站、機車車輛之購置與折舊，鐵路系統固定成本占比極高。</li>
+<li><b>變動成本（Variable Cost）：</b>隨營運量變動之成本，如能源消耗、人員加班費、維修保養等。</li>
+<li><b>邊際成本（Marginal Cost）：</b>每多服務一位旅客所增加的成本；由於鐵路固定成本高、邊際成本相對低，故具有「規模經濟」特性，載客量越大，平均成本越低。</li>
+</ul>
+
+<h4>五、規模經濟與網路經濟</h4>
+<ul>
+<li><b>規模經濟（Economies of Scale）：</b>因固定成本分攤到更多產出上，使平均成本隨產量增加而遞減，鐵路、電信等資本密集產業普遍具備此特性。</li>
+<li><b>網路經濟（Network Economy）：</b>路網涵蓋範圍越廣、路線間銜接越完善，整體系統對使用者的吸引力與效用越高，此為捷運、鐵路路網規劃的重要考量。</li>
+</ul>
+
+<h4>六、運輸市場的價格訂定原則</h4>
+<table class="compare">
+<tr><th>訂價原則</th><th>概念</th></tr>
+<tr><td>邊際成本訂價</td><td>票價等於服務最後一位旅客的邊際成本，理論上最具效率，但可能無法回收固定成本</td></tr>
+<tr><td>平均成本訂價</td><td>票價涵蓋平均總成本（含固定成本分攤），確保財務自足，為多數大眾運輸業者採行方式</td></tr>
+<tr><td>尖離峰差別訂價</td><td>利用運輸服務無法儲存的特性，尖峰時段收取較高票價、離峰時段給予優惠，藉此平衡運能供需</td></tr>
+</table>
+
+<h4>七、常見考點提醒</h4>
+<table class="compare">
+<tr><th>易混淆概念</th><th>區別重點</th></tr>
+<tr><td>價格彈性 vs. 所得彈性</td><td>前者衡量「票價變動」的影響；後者衡量「所得變動」的影響，考題常以情境描述讓考生自行判斷是哪一種彈性</td></tr>
+<tr><td>固定成本 vs. 變動成本</td><td>判斷關鍵在於「是否隨營運量／載客量而變動」，軌道建設屬固定成本、燃料電力屬變動成本</td></tr>
+<tr><td>規模經濟 vs. 網路經濟</td><td>規模經濟談「產量增加使平均成本下降」；網路經濟談「路網涵蓋越廣，整體效用越高」，兩者常被誤用混淆</td></tr>
+</table>
+`;
+
+/* ===================== 講義：動力車與車輛構造（第2週 / TOPIC 02） ===================== */
+const guide_vehicle_0817 = `
+<h4>一、牽引力的基本概念</h4>
+<p>牽引力（Tractive Effort）係指機車或動力車輛驅動車輪所產生、用以克服運行阻力並使列車加速前進的作用力。牽引力的大小取決於動力系統（引擎或牽引馬達）所能輸出的功率，以及該功率能否有效轉換為車輪與鋼軌間的實際推進力。</p>
+
+<h4>二、黏著力與黏著係數</h4>
+<ul>
+<li><b>黏著力（Adhesion）：</b>車輪與鋼軌接觸面之間，靠摩擦所能傳遞的最大牽引力或制動力。若牽引力超過黏著力所能提供的上限，車輪將發生空轉打滑，動力無法有效傳遞。</li>
+<li><b>黏著係數（Coefficient of Adhesion）：</b>黏著力與車輪垂直荷重之比值，受軌面狀況（乾燥、潮濕、結冰、落葉）影響甚鉅，濕滑軌面之黏著係數明顯降低，是雨天、落葉季節列車性能下降的主因。</li>
+<li><b>提升黏著力的方法：</b>如增加動軸軸重、於輪軌間灑砂增加摩擦力（撒砂裝置）、採用多軸動力分散配置以提高整體可用黏著力。</li>
+</ul>
+<div class="memo"><b>記憶提醒：</b>牽引力是「引擎想輸出多少力」，黏著力是「輪軌之間實際能傳遞多少力」，兩者之中較小者才是列車實際能發揮的極限，此邏輯常是計算與概念題的出題核心。</div>
+
+<div class="fig-wrap">
+<svg viewBox="0 0 640 340" xmlns="http://www.w3.org/2000/svg" style="font-family:'Noto Sans TC',sans-serif;">
+  <line x1="60" y1="40" x2="60" y2="320" stroke="#1b2a44" stroke-width="2"/>
+  <line x1="60" y1="320" x2="600" y2="320" stroke="#1b2a44" stroke-width="2"/>
+
+  <line x1="60" y1="226.7" x2="600" y2="226.7" stroke="#d8d0bd" stroke-width="1"/>
+  <line x1="60" y1="133.3" x2="600" y2="133.3" stroke="#d8d0bd" stroke-width="1"/>
+
+  <text x="55" y="324" text-anchor="end" font-size="10.5" fill="#4a4638">0</text>
+  <text x="55" y="230" text-anchor="end" font-size="10.5" fill="#4a4638">100</text>
+  <text x="55" y="137" text-anchor="end" font-size="10.5" fill="#4a4638">200</text>
+  <text x="55" y="45" text-anchor="end" font-size="10.5" fill="#4a4638">300</text>
+  <text x="24" y="180" text-anchor="middle" font-size="11" fill="#1b2a44" transform="rotate(-90 24 180)">牽引力 (kN)</text>
+
+  <text x="60" y="335" text-anchor="middle" font-size="10.5" fill="#4a4638">0</text>
+  <text x="240" y="335" text-anchor="middle" font-size="10.5" fill="#4a4638">40</text>
+  <text x="420" y="335" text-anchor="middle" font-size="10.5" fill="#4a4638">80</text>
+  <text x="600" y="335" text-anchor="middle" font-size="10.5" fill="#4a4638">120</text>
+  <text x="330" y="356" text-anchor="middle" font-size="11" fill="#1b2a44">速度 (km/h)</text>
+
+  <polyline points="60,59 240,59 285,111 330,146 375,171 420,189 465,204 510,216 555,225 600,233"
+    fill="none" stroke="#c08a3e" stroke-width="3.5"/>
+  <polyline points="60,152 240,152 285,186 330,208 375,224 420,236 465,245 510,253 555,259 600,264"
+    fill="none" stroke="#b33a3a" stroke-width="3" stroke-dasharray="7,5"/>
+
+  <text x="130" y="50" font-size="10.5" fill="#4a4638">定扭矩區（受黏著力限制）</text>
+  <text x="440" y="175" font-size="10.5" fill="#4a4638">定功率區（F ∝ 1/v）</text>
+</svg>
+<div class="fig-legend">
+  <span><i class="ln" style="border-color:#c08a3e;"></i>乾燥軌面（黏著係數較高）</span>
+  <span><i class="ln" style="border-color:#b33a3a;border-top-style:dashed;"></i>潮濕軌面（黏著係數較低）</span>
+</div>
+<div class="fig-caption">圖3．牽引力－速度特性曲線示意圖（低速定扭矩區受黏著力限制，高速轉為定功率區）；曲線形狀為概念示意，實際數值依車型而異</div>
+</div>
+
+<h4>三、列車的運行阻力</h4>
+<ul>
+<li><b>基本阻力：</b>包含車輪與軸承的機械摩擦阻力、空氣阻力等，速度越高、空氣阻力占比越大（與速度平方大致成正比）。</li>
+<li><b>坡度阻力：</b>列車上坡時，因重力分量產生額外阻力；下坡時則反向成為助力，故坡度是路線設計與牽引動力配置的重要考量。</li>
+<li><b>曲線阻力：</b>列車通過曲線路段時，因輪緣與鋼軌側面摩擦、車輪滑動等因素產生額外阻力，曲線半徑越小，阻力越大。</li>
+</ul>
+
+<h4>四、加速度與行車性能</h4>
+<ul>
+<li><b>起動加速度：</b>列車由靜止狀態加速之能力，受牽引力、黏著力及列車總重（含載客量）影響，都會區通勤路線特別重視起動加速度，以縮短站間行車時間。</li>
+<li><b>最高速度：</b>取決於動力系統之額定功率、路線容許速限、車輛動力學穩定性（如車輛搖擺、脫軌風險）等多重因素綜合限制。</li>
+<li><b>減速度（煞車性能）：</b>與加速度同等重要，須確保列車能在安全距離內停車，減速度亦受黏著力限制，濕滑軌面同樣會降低煞車效能。</li>
+</ul>
+
+<div class="fig-wrap">
+<svg viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" style="font-family:'Noto Sans TC',sans-serif;">
+  <line x1="60" y1="40" x2="60" y2="320" stroke="#1b2a44" stroke-width="2"/>
+  <line x1="60" y1="320" x2="600" y2="320" stroke="#1b2a44" stroke-width="2"/>
+
+  <line x1="60" y1="264" x2="600" y2="264" stroke="#d8d0bd" stroke-width="1"/>
+  <line x1="60" y1="208" x2="600" y2="208" stroke="#d8d0bd" stroke-width="1"/>
+  <line x1="60" y1="152" x2="600" y2="152" stroke="#d8d0bd" stroke-width="1"/>
+  <line x1="60" y1="96" x2="600" y2="96" stroke="#d8d0bd" stroke-width="1"/>
+
+  <text x="55" y="324" text-anchor="end" font-size="10.5" fill="#4a4638">0</text>
+  <text x="55" y="268" text-anchor="end" font-size="10.5" fill="#4a4638">20</text>
+  <text x="55" y="212" text-anchor="end" font-size="10.5" fill="#4a4638">40</text>
+  <text x="55" y="156" text-anchor="end" font-size="10.5" fill="#4a4638">60</text>
+  <text x="55" y="100" text-anchor="end" font-size="10.5" fill="#4a4638">80</text>
+  <text x="55" y="45" text-anchor="end" font-size="10.5" fill="#4a4638">100</text>
+  <text x="24" y="180" text-anchor="middle" font-size="11" fill="#1b2a44" transform="rotate(-90 24 180)">速度 (km/h)</text>
+
+  <text x="60" y="335" text-anchor="middle" font-size="10.5" fill="#4a4638">0</text>
+  <text x="150" y="335" text-anchor="middle" font-size="10.5" fill="#4a4638">10</text>
+  <text x="240" y="335" text-anchor="middle" font-size="10.5" fill="#4a4638">20</text>
+  <text x="330" y="335" text-anchor="middle" font-size="10.5" fill="#4a4638">30</text>
+  <text x="420" y="335" text-anchor="middle" font-size="10.5" fill="#4a4638">40</text>
+  <text x="510" y="335" text-anchor="middle" font-size="10.5" fill="#4a4638">50</text>
+  <text x="600" y="335" text-anchor="middle" font-size="10.5" fill="#4a4638">60</text>
+  <text x="330" y="356" text-anchor="middle" font-size="11" fill="#1b2a44">時間 (秒)</text>
+
+  <path d="M60,320 L105,249 L150,197 L195,161 L240,135 L330,102 L420,86 L510,77 L600,73"
+    fill="none" stroke="#c08a3e" stroke-width="3.5" stroke-linejoin="round"/>
+  <path d="M60,320 L105,277 L150,241 L195,213 L240,189 L330,154 L420,130 L510,114 L600,104"
+    fill="none" stroke="#b33a3a" stroke-width="3" stroke-dasharray="7,5" stroke-linejoin="round"/>
+
+  <text x="250" y="115" font-size="10.5" fill="#4a4638">乾燥軌面：加速較快，較早接近最高速</text>
+  <text x="250" y="230" font-size="10.5" fill="#4a4638">潮濕軌面：低速段黏著力受限，加速較慢</text>
+</svg>
+<div class="fig-legend">
+  <span><i class="ln" style="border-color:#c08a3e;"></i>乾燥軌面</span>
+  <span><i class="ln" style="border-color:#b33a3a;border-top-style:dashed;"></i>潮濕軌面</span>
+</div>
+<div class="fig-caption">圖4．起動加速度—速度／時間曲線示意圖：曲線前段斜率（加速度）越大代表起動越快；濕滑軌面因黏著力受限，前段斜率較平緩。數值為概念示意，非實測數據</div>
+</div>
+
+<h4>五、動力集中式與動力分散式之性能比較</h4>
+<table class="compare">
+<tr><th>比較項目</th><th>動力集中式（機車牽引）</th><th>動力分散式（電聯車 EMU）</th></tr>
+<tr><td>加減速性能</td><td>較差，僅機車本身動軸提供牽引與制動</td><td>較佳，多節車廂動軸分散提供牽引力，可用黏著力總量較大</td></tr>
+<tr><td>可靠度</td><td>單一機車故障即影響整列車</td><td>單一動力單元故障，其餘單元仍可分擔運行</td></tr>
+<tr><td>編組彈性</td><td>可依需求更換不同節數之客車廂</td><td>編組彈性相對較低，通常固定編組運行</td></tr>
+<tr><td>適用場合</td><td>長途、高速、彈性編組需求較高之路線</td><td>都會區通勤、站距密集、頻繁停靠之路線</td></tr>
+</table>
+
+<h4>六、常見考點提醒</h4>
+<ul>
+<li>牽引力與黏著力的關係：牽引力受限於黏著力，兩者何者才是「實際可發揮的上限」是常見混淆點。</li>
+<li>影響黏著係數的環境因素（軌面潮濕、落葉、結冰）及其對應的因應措施（撒砂裝置）。</li>
+<li>列車運行阻力的三大來源（基本阻力、坡度阻力、曲線阻力）及其個別成因。</li>
+<li>動力集中式與動力分散式在加減速性能、可靠度、適用場合上的優劣比較，是申論與選擇題皆常見的命題方向。</li>
+</ul>
+`;
+
+const GUIDES = {
+  '2026-08-10': {
+    transport: {no:'TOPIC 01', title:'運輸的本質、特性與功能', html: guide_transport_0810},
+    vehicle:   {no:'TOPIC 01', title:'鐵路車輛基本構造：轉向架、輪軸與緩衝連結裝置', html: guide_vehicle_0810}
+  },
+  '2026-08-17': {
+    transport: {no:'TOPIC 02', title:'運輸需求、彈性與成本結構', html: guide_transport_0817},
+    vehicle:   {no:'TOPIC 02', title:'牽引力、黏著力與加減速性能', html: guide_vehicle_0817}
+  }
+};
+const GUIDE_WEEK_COUNT = 12; // 規劃週數，用於「主題 X / 12週」顯示
+
+function renderGuides(dateKey){
+  const weekKey = weekMondayOf(dateKey);
+  const g = GUIDES[weekKey];
+  if(!g) return; // 該週講義尚未產生時，維持畫面上原有內容
+  document.getElementById('transport-eyebrow').textContent = g.transport.no;
+  document.getElementById('transport-title').textContent = g.transport.title;
+  document.getElementById('guide-transport').innerHTML = g.transport.html;
+  document.getElementById('transport-count').textContent = `${g.transport.no.replace('TOPIC ','主題 ').replace(/^0/,'')} / ${GUIDE_WEEK_COUNT}週`;
+
+  document.getElementById('vehicle-eyebrow').textContent = g.vehicle.no;
+  document.getElementById('vehicle-title').textContent = g.vehicle.title;
+  document.getElementById('guide-vehicle').innerHTML = g.vehicle.html;
+  document.getElementById('vehicle-count').textContent = `${g.vehicle.no.replace('TOPIC ','主題 ').replace(/^0/,'')} / ${GUIDE_WEEK_COUNT}週`;
+}
+
+renderGuides(currentSessionKey);
+
 // 每週一、五為模擬考排定日；此區間會隨每週實際上線內容持續延伸
 const SESSIONS = {
   '2026-08-10': {label:'第 1 次模擬考', available:true},
   '2026-08-14': {label:'第 2 次模擬考', available:true},
-  '2026-08-17': {label:'第 3 次模擬考', available:false},
-  '2026-08-21': {label:'第 4 次模擬考', available:false},
+  '2026-08-17': {label:'第 3 次模擬考', available:true},
+  '2026-08-21': {label:'第 4 次模擬考', available:true},
   '2026-08-24': {label:'第 5 次模擬考', available:false},
   '2026-08-28': {label:'第 6 次模擬考', available:false},
   '2026-08-31': {label:'第 7 次模擬考', available:false},
