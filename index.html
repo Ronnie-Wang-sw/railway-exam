@@ -736,7 +736,7 @@
   </section>
 
   <div class="note-box">
-    <b>使用說明：</b>本題組為依歷屆國家考試（鐵路特考、高普考共同科目）常見題型與命題重點自行編寫之模擬題，並非逐字複製的歷屆試卷原文；憲法與法學緒論條文內容已核對現行規定。若你手邊有實際考古題 PDF，可以上傳給我，我能直接依原題重新整理成互動測驗與詳解。<b>目前已上線 8/10、8/14、8/17、8/21 共四場完整題組</b>，運輸學概要、動力車與車輛構造講義也已更新到第2週主題。行事曆上會標出後續週一、五的排定日期，但這些日期需要你回到對話中請我補新題目與講義後才會由「排定中」變成「已上線」（此頁面本身不會自動生成新內容）。英文測驗與文法例句中的單字都可以點選加入「單字本」分頁，依週次、月份整理，每個單字都能展開查看發音、中英文字義、例句與常見字根字首提示。
+    <b>使用說明：</b>本題組為依歷屆國家考試（鐵路特考、高普考共同科目）常見題型與命題重點自行編寫之模擬題，並非逐字複製的歷屆試卷原文；憲法與法學緒論條文內容已核對現行規定。若你手邊有實際考古題 PDF，可以上傳給我，我能直接依原題重新整理成互動測驗與詳解。<b>目前已上線 8/10、8/14、8/17、8/21 共四場完整題組</b>，國文、英文、法學知識、文法整理每一場都是不同內容；運輸學概要、動力車與車輛構造講義也是每場各有獨立主題（TOPIC 01～04），不會兩場共用同一個主題。行事曆上會標出後續週一、五的排定日期，但這些日期需要你回到對話中請我補新題目與講義後才會由「排定中」變成「已上線」（此頁面本身不會自動生成新內容）。英文測驗與文法例句中的單字都可以點選加入「單字本」分頁，依週次、月份整理，每個單字都能展開查看發音、中英文字義、例句與常見字根字首提示。
   </div>
 
   <footer>鐵路人員升資考試．準備進度 WEEK 01 / 12 · 距 2026年11月考試倒數規劃中</footer>
@@ -1968,22 +1968,240 @@ const guide_vehicle_0817 = `
 </ul>
 `;
 
+/* ===================== 講義：運輸學概要（8/14 場 / TOPIC 02） ===================== */
+const guide_transport_0814 = `
+<h4>一、運輸服務的分類方式</h4>
+<p>承接第1主題「運輸系統五大要素」，本主題進一步討論運輸服務本身可依不同標準分類，這是命題時常見的分類架構考點。</p>
+<ul>
+<li><b>依服務對象分類：</b>客運（載運人員）與貨運（載運物品），兩者在場站設計、時刻表安排、車輛型式上有明顯差異。</li>
+<li><b>依服務範圍分類：</b>市區運輸（如公車、捷運）、都會區運輸（如通勤鐵路）、城際運輸（如高鐵、國道客運）、國際運輸（如航空、遠洋航運）。</li>
+<li><b>依營運方式分類：</b>定期定線（有固定班表與路線，如公車、鐵路）與不定期不定線（如計程車、包船）。</li>
+</ul>
+
+<h4>二、大眾運輸系統的特性</h4>
+<ul>
+<li><b>共乘性：</b>多位使用者共同搭乘同一運具，具規模經濟效益，單位運輸成本隨載客量提高而下降。</li>
+<li><b>定時定線：</b>依固定時刻表、固定路線營運，可預測性高，但彈性相對較低。</li>
+<li><b>公共政策工具性：</b>常被視為達成社會公平（保障弱勢移動權）、抒解交通壅塞、降低污染等政策目標的重要工具，故多受政府補貼或管制。</li>
+</ul>
+
+<h4>三、大眾運輸系統的類型比較</h4>
+<table class="compare">
+<tr><th>類型</th><th>運能</th><th>特性</th></tr>
+<tr><td>市區公車</td><td>低～中</td><td>路網彈性大、建置成本低，但易受道路壅塞影響準點率</td></tr>
+<tr><td>輕軌（LRT）</td><td>中</td><td>路權可為專用或混合，建置成本中等，適合中運量走廊</td></tr>
+<tr><td>捷運（MRT）</td><td>中～高</td><td>專用路權，準點性佳，建置成本高，適合高密度都會區</td></tr>
+<tr><td>通勤／城際鐵路</td><td>高</td><td>長途運能大，站距較長，適合城際或都會區與郊區間聯繫</td></tr>
+</table>
+
+<h4>四、大眾運輸經營型態</h4>
+<ul>
+<li><b>公有公營：</b>由政府部門直接經營，決策受政治監督，惟經營效率與財務彈性可能受限。</li>
+<li><b>公有民營／委外經營：</b>政府持有資產所有權，委託民間公司負責營運，兼顧公共監督與民間效率。</li>
+<li><b>民營：</b>由民間企業自負盈虧經營，效率誘因較強，惟偏遠或虧損路線可能面臨減班或停駛風險，須輔以補貼機制維持普及服務。</li>
+<li><b>BOT／BOO 等特許經營模式：</b>由政府提供特許權，民間投資興建並營運一定年限（BOT，Build-Operate-Transfer）或永久持有（BOO，Build-Own-Operate），常見於高速公路、大型場站開發。</li>
+</ul>
+<div class="memo"><b>記憶提醒：</b>BOT 期滿要「Transfer（移轉）」給政府，BOO 則「Own（持有）」不移轉，兩者最大差別就在期滿後所有權歸屬，是選擇題常考的細節。</div>
+
+<h4>五、常見考點提醒</h4>
+<ul>
+<li>大眾運輸的「共乘性」與「定時定線」特性，常與上一主題所學的「無法儲存性」「供給僵固性」合併出題，須注意彼此關聯但概念不同。</li>
+<li>BOT、BOO、公有民營等經營型態的定義與差異，是實務類考題的高頻考點。</li>
+<li>各類大眾運輸系統（公車、輕軌、捷運、鐵路）的運能與適用場合比較，常以表格式選擇題出現。</li>
+</ul>
+`;
+
+/* ===================== 講義：動力車與車輛構造（8/14 場 / TOPIC 02） ===================== */
+const guide_vehicle_0814 = `
+<h4>一、空氣煞車系統的基本原理</h4>
+<p>空氣煞車（Air Brake）是鐵路車輛最主要的煞車型式，利用壓縮空氣作為傳遞煞車力的媒介，具備「失效即安全」（fail-safe）的設計精神：一旦管路洩壓（如車輛意外脫鉤），系統會自動觸發煞車，而非失去煞車能力。</p>
+
+<div class="fig-wrap">
+<svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg" style="font-family:'Noto Sans TC',sans-serif;">
+  <defs>
+    <marker id="arrowhead2" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+      <polygon points="0 0, 10 4, 0 8" fill="#1b2a44"/>
+    </marker>
+  </defs>
+  <rect x="15" y="70" width="100" height="60" rx="5" fill="#fff" stroke="#1b2a44" stroke-width="2.5"/>
+  <text x="65" y="96" text-anchor="middle" font-size="10.5" fill="#1b2a44" font-weight="700">主風泵</text>
+  <text x="65" y="110" text-anchor="middle" font-size="8.5" fill="#4a4638">Compressor</text>
+
+  <path d="M115 100 H155" stroke="#1b2a44" stroke-width="2.2" marker-end="url(#arrowhead2)"/>
+
+  <rect x="158" y="70" width="100" height="60" rx="5" fill="#fff" stroke="#1b2a44" stroke-width="2.5"/>
+  <text x="208" y="96" text-anchor="middle" font-size="10.5" fill="#1b2a44" font-weight="700">總風缸</text>
+  <text x="208" y="110" text-anchor="middle" font-size="8.5" fill="#4a4638">Main Reservoir</text>
+
+  <path d="M208 130 V150" stroke="#c08a3e" stroke-width="3"/>
+  <path d="M65 130 V190 H500" stroke="#c08a3e" stroke-width="3.5"/>
+  <text x="300" y="182" text-anchor="middle" font-size="10" fill="#c08a3e" font-weight="700">煞車管 Brake Pipe（貫穿全列車）</text>
+
+  <rect x="300" y="70" width="100" height="60" rx="5" fill="#fff" stroke="#1b2a44" stroke-width="2.5"/>
+  <text x="350" y="96" text-anchor="middle" font-size="10.5" fill="#1b2a44" font-weight="700">三動閥</text>
+  <text x="350" y="110" text-anchor="middle" font-size="8.5" fill="#4a4638">Triple Valve</text>
+  <path d="M350 130 V150 M350 150 L350 165" stroke="#1b2a44" stroke-width="2.2" marker-end="url(#arrowhead2)"/>
+
+  <rect x="445" y="70" width="130" height="60" rx="5" fill="#fff" stroke="#1b2a44" stroke-width="2.5"/>
+  <text x="510" y="90" text-anchor="middle" font-size="10.5" fill="#1b2a44" font-weight="700">煞車缸／閘瓦</text>
+  <text x="510" y="104" text-anchor="middle" font-size="8.5" fill="#4a4638">Brake Cylinder</text>
+  <text x="510" y="117" text-anchor="middle" font-size="8.5" fill="#4a4638">/ Brake Shoe</text>
+  <path d="M350 165 H510 V130" stroke="#1b2a44" stroke-width="2.2" marker-end="url(#arrowhead2)"/>
+</svg>
+<div class="fig-caption">圖5．空氣煞車系統簡化示意圖：煞車管貫穿全列車，管路洩壓會觸發三動閥動作，推動煞車缸夾緊閘瓦，此即「失效即安全」設計的關鍵</div>
+</div>
+
+<h4>二、基礎煞車裝置的型式</h4>
+<ul>
+<li><b>踏面煞車（Tread Brake）：</b>煞車閘瓦直接夾壓車輪踏面產生摩擦力，構造簡單，但長期使用會磨耗車輪踏面，早期客貨車普遍採用。</li>
+<li><b>碟式煞車（Disc Brake）：</b>另於車軸或車輪上加裝煞車碟盤，以煞車來令片夾壓碟盤產生摩擦力，不磨耗車輪踏面本身，煞車效能較穩定，為現代高速列車與電聯車主流配置。</li>
+</ul>
+
+<h4>三、電氣煞車與再生煞車</h4>
+<ul>
+<li><b>電氣煞車：</b>電力機車或電聯車利用牽引馬達反轉作為發電機，將列車動能轉換為電能消耗於電阻（發電煞車）或回饋電網（再生煞車），可輔助機械煞車、減少閘瓦磨耗。</li>
+<li><b>再生煞車的節能效益：</b>回生電能可回饋至電車線供其他列車使用，於都會區密集發車路線（起停頻繁）節能效果尤其顯著。</li>
+</ul>
+
+<h4>四、行車保安裝置</h4>
+<ul>
+<li><b>列車自動防護系統（ATP, Automatic Train Protection）：</b>持續監控列車速度與號誌狀態，若駕駛未依規定減速或停車，系統會自動介入施加煞車，防止冒進號誌或超速。</li>
+<li><b>列車自動控制（ATC, Automatic Train Control）：</b>在 ATP 的基礎上，進一步自動調整列車速度以符合限速要求，減少人為操作誤差。</li>
+<li><b>死人開關（Dead Man's Switch）：</b>駕駛須持續施力於控制手把或踏板，若駕駛失去反應（如昏迷），裝置會自動觸發緊急煞車。</li>
+</ul>
+
+<h4>五、常見考點提醒</h4>
+<ul>
+<li>空氣煞車「管路洩壓即觸發煞車」的失效即安全邏輯，是理解而非死背的重點，常以情境題出現（如車廂意外脫鉤時的煞車反應）。</li>
+<li>踏面煞車與碟式煞車的差異：碟式煞車不磨耗車輪踏面本身，是兩者比較的核心區別。</li>
+<li>電氣煞車／再生煞車與機械（空氣）煞車並非互斥，實務上多為輔助搭配使用。</li>
+<li>ATP 與 ATC 的功能差異（防護介入 vs 主動調速）為常見混淆考點。</li>
+</ul>
+`;
+
+/* ===================== 講義：運輸學概要（8/21 場 / TOPIC 04） ===================== */
+const guide_transport_0821 = `
+<h4>一、運輸規劃的意義與層級</h4>
+<p>運輸規劃（Transportation Planning）係指針對未來運輸系統的發展，透過系統性程序進行目標設定、現況分析、方案研擬與評估，以有效配置運輸資源。依規劃範圍與時間長短，可概分為長期（路網架構、土地使用）、中期（路線與場站規劃）、短期（號誌調整、行車時刻表）三種層級。</p>
+
+<h4>二、運輸規劃的基本程序</h4>
+<ul>
+<li><b>目標設定：</b>確立規劃欲達成之政策目標，如提升可及性、紓解壅塞、降低污染。</li>
+<li><b>現況調查與資料蒐集：</b>包含人口、土地使用、既有運輸系統使用狀況等基礎資料。</li>
+<li><b>需求預測：</b>推估未來運輸需求量與分布型態，作為後續方案規劃依據。</li>
+<li><b>方案研擬與評估：</b>研擬多種可行方案，依成本效益、環境影響等準則進行比較評選。</li>
+<li><b>執行與後續監測：</b>方案付諸實施後，持續監測成效並適時調整。</li>
+</ul>
+
+<h4>三、四階段運輸需求預測法</h4>
+<p>四階段運輸需求預測法（Four-Step Model）為運輸規劃領域最經典的分析架構，依序為：</p>
+<ul>
+<li><b>旅次發生（Trip Generation）：</b>估算各分區產生與吸引的旅次總量，通常與人口、就業機會等社經活動有關。</li>
+<li><b>旅次分布（Trip Distribution）：</b>將各分區產生的旅次，分配到各目的分區，形成起訖對（OD, Origin-Destination）矩陣。</li>
+<li><b>運具選擇（Modal Split）：</b>估算旅次選擇各種運具（私人運具、大眾運輸等）的比例。</li>
+<li><b>路網分派（Trip Assignment）：</b>將各運具之旅次分派至實際路網上的各條路徑，估算各路段的使用量。</li>
+</ul>
+<div class="memo"><b>記憶口訣：</b>「發、分、選、派」四字依序對應旅次發生、旅次分布、運具選擇、路網分派，是選擇題常考的固定順序，順序不可顛倒。</div>
+
+<h4>四、路網型態的分類</h4>
+<table class="compare">
+<tr><th>路網型態</th><th>特性</th></tr>
+<tr><td>放射狀（Radial）</td><td>由市中心向外放射延伸，便於聯繫市中心與郊區，但郊區間橫向聯繫不便</td></tr>
+<tr><td>格狀（Grid）</td><td>路網呈棋盤式規則排列，路徑選擇彈性大，常見於平原型都市規劃</td></tr>
+<tr><td>環狀＋放射狀（Ring-Radial）</td><td>結合放射狀路線與環狀路線，兼顧市中心聯繫與郊區間橫向移動需求，為許多大型都會區採用之路網型態</td></tr>
+</table>
+
+<h4>五、運輸走廊與場站區位選擇</h4>
+<ul>
+<li><b>運輸走廊（Transportation Corridor）：</b>指旅次需求集中、具有明顯方向性的帶狀區域，通常是規劃新建運輸建設優先評估的範圍。</li>
+<li><b>場站區位選擇原則：</b>應考量可及性（周邊路網銜接）、服務人口涵蓋範圍、土地取得可行性、與既有路網轉乘便利性等因素綜合評估。</li>
+</ul>
+
+<h4>六、常見考點提醒</h4>
+<ul>
+<li>四階段運輸需求預測法的四個步驟順序與各步驟定義，是本主題的核心考點，務必熟記「發、分、選、派」。</li>
+<li>路網型態（放射狀、格狀、環狀＋放射狀）的特性與優缺點比較。</li>
+<li>運輸規劃程序（目標設定→現況調查→需求預測→方案評估→執行監測）的邏輯順序。</li>
+</ul>
+`;
+
+/* ===================== 講義：動力車與車輛構造（8/21 場 / TOPIC 04） ===================== */
+const guide_vehicle_0821 = `
+<h4>一、車體材質的演進</h4>
+<ul>
+<li><b>普通碳鋼：</b>早期客貨車普遍採用，強度足夠但密度大、重量重，且較易鏽蝕。</li>
+<li><b>不鏽鋼：</b>耐蝕性佳、強度良好，重量較碳鋼略輕，維護成本相對較低，現行許多客車與電聯車車體採用。</li>
+<li><b>鋁合金：</b>密度僅約鋼材三分之一，具備優異的輕量化效益，惟材料與製造成本較高，常見於高速列車與新型電聯車車體。</li>
+</ul>
+
+<h4>二、車體輕量化的效益</h4>
+<ul>
+<li><b>降低能源消耗：</b>車輛自重減少，加減速所需能量隨之降低，有助於節能。</li>
+<li><b>提升加減速性能：</b>在相同牽引力／黏著力條件下，車重越輕，可達成的加速度越高，有利於縮短站間行車時間。</li>
+<li><b>降低軸重與軌道負荷：</b>車重減輕可降低單一車軸傳遞至軌道的重量（軸重），減少對軌道結構與路基的損耗，延長維護週期。</li>
+</ul>
+
+<h4>三、車輛限界與建築限界</h4>
+<div class="fig-wrap">
+<svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg" style="font-family:'Noto Sans TC',sans-serif;">
+  <path d="M40 240 L40 90 Q40 30 200 30 Q360 30 360 90 L360 240 Z" fill="none" stroke="#1b2a44" stroke-width="2.5" stroke-dasharray="8,5"/>
+  <text x="200" y="20" text-anchor="middle" font-size="11" fill="#1b2a44" font-weight="700">建築限界 Structure Gauge</text>
+
+  <rect x="90" y="80" width="220" height="150" rx="18" fill="#fdf6e8" stroke="#c08a3e" stroke-width="3"/>
+  <text x="200" y="162" text-anchor="middle" font-size="11.5" fill="#c08a3e" font-weight="700">車輛限界</text>
+  <text x="200" y="178" text-anchor="middle" font-size="9.5" fill="#c08a3e">Rolling Stock Gauge</text>
+
+  <line x1="360" y1="150" x2="330" y2="150" stroke="#b33a3a" stroke-width="2"/>
+  <text x="345" y="115" text-anchor="middle" font-size="9.5" fill="#b33a3a" transform="rotate(-90 345 130)">餘裕淨空</text>
+
+  <line x1="40" y1="240" x2="360" y2="240" stroke="#1b2a44" stroke-width="3"/>
+  <text x="200" y="255" text-anchor="middle" font-size="10" fill="#4a4638">軌道 Rail Level</text>
+</svg>
+<div class="fig-caption">圖6．車輛限界與建築限界關係示意圖（橫斷面）：車輛實際尺寸須完全落在車輛限界內，且與建築限界之間保留必要的餘裕淨空，確保列車通過隧道、月台、號誌等周邊設施時不發生碰觸</div>
+</div>
+<ul>
+<li><b>車輛限界（Rolling Stock Gauge）：</b>規範鐵路車輛外形尺寸不得超出的最大輪廓範圍，確保車輛本身尺寸標準化。</li>
+<li><b>建築限界（Structure Gauge）：</b>規範沿線橋樑、隧道、月台、號誌等固定設施，不得侵入的最小淨空範圍，須大於車輛限界，兩者間須保留適當餘裕，以容納車輛行駛時的搖擺與公差。</li>
+</ul>
+
+<h4>四、車輛限界相關概念延伸</h4>
+<ul>
+<li><b>公差與動態包絡線：</b>車輛行駛中因懸吊系統作用、曲線離心力等因素會產生搖擺位移，故實際規劃須考慮動態包絡線（車輛運動時可能占據的最大空間），而非僅靜態尺寸。</li>
+<li><b>不同路線限界差異：</b>不同國家、不同鐵路系統之限界標準不同，跨系統聯運車輛須特別留意限界相容性問題。</li>
+</ul>
+
+<h4>五、常見考點提醒</h4>
+<ul>
+<li>車輛限界與建築限界的大小關係（建築限界須大於車輛限界，並保留餘裕），是選擇題常考的基本邏輯，勿混淆兩者何者為大。</li>
+<li>車體輕量化的三大效益（節能、提升加減速性能、降低軸重對軌道之損耗）常以情境題型出現。</li>
+<li>不鏽鋼與鋁合金車體的優缺點比較（重量、成本、耐蝕性）。</li>
+</ul>
+`;
+
 const GUIDES = {
   '2026-08-10': {
     transport: {no:'TOPIC 01', title:'運輸的本質、特性與功能', html: guide_transport_0810},
     vehicle:   {no:'TOPIC 01', title:'鐵路車輛基本構造：轉向架、輪軸與緩衝連結裝置', html: guide_vehicle_0810}
   },
+  '2026-08-14': {
+    transport: {no:'TOPIC 02', title:'運輸系統分類與大眾運輸經營型態', html: guide_transport_0814},
+    vehicle:   {no:'TOPIC 02', title:'空氣煞車系統與行車安全裝置', html: guide_vehicle_0814}
+  },
   '2026-08-17': {
-    transport: {no:'TOPIC 02', title:'運輸需求、彈性與成本結構', html: guide_transport_0817},
-    vehicle:   {no:'TOPIC 02', title:'牽引力、黏著力與加減速性能', html: guide_vehicle_0817}
+    transport: {no:'TOPIC 03', title:'運輸需求、彈性與成本結構', html: guide_transport_0817},
+    vehicle:   {no:'TOPIC 03', title:'牽引力、黏著力與加減速性能', html: guide_vehicle_0817}
+  },
+  '2026-08-21': {
+    transport: {no:'TOPIC 04', title:'運輸規劃基本概念與路網型態', html: guide_transport_0821},
+    vehicle:   {no:'TOPIC 04', title:'車體材質、輕量化與車輛限界', html: guide_vehicle_0821}
   }
 };
 const GUIDE_WEEK_COUNT = 12; // 規劃週數，用於「主題 X / 12週」顯示
 
 function renderGuides(dateKey){
-  const weekKey = weekMondayOf(dateKey);
-  const g = GUIDES[weekKey];
-  if(!g) return; // 該週講義尚未產生時，維持畫面上原有內容
+  // 每一場（每個日期）都有各自獨立的講義主題，不與同一週的另一場共用
+  const g = GUIDES[dateKey];
+  if(!g) return; // 該場講義尚未產生時，維持畫面上原有內容
   document.getElementById('transport-eyebrow').textContent = g.transport.no;
   document.getElementById('transport-title').textContent = g.transport.title;
   document.getElementById('guide-transport').innerHTML = g.transport.html;
