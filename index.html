@@ -564,6 +564,30 @@
 
   /* ---------- Grammar section ---------- */
   .grammar-section{margin-top:34px;}
+
+  .word-summary{margin-top:28px;}
+  .word-summary-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    border-bottom:2px solid var(--navy);
+    padding-bottom:8px;
+    margin-bottom:14px;
+  }
+  .word-summary-head h2{font-size:18px;margin:0;color:var(--navy);}
+  .word-summary-head .count{font-family:'Roboto Mono',monospace;font-size:12px;color:var(--brass);}
+  .ws-empty{color:#948d7c;font-size:13.5px;}
+  .ws-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-left:3px solid var(--navy);
+    border-radius:3px;
+    padding:12px 16px;
+    margin-bottom:10px;
+  }
+  .ws-card .ws-word-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:4px;}
+  .ws-card .ws-word{font-family:'Roboto Mono',monospace;font-weight:700;color:var(--navy);font-size:16px;}
+  .ws-card .ws-loading{color:#948d7c;font-size:12.5px;}
   .gram-card{
     background:#fff;
     border:1px solid var(--line);
@@ -685,6 +709,8 @@
       <button class="btn" onclick="gradeQuiz('english')">交卷並看詳解</button>
       <div class="score-flip" id="score-english"><span>得分</span><span class="digit">--/30</span></div>
     </div>
+
+    <div id="english-word-summary"></div>
 
     <div class="grammar-section">
       <div class="section-head"><h2>本日文法整理</h2><span class="count">10 個常用文法</span></div>
@@ -1285,6 +1311,7 @@ function loadSession(dateKey){
   ['chinese','english','law'].forEach(k=>{
     document.getElementById('score-'+k).style.display = 'none';
   });
+  document.getElementById('english-word-summary').innerHTML = '';
 }
 
 function gradeQuiz(key){
@@ -1307,6 +1334,61 @@ function gradeQuiz(key){
   scoreBox.style.display = 'flex';
   scoreBox.querySelector('.digit').textContent = score + '/' + data.length;
   scoreBox.scrollIntoView({behavior:'smooth', block:'center'});
+  if(key === 'english') renderWordSummaryPanel();
+}
+
+async function renderWordSummaryPanel(){
+  const wrap = document.getElementById('english-word-summary');
+  const list = await vocabLoad();
+  const sessionWords = list.filter(v => v.sessionDate === currentSessionKey)
+                            .sort((a,b) => (a.order ?? 0) - (b.order ?? 0));
+
+  if(sessionWords.length === 0){
+    wrap.innerHTML = `
+      <div class="word-summary">
+        <div class="word-summary-head"><h2>本次新增單字</h2><span class="count">0 個</span></div>
+        <p class="ws-empty">這次交卷前沒有點選任何生字。作答時點選看不懂的單字，交卷後這裡會自動列出翻譯、例句與字根提示。</p>
+      </div>`;
+    return;
+  }
+
+  wrap.innerHTML = `
+    <div class="word-summary">
+      <div class="word-summary-head"><h2>本次新增單字</h2><span class="count">${sessionWords.length} 個 · 查詢中…</span></div>
+      ${sessionWords.map(v => `
+        <div class="ws-card" id="ws-${v.id}">
+          <div class="ws-word-row">
+            <span class="ws-word">${v.word}</span>
+            <span class="ws-loading">查詢中…</span>
+          </div>
+        </div>`).join('')}
+    </div>`;
+
+  // 同時平行查詢每個單字，比逐一等待快很多
+  await Promise.all(sessionWords.map(async v=>{
+    const {phonetic, example, definition, translation} = await fetchWordInfo(v.word);
+    const roots = findRootHint(v.word);
+    const rootsHtml = roots.length
+      ? roots.map(r=>`<b>${r.frag}</b>：${r.mean}`).join('；')
+      : '未收錄於常見字根對照表';
+    const card = document.getElementById('ws-'+v.id);
+    if(!card) return;
+    card.innerHTML = `
+      <div class="ws-word-row">
+        <span class="ws-word">${v.word}</span>
+        ${phonetic ? `<span class="phonetic">${phonetic}</span>` : ''}
+        <button class="speak-btn" onclick="speakWord('${v.word.replace(/'/g,"\\'")}')">🔊 發音</button>
+      </div>
+      ${translation ? `<div class="nb-translation"><b>中文翻譯：</b>${translation}</div>` : `<div class="nb-translation" style="color:#948d7c;">查無自動翻譯</div>`}
+      ${definition ? `<div class="nb-def"><b>英文字義：</b>${definition}</div>` : ''}
+      ${example ? `<div class="nb-example"><b>例句：</b>${example}</div>` : ''}
+      <div class="nb-sentence"><b>題目例句：</b>${v.sentence}</div>
+      <div class="nb-roots"><b>字根／字首／字尾：</b>${rootsHtml}</div>
+    `;
+  }));
+
+  const countEl = wrap.querySelector('.word-summary-head .count');
+  if(countEl) countEl.textContent = `${sessionWords.length} 個`;
 }
 
 renderQuiz('chinese');
@@ -1344,6 +1426,20 @@ async function vocabSave(arr){
   vocabMemoryFallback = arr;
 }
 
+// 序列化單字本的「讀取→修改→寫入」流程，避免快速連續點選多個單字時，
+// 後一次寫入以「過期的舊資料」蓋掉前一次剛加入的單字（讀寫競速問題）。
+let vocabWriteQueue = Promise.resolve();
+function vocabMutate(mutatorFn){
+  const result = vocabWriteQueue.then(async ()=>{
+    const list = await vocabLoad();
+    const outcome = mutatorFn(list);
+    await vocabSave(list);
+    return outcome;
+  });
+  vocabWriteQueue = result.catch(()=>{}); // 即使單次操作失敗，仍讓後續操作能繼續排隊執行
+  return result;
+}
+
 function weekMondayOf(dateKey){
   const d = new Date(dateKey+'T00:00:00');
   const day = d.getDay(); // 0=Sun...1=Mon...5=Fri
@@ -1369,25 +1465,31 @@ async function onWordClick(evt, el){
   let sentence = '';
   if(card){
     const qtextEl = card.querySelector('.qtext') || card.querySelector('.gram-example .en');
-    sentence = qtextEl ? qtextEl.innerText : '';
+    sentence = qtextEl ? (qtextEl.innerText || qtextEl.textContent || '') : '';
   }
   // 記錄此單字在題目／文法例句中出現的順序，讓單字本能依「題目順序」排序
   const order = Array.from(document.querySelectorAll('#quiz-english .word, #grammar-list .word')).indexOf(el);
-  const list = await vocabLoad();
-  if(list.some(v=>v.word.toLowerCase() === word.toLowerCase())){
+
+  const outcome = await vocabMutate(list=>{
+    if(list.some(v=>v.word.toLowerCase() === word.toLowerCase())){
+      return 'duplicate';
+    }
+    list.push({
+      id: Date.now()+'-'+word,
+      word,
+      sentence,
+      sessionDate: currentSessionKey,
+      week: weekLabelOf(currentSessionKey),
+      month: monthLabelOf(currentSessionKey),
+      order: order
+    });
+    return 'added';
+  });
+
+  if(outcome === 'duplicate'){
     showToast(`「${word}」已在單字本中`);
     return;
   }
-  list.push({
-    id: Date.now()+'-'+word,
-    word,
-    sentence,
-    sessionDate: currentSessionKey,
-    week: weekLabelOf(currentSessionKey),
-    month: monthLabelOf(currentSessionKey),
-    order: order
-  });
-  await vocabSave(list);
   el.classList.add('added');
   showToast(`已加入單字本：${word}`);
   refreshVocabBadge();
@@ -1473,9 +1575,10 @@ async function renderNotebook(){
 }
 
 async function deleteWord(id){
-  const list = await vocabLoad();
-  const next = list.filter(v=>v.id !== id);
-  await vocabSave(next);
+  await vocabMutate(list=>{
+    const idx = list.findIndex(v=>v.id === id);
+    if(idx !== -1) list.splice(idx,1);
+  });
   renderNotebook();
   refreshVocabBadge();
 }
@@ -1514,23 +1617,14 @@ function findRootHint(word){
   return hits.slice(0,3);
 }
 
-async function studyWord(id, word){
-  const box = document.getElementById('study-'+id);
-  if(box.dataset.loaded === '1'){
-    box.style.display = box.style.display === 'none' ? 'block' : 'none';
-    return;
-  }
-  box.style.display = 'block';
-  box.innerHTML = `<p class="nb-loading">查詢中…</p>`;
-  let phonetic = '', audioUrl = '', example = '', definition = '', translation = '';
+async function fetchWordInfo(word){
+  let phonetic = '', example = '', definition = '', translation = '';
   try{
     const res = await fetch('https://api.dictionaryapi.dev/api/v2/entries/en/' + encodeURIComponent(word));
     if(res.ok){
       const json = await res.json();
       const entry = json[0];
       phonetic = entry.phonetic || (entry.phonetics.find(p=>p.text)||{}).text || '';
-      const withAudio = entry.phonetics.find(p=>p.audio);
-      audioUrl = withAudio ? withAudio.audio : '';
       const meaning = entry.meanings[0];
       if(meaning){
         definition = meaning.partOfSpeech + '｜' + meaning.definitions[0].definition;
@@ -1550,6 +1644,19 @@ async function studyWord(id, word){
       }
     }
   }catch(e){ /* 翻譯服務無法使用時，僅顯示英文字義 */ }
+
+  return {phonetic, example, definition, translation};
+}
+
+async function studyWord(id, word){
+  const box = document.getElementById('study-'+id);
+  if(box.dataset.loaded === '1'){
+    box.style.display = box.style.display === 'none' ? 'block' : 'none';
+    return;
+  }
+  box.style.display = 'block';
+  box.innerHTML = `<p class="nb-loading">查詢中…</p>`;
+  const {phonetic, example, definition, translation} = await fetchWordInfo(word);
 
   const roots = findRootHint(word);
   const rootsHtml = roots.length
