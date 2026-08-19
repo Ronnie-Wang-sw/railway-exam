@@ -528,6 +528,7 @@
   }
   .nb-study-btn{padding:6px 12px;font-size:12.5px;}
   .nb-study{display:none;margin-top:8px;}
+  .nb-study.nb-study-auto{display:block;}
   .nb-loading{font-size:12px;color:#948d7c;}
   .nb-study-inner{
     background:var(--paper-dim);
@@ -1563,8 +1564,7 @@ async function renderNotebook(){
             <button class="nb-del" onclick="deleteWord('${v.id}')" title="刪除">✕</button>
           </div>
           <div class="nb-sentence">${v.sentence}</div>
-          <button class="btn ghost nb-study-btn" onclick="studyWord('${v.id}','${v.word}')">📖 單字學習</button>
-          <div class="nb-study" id="study-${v.id}"></div>
+          <div class="nb-study nb-study-auto" id="study-${v.id}"><p class="nb-loading">查詢中…</p></div>
         </div>`;
       });
       html += `</div></div>`;
@@ -1572,6 +1572,28 @@ async function renderNotebook(){
     html += `</div>`;
   });
   wrap.innerHTML = html;
+
+  // 同步（平行）查詢每個單字的翻譯、字義、例句、字根，不需再逐一點開才顯示
+  await Promise.all(list.map(async v=>{
+    const box = document.getElementById('study-'+v.id);
+    if(!box) return;
+    const {phonetic, example, definition, translation} = await fetchWordInfo(v.word);
+    const roots = findRootHint(v.word);
+    const rootsHtml = roots.length
+      ? roots.map(r=>`<li><b>${r.frag}</b>：${r.mean}</li>`).join('')
+      : '<li>此字未收錄於常見字根對照表（僅供參考，非完整字源資料庫）</li>';
+    box.innerHTML = `
+      <div class="nb-study-inner">
+        <div class="nb-study-row">
+          <button class="speak-btn" onclick="speakWord('${v.word.replace(/'/g,"\\'")}')">🔊 發音</button>
+          ${phonetic ? `<span class="phonetic">${phonetic}</span>` : ''}
+        </div>
+        ${translation ? `<div class="nb-translation"><b>中文翻譯：</b>${translation}</div>` : `<div class="nb-translation" style="color:#948d7c;">查無自動翻譯，請參考下方英文字義或自行查閱字典。</div>`}
+        ${definition ? `<div class="nb-def"><b>英文字義：</b>${definition}</div>` : `<div class="nb-def" style="color:#948d7c;">查無線上字典資料，可利用「🔊 發音」聽發音，或自行查閱字典補充字義。</div>`}
+        ${example ? `<div class="nb-example"><b>例句：</b>${example}</div>` : ''}
+        <div class="nb-roots"><b>字根／字首／字尾參考：</b><ul>${rootsHtml}</ul></div>
+      </div>`;
+  }));
 }
 
 async function deleteWord(id){
