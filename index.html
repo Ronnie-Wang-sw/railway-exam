@@ -625,6 +625,22 @@
   }
   .gram-card .gram-example .en{color:var(--navy);font-weight:500;}
   .gram-card .gram-example .zh{color:#6b6455;margin-top:3px;}
+  .doc-tag{
+    display:inline-block;
+    font-family:'Roboto Mono',monospace;
+    font-size:10.5px;
+    font-weight:700;
+    padding:1px 8px;
+    border-radius:10px;
+    margin-left:8px;
+    vertical-align:middle;
+    background:var(--paper-dim);
+    color:var(--navy);
+    border:1px solid var(--line);
+  }
+  .doc-tag.up{background:#fdf6e8;color:var(--brass);border-color:var(--brass);}
+  .doc-tag.down{background:#eef3ee;color:var(--green);border-color:var(--green);}
+  .doc-tag.level{background:#f3ecec;color:var(--red);border-color:var(--red);}
 
   .note-box{
     background:var(--paper-dim);
@@ -700,6 +716,11 @@
       <button class="btn" onclick="gradeQuiz('chinese')">交卷並看詳解</button>
       <div class="score-flip" id="score-chinese"><span>得分</span><span class="digit">--/30</span></div>
     </div>
+
+    <div class="grammar-section" id="official-doc-section" style="display:none;">
+      <div class="section-head"><h2>公文用語重點整理</h2><span class="count" id="official-doc-count">10 個重點</span></div>
+      <div id="official-doc-list"></div>
+    </div>
   </section>
 
   <section class="panel" id="panel-english">
@@ -763,7 +784,7 @@
   </section>
 
   <div class="note-box">
-    <b>使用說明：</b>本題組為依歷屆國家考試（鐵路特考、高普考共同科目）常見題型與命題重點自行編寫之模擬題，並非逐字複製的歷屆試卷原文；憲法與法學緒論條文內容已核對現行規定。若你手邊有實際考古題 PDF，可以上傳給我，我能直接依原題重新整理成互動測驗與詳解。<b>目前已上線 8/10、8/14、8/17、8/21、8/24、8/28 共六場完整題組</b>，國文、英文、法學知識、文法整理每一場都是不同內容；運輸學概要、動力車與車輛構造講義也是每場各有獨立主題（TOPIC 01～06），不會兩場共用同一個主題。行事曆上會標出後續週一、五的排定日期，但這些日期需要你回到對話中請我補新題目與講義後才會由「排定中」變成「已上線」（此頁面本身不會自動生成新內容）。英文測驗與文法例句中的單字都可以點選加入「單字本」分頁，依週次、月份整理，每個單字都能展開查看發音、中英文字義、例句與常見字根字首提示。
+    <b>使用說明：</b>本題組為依歷屆國家考試（鐵路特考、高普考共同科目）常見題型與命題重點自行編寫之模擬題，並非逐字複製的歷屆試卷原文；憲法與法學緒論條文內容已核對現行規定。若你手邊有實際考古題 PDF，可以上傳給我，我能直接依原題重新整理成互動測驗與詳解。<b>目前已上線 8/10、8/14、8/17、8/21、8/24、8/28 共六場完整題組</b>，國文、英文、法學知識、文法整理每一場都是不同內容；運輸學概要、動力車與車輛構造講義也是每場各有獨立主題（TOPIC 01～06），不會兩場共用同一個主題。<b>從 8/28（週五）起，國文測驗後方新增「公文用語重點整理」</b>，之後每個週五場次會持續延伸新的公文用語重點（週一場次維持原本的國文測驗，不含此區塊）。行事曆上會標出後續週一、五的排定日期，但這些日期需要你回到對話中請我補新題目與講義後才會由「排定中」變成「已上線」（此頁面本身不會自動生成新內容）。英文測驗與文法例句中的單字都可以點選加入「單字本」分頁，依週次、月份整理，每個單字都能展開查看發音、中英文字義、例句與常見字根字首提示。
   </div>
 
   <footer>鐵路人員升資考試．準備進度 WEEK 01 / 12 · 距 2026年11月考試倒數規劃中</footer>
@@ -1031,6 +1052,29 @@ function renderGrammar(dateKey){
       </div>
     </div>`).join('');
   markKnownWords();
+}
+
+// 公文用語重點整理：目前只在有排定內容的週五場次顯示（從 8/28 起）
+function renderOfficialDoc(dateKey){
+  const section = document.getElementById('official-doc-section');
+  const list = OFFICIAL_DOC_SETS[dateKey];
+  if(!list){
+    section.style.display = 'none';
+    document.getElementById('official-doc-list').innerHTML = '';
+    return;
+  }
+  section.style.display = 'block';
+  document.getElementById('official-doc-count').textContent = `${list.length} 個重點`;
+  const tagClass = {'上行文':'up','平行文':'','下行文':'down','不分層級':'level'};
+  document.getElementById('official-doc-list').innerHTML = list.map((d,i)=>`
+    <div class="gram-card">
+      <div class="gram-no">公文用語 ${i+1}<span class="doc-tag ${tagClass[d.category]||''}">${d.category}</span></div>
+      <div class="gram-pattern">${d.term}</div>
+      <div class="gram-explain">${d.explain}</div>
+      <div class="gram-example">
+        <div class="en">${d.example}</div>
+      </div>
+    </div>`).join('');
 }
 
 /* ===================== 國文 30（8/17 場） ===================== */
@@ -1504,6 +1548,23 @@ const GRAMMAR_SETS = {
   '2026-08-28': grammar_0828
 };
 
+/* ===================== 公文用語重點整理（8/28 場） ===================== */
+const officialdoc_0828 = [
+{term:'查照', category:'平行文', explain:'用於平行機關（或對非隸屬機關）行文，請對方知悉辦理，不涉及指揮監督關係，語氣中性。', example:'例：「檢送本年度會議紀錄一份，請　查照。」——用於通知平行機關辦理結果或相關事宜。'},
+{term:'鑒核', category:'上行文', explain:'下級機關對上級機關行文時，請求上級審核、裁示可否之用語，語氣恭敬。', example:'例：「檢陳本案改善方案，敬請　鑒核。」——下級機關陳報方案，請上級審核裁示。'},
+{term:'核示', category:'上行文', explain:'與「鑒核」用法相近，請求上級就所陳報事項給予裁示或指示，常見於簽呈結尾。', example:'例：「上開意見是否可行，敬請　核示。」——請長官就意見表示可否。'},
+{term:'照辦', category:'下行文', explain:'上級機關對下級機關行文，要求下級依指示內容確實執行辦理。', example:'例：「本案業經核定，請　照辦。」——上級核定後指示下級機關執行。'},
+{term:'備查', category:'上行文', explain:'下級機關陳報事項供上級機關知悉、存查，性質上僅供了解，通常不須上級再另行核示。', example:'例：「本活動已依原核定計畫辦理完竣，檢附成果報告一份，敬請　備查。」'},
+{term:'查照辦理', category:'下行文', explain:'兼具「知悉」與「執行」兩層意涵，常見於上級對下級或平行機關間，要求對方了解事項並依內容處理。', example:'例：「有關本案後續處理原則，請　查照辦理。」'},
+{term:'檢送／檢附', category:'不分層級', explain:'表示隨函附上相關文件或資料，「檢送」多用於整份文件、「檢附」則常用於附件、表件，惟現行公文寫作已趨向不嚴格區分，可視語境選用。', example:'例：「檢送會議資料一份，如附件。」'},
+{term:'函', category:'不分層級', explain:'現行公文最常用的文別，適用於機關間有關公務之往來，不論上行、平行、下行文均可使用，是取代舊制「令」「咨」等多種文別後的主要通用文別。', example:'例：機關對外行文，凡非屬發布法規、人事任免等特定事項，原則上皆以「函」行之。'},
+{term:'令', category:'不分層級', explain:'用於公布法律、發布命令、及行政機關對重要人事之任免、獎懲等特定事項，使用範圍較「函」更為侷限、正式性更高。', example:'例：總統公布法律、發布緊急命令，即以「令」為文別。'},
+{term:'簽', category:'不分層級', explain:'機關內部承辦人員或幕僚，就擬辦事項提出意見、分析或建議，供機關長官核決之公文書，屬對內溝通性質，非對外行文之文別。', example:'例：承辦人簽擬三種替代方案，並敘明優劣，供長官擇一核定。'}
+];
+const OFFICIAL_DOC_SETS = {
+  '2026-08-28': officialdoc_0828
+};
+
 const SESSION_SETS = {
   '2026-08-10': {chinese:chinese_0810, english:english_0810, law:law_0810},
   '2026-08-14': {chinese:chinese_0814, english:english_0814, law:law_0814},
@@ -1554,6 +1615,7 @@ function loadSession(dateKey){
   renderQuiz('law');
   renderGrammar(dateKey);
   renderGuides(dateKey);
+  renderOfficialDoc(dateKey);
   ['chinese','english','law'].forEach(k=>{
     document.getElementById('score-'+k).style.display = 'none';
   });
@@ -1641,6 +1703,7 @@ renderQuiz('chinese');
 renderQuiz('english');
 renderQuiz('law');
 renderGrammar(currentSessionKey);
+renderOfficialDoc(currentSessionKey);
 
 /* ===================== 單字本（Vocabulary Notebook） ===================== */
 // 儲存機制：優先使用 window.storage（Claude 環境內建的持久化儲存）；
