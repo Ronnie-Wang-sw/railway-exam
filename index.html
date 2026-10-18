@@ -694,7 +694,7 @@
   </div>
   <div class="session-banner" id="session-banner">
     <span>目前檢視：<b id="session-date-label">2026/08/10（一）· 第 1 次模擬考</b></span>
-    <span>已上線：8/10～10/16（共20場，涵蓋10週完整進度）</span>
+    <span>已上線：8/10～10/23（共22場，涵蓋11週完整進度）</span>
   </div>
 </header>
 
@@ -783,9 +783,6 @@
     <div id="notebook-body"></div>
   </section>
 
-  <div class="note-box">
-    <b>使用說明：</b>本題組為依歷屆國家考試（鐵路特考、高普考共同科目）常見題型與命題重點自行編寫之模擬題，並非逐字複製的歷屆試卷原文；憲法與法學緒論條文內容已核對現行規定。若你手邊有實際考古題 PDF，可以上傳給我，我能直接依原題重新整理成互動測驗與詳解。<b>目前已上線 8/10～10/16 共二十場完整題組</b>，國文、英文、法學知識、文法整理每一場都是不同內容；運輸學概要、動力車與車輛構造講義也是每場各有獨立主題（TOPIC 01～20），不會兩場共用同一個主題。<b>從 8/28（週五）起，國文測驗後方新增「公文用語重點整理」</b>，之後每個週五場次會持續延伸新的公文用語重點（週一場次維持原本的國文測驗，不含此區塊）。行事曆上會標出後續週一、五的排定日期，但這些日期需要你回到對話中請我補新題目與講義後才會由「排定中」變成「已上線」（此頁面本身不會自動生成新內容）。英文測驗與文法例句中的單字都可以點選加入「單字本」分頁，依週次、月份整理，每個單字都能展開查看發音、中英文字義、例句與常見字根字首提示。
-  </div>
 
   <footer>鐵路人員升資考試．準備進度 WEEK 01 / 12 · 距 2026年11月考試倒數規劃中</footer>
 </main>
@@ -3254,6 +3251,239 @@ const officialdoc_1016 = [
 ];
 OFFICIAL_DOC_SETS["2026-10-16"] = officialdoc_1016;
 
+/* ===================== 國文／英文／法學知識（2026-10-19 場） ===================== */
+const chinese_1019 = [
+{q:"下列「」中的字，讀音何者正確？「囁」嚅",opts:["ㄋㄧㄝˋ","ㄐㄧㄝˊ","ㄕㄜˋ","ㄓㄜˊ"],ans:0,ex:"「囁嚅」讀ㄋㄧㄝˋ ㄖㄨˊ，形容想說又不敢說的樣子。"},
+{q:"「他的分析「鞭辟入裡」」，「鞭辟入裡」形容：",opts:["冗長鬆散","分析深刻透徹，切中要害","模稜兩可","膚淺空泛"],ans:1,ex:"形容言論或文章分析透徹，能深入事理核心。"},
+{q:"「他一句話「一針見血」」，「一針見血」比喻：",opts:["說話直接切中要害","說話含糊其辭","針灸技術高明","說話冗長"],ans:0,ex:"比喻言簡意賅、直指問題要害。"},
+{q:"「他對當前局勢「洞若觀火」」，「洞若觀火」形容：",opts:["警覺火災","看得非常清楚透徹","刻意隱瞞","看不清楚"],ans:1,ex:"形容觀察事物極為清楚明白，如同看火一樣。"},
+{q:"「讀書貴在「融會貫通」」，「融會貫通」意謂：",opts:["淺嘗輒止","只讀一家之言","把各方面知識融合貫串，完全領會","死記硬背"],ans:2,ex:"指綜合各方面的道理，加以貫穿而徹底理解。"},
+{q:"「他善於「觸類旁通」」，「觸類旁通」意謂：",opts:["忘記舊知","拒絕學習新知","只懂單一事物","由一事物的道理推知其他同類事物"],ans:3,ex:"指掌握某類事物的規律後，能推知其他同類事物。"},
+{q:"「他在危局中「力挽狂瀾」」，「力挽狂瀾」比喻：",opts:["以強大力量挽回危急的局勢","隨波逐流","袖手旁觀","推波助瀾"],ans:0,ex:"比喻竭盡全力挽救危局。"},
+{q:"「他是這個團隊的「中流砥柱」」，「中流砥柱」比喻：",opts:["旁觀者","在艱難環境中堅定支撐大局的人","隨波逐流的人","新進人員"],ans:1,ex:"比喻能在艱難環境中堅定支撐大局的人或力量。"},
+{q:"「為了正義，他「義無反顧」」，「義無反顧」形容：",opts:["害怕後果","猶豫回頭","為正義勇往直前，毫不退縮","不顧正義"],ans:2,ex:"指為了正義勇往直前，絕不猶豫退縮。"},
+{q:"「維護行車安全是我們「責無旁貸」」，「責無旁貸」意謂：",opts:["無關緊要","自己應負的責任，不能推卸","責任可以推給他人","責備他人"],ans:1,ex:"指自己應盡的責任，不能推諉給別人。"},
+{q:"「面對艱鉅任務，他「當仁不讓」」，「當仁不讓」意謂：",opts:["謙讓退縮","推卸責任","遇到應做的事，勇於承擔，不推讓","拒絕參與"],ans:2,ex:"語出《論語》，指遇到該做的事，主動承擔，不推讓給他人。"},
+{q:"「前輩們「繼往開來」，為後人打下基礎」，「繼往開來」意謂：",opts:["拋棄傳統","只守成規","繼承前人事業，並開創未來","只顧眼前"],ans:2,ex:"指承接前人的成就，再開創新的局面。"},
+{q:"「這篇文章寫得「條分縷析」」，「條分縷析」形容：",opts:["雜亂無章","重複冗長","簡略粗疏","分析細密，條理分明"],ans:3,ex:"形容分析細緻、條理清楚。"},
+{q:"「寫報告須「提綱挈領」」，「提綱挈領」意謂：",opts:["抓住要點，簡明扼要","鉅細靡遺","含混模糊","斷章取義"],ans:0,ex:"比喻抓住事物的關鍵或要點。"},
+{q:"「這項技術「日新月異」」，「日新月異」形容：",opts:["發展進步快速，不斷更新","停滯不前","一成不變","逐年衰退"],ans:0,ex:"形容事物發展進步快速，不斷出現新變化。"},
+{q:"「這幅畫中的人物「栩栩如生」」，「栩栩如生」形容：",opts:["模糊不清","色彩單調","粗糙呆板","生動逼真，像活的一樣"],ans:3,ex:"形容藝術作品中的形象生動逼真。"},
+{q:"「兩隊實力「不相上下」」，「不相上下」意謂：",opts:["高下立判","彼此差不多，難分高低","差距懸殊","一面倒"],ans:1,ex:"指雙方程度相當，分不出高下。"},
+{q:"《詩經》共收詩多少篇？",opts:["五百篇","三百零五篇","三十篇","一千篇"],ans:1,ex:"《詩經》現存三百零五篇，故稱「詩三百」。"},
+{q:"《詩經》的內容，依性質分為：",opts:["賦、比、興","詩、詞、曲","風、雅、頌","經、史、子"],ans:2,ex:"《詩經》分為風、雅、頌三類；賦、比、興是表現手法。"},
+{q:"「四書」是指：",opts:["《大學》《中庸》《論語》《孟子》","《史記》《漢書》","《老子》《莊子》","《詩》《書》《禮》《易》"],ans:0,ex:"四書為宋代朱熹合編的儒家經典。"},
+{q:"下列何者不屬「五經」？",opts:["《詩經》","《易經》","《尚書》","《論語》"],ans:3,ex:"五經為《詩》《書》《禮》《易》《春秋》，《論語》屬四書。"},
+{q:"蘇軾的號為：",opts:["柳州","東坡居士","稼軒","六一居士"],ans:1,ex:"蘇軾號東坡居士；六一居士為歐陽脩，稼軒為辛棄疾。"},
+{q:"詞人李清照是哪個朝代的人？",opts:["唐代","元代","明代","宋代"],ans:3,ex:"李清照為宋代著名女詞人，號易安居士。"},
+{q:"「富者田連阡陌，貧者無立錐之地」運用何種修辭？",opts:["映襯","設問","排比","誇飾"],ans:0,ex:"以富者與貧者的境況對照，屬映襯修辭。"},
+{q:"「淅瀝淅瀝的雨聲敲打著窗」運用何種修辭？",opts:["倒反","摹寫（聽覺）","引用","設問"],ans:1,ex:"以「淅瀝」等擬聲詞描摹雨聲，屬聽覺摹寫。"},
+{q:"公文用語「請查照轉知」，意為：",opts:["請對方回復","請對方辦理並報告","請對方知悉並轉告所屬","請對方核示"],ans:2,ex:"「查照轉知」表示請知悉，並將內容轉知相關單位。"},
+{q:"公文用語「是否可行，請核示」，適用於：",opts:["平行機關之間","機關對一般民眾","上級機關對下級機關","下級機關對上級機關"],ans:3,ex:"「核示」是請求上級長官裁示，屬上行用語。"},
+{q:"「寧可犧牲自己，也不願傷害別人」，這句話屬：",opts:["選擇（取捨）複句","因果複句","假設複句","條件複句"],ans:0,ex:"「寧可……也不願……」表示在兩者間作取捨，屬選擇複句。"},
+{q:"「他雖沒說話，但眼神已「不言而喻」」，「不言而喻」意謂：",opts:["說不清楚","不可說出口","完全不懂","不必明說就能明白"],ans:3,ex:"指不用說明，大家就能明白。"},
+{q:"「這件事他處理得「淋漓盡致」」，「淋漓盡致」形容：",opts:["草率敷衍","含蓄隱晦","表達或發揮得極其充分透徹","不夠充分"],ans:2,ex:"形容文章或言談表達得非常透徹、充分。"}
+];
+const english_1019 = [
+{q:"The new rule applies ____ all employees.",opts:["by","to","for","at"],ans:1,ex:"\"apply to\" 意為「適用於」。"},
+{q:"____ the rain stopped, we resumed work.",opts:["Because of","Unless","As soon as","Despite"],ans:2,ex:"\"as soon as\" 引導子句，表示「一……就……」。"},
+{q:"He denied ____ the document.",opts:["having seen","to see","seen","see"],ans:0,ex:"deny 之後接動名詞；完成式 having seen 表示否認的是較早的動作。"},
+{q:"\"Eliminate\" most nearly means:",opts:["to postpone","to increase","to invite","to remove completely"],ans:3,ex:"eliminate 意為「消除、剔除」。"},
+{q:"If the train had been on time, we ____ the meeting.",opts:["did not miss","will not miss","would not have missed","would not miss"],ans:2,ex:"與過去事實相反的假設，主要子句用 would have + p.p.。"},
+{q:"The committee is made ____ of senior engineers.",opts:["at","up","on","off"],ans:1,ex:"\"be made up of\" 意為「由……組成」。"},
+{q:"She is in charge ____ the maintenance team.",opts:["for","at","of","on"],ans:2,ex:"\"be in charge of\" 意為「負責管理」。"},
+{q:"\"Fluctuate\" most nearly means:",opts:["to disappear","to rise and fall irregularly","to increase steadily","to remain constant"],ans:1,ex:"fluctuate 意為「波動、起伏」。"},
+{q:"I would rather you ____ the door.",opts:["closing","closed","to close","close"],ans:1,ex:"\"would rather + 子句\" 用過去式表示現在或未來的希望。"},
+{q:"The manual provides ____ information about safety.",opts:["using","usefully","use","useful"],ans:3,ex:"修飾名詞 information 須用形容詞 useful。"},
+{q:"Despite ____ tired, he kept working.",opts:["being","be","been","to be"],ans:0,ex:"despite 為介詞，後接動名詞 being。"},
+{q:"Neither the manager nor his assistants ____ present.",opts:["has been","was","were","is"],ans:2,ex:"\"neither...nor...\" 動詞與最近的主詞 assistants 一致。"},
+{q:"\"Vulnerable\" most nearly means:",opts:["loud","easily harmed","expensive","strong"],ans:1,ex:"vulnerable 意為「易受傷害的、脆弱的」。"},
+{q:"The faster we work, ____ we will finish.",opts:["the sooner","soonest","sooner","the soonest"],ans:0,ex:"\"the + 比較級, the + 比較級\" 表示越……越……。"},
+{q:"This bridge is said ____ built in 1950.",opts:["to be","to have been","have been","being"],ans:1,ex:"\"be said to have been + p.p.\" 表示據說過去曾被……。"},
+{q:"He suggested that the meeting ____ postponed.",opts:["was","being","is","be"],ans:3,ex:"suggest that 之後用「(should) + 原形動詞」，被動為 be postponed。"},
+{q:"\"Optional\" is the opposite of:",opts:["mandatory","free","flexible","voluntary"],ans:0,ex:"optional（選擇性的）的反義詞為 mandatory（強制的）。"},
+{q:"We are looking for a candidate ____ is familiar with rail systems.",opts:["whose","whom","who","which"],ans:2,ex:"先行詞為人且作主詞，用 who。"},
+{q:"Passengers must show their tickets ____ request.",opts:["on","at","in","by"],ans:0,ex:"\"on request\" 意為「應要求時」。"},
+{q:"The project fell behind schedule ____ a shortage of materials.",opts:["owing","because","so that","owing to"],ans:3,ex:"\"owing to + 名詞\" 意為「由於」。"},
+{q:"Read: \"A new app lets passengers see how crowded each carriage is before the train arrives. The railway hopes this will spread passengers more evenly along the platform.\" What does the app show?",opts:["Train ticket prices","Weather forecasts","Station maps only","How crowded each carriage is"],ans:3,ex:"文中指出這款應用程式能顯示各節車廂的擁擠程度。"},
+{q:"According to the passage, what does the railway hope the app will do?",opts:["Increase fares","Spread passengers more evenly along the platform","Reduce the number of trains","Close some platforms"],ans:1,ex:"文中說鐵路單位希望乘客更平均地分散在月台上。"},
+{q:"Read: \"Cleaning crews work between midnight and 4 a.m. when no trains run. Any area under repair is marked with warning signs.\" When do the cleaning crews work?",opts:["At noon","During the morning peak","All day","Between midnight and 4 a.m."],ans:3,ex:"文中指出清潔人員在午夜至凌晨四點間作業。"},
+{q:"According to the passage, how are areas under repair marked?",opts:["With warning signs","With red trains","They are not marked","With ticket gates"],ans:0,ex:"文中說施工區域會以警告標誌標示。"},
+{q:"The word \"spread\" in the first passage most nearly means:",opts:["to collect","to reduce","to hide","to distribute"],ans:3,ex:"spread passengers 指把乘客分散開來。"},
+{q:"Choose the correctly punctuated sentence:",opts:["Because of the fog several flights, were delayed.","Because of the fog several, flights were delayed.","Because of the fog, several flights were delayed.","Because, of the fog several flights were delayed."],ans:2,ex:"句首的原因副詞片語後須加逗號。"},
+{q:"\"Consecutive\" most nearly means:",opts:["following one after another","separate","final","random"],ans:0,ex:"consecutive 意為「連續的」。"},
+{q:"Scarcely had we left ____ the storm began.",opts:["when","since","than","until"],ans:0,ex:"\"Scarcely...when...\" 表示「一……就……」。"},
+{q:"\"In terms of\" most nearly means:",opts:["because of","with regard to","instead of","in spite of"],ans:1,ex:"\"in terms of\" 意為「就……而言」。"},
+{q:"He was accused ____ falsifying the records.",opts:["with","on","of","for"],ans:2,ex:"\"accuse someone of + V-ing\" 意為「指控某人……」。"}
+];
+const law_1019 = [
+{q:"法律公布之意義為：",opts:["法律被廢止","將法律公開宣告，使公眾周知","法律被修正","法律開始生效"],ans:1,ex:"公布是依法定程序將法律公開周知，與施行（生效）不同。"},
+{q:"法律之修正或廢止，須經何種程序？",opts:["立法院三讀通過，並由總統公布","考試院決議即可","司法院解釋即可","行政院核定即可"],ans:0,ex:"法律之制定、修正、廢止均須經立法程序，由總統公布。"},
+{q:"自治條例與憲法、法律牴觸者，其效力為：",opts:["有效","優先適用","與法律並行適用","無效"],ans:3,ex:"地方制度法第30條規定，自治條例與憲法、法律或基於法律授權之法規牴觸者，無效。"},
+{q:"命令與法律牴觸者，其效力為：",opts:["並行適用","優先適用","有效","無效"],ans:3,ex:"依法律位階原則，命令不得牴觸法律，牴觸者無效。"},
+{q:"行政機關訂定法規命令，須具備何種要件？",opts:["無須任何依據","有法律之授權","依習慣訂定","僅須首長口頭同意"],ans:1,ex:"法規命令對外發生法律效果，須有法律授權為依據。"},
+{q:"「行政規則」之性質為：",opts:["須經立法院三讀","效力高於法律","機關內部作業規範，原則上不直接對外發生法律效果","直接規範人民權利義務"],ans:2,ex:"行政規則是上級機關對下級機關或長官對屬官所發布，原則上無對外效力。"},
+{q:"刑法上「過失」係指：",opts:["有意追求犯罪結果","預見其發生而不違背其本意","明知並有意使其發生","按其情節應注意，並能注意，而不注意"],ans:3,ex:"刑法第14條第1項規定無認識過失之要件。"},
+{q:"刑法上，行為人預見犯罪事實之發生，而其發生並不違背其本意者，為：",opts:["間接故意","無認識過失","有認識過失","直接故意"],ans:0,ex:"刑法第13條第2項規定之間接（不確定）故意。"},
+{q:"刑法規定，拘役之期間為：",opts:["三個月以上","一日以上，六十日未滿","一個月以上","五年以上"],ans:1,ex:"刑法第42條規定，拘役為一日以上，六十日未滿。"},
+{q:"刑法規定，有期徒刑之期間為：",opts:["一年以上，三年以下","五年以上，十年以下","三個月以上，五年以下","二月以上，十五年以下（遇有加減時，得減至二月未滿，或加至二十年）"],ans:3,ex:"刑法第33條第3款所定有期徒刑之期間。"},
+{q:"刑法上「累犯」之要件為：",opts:["過失再犯輕罪","二年內再犯","受有期徒刑執行完畢後，五年以內故意再犯有期徒刑以上之罪","初犯"],ans:2,ex:"刑法第47條第1項規定累犯之要件。"},
+{q:"依民法規定，要約經拒絕者：",opts:["效力未定","失其拘束力","須經法院確認失效","仍有拘束力"],ans:1,ex:"民法第155條規定，要約經拒絕者，失其拘束力。"},
+{q:"契約經解除後，當事人雙方原則上負何種義務？",opts:["各自保留所得","互負回復原狀之義務","無任何義務","僅一方負義務"],ans:1,ex:"民法第259條規定，契約解除後，當事人雙方回復原狀之義務。"},
+{q:"債務不履行之主要類型，不包括下列何者？",opts:["給付遲延","不完全給付","消滅時效","給付不能"],ans:2,ex:"債務不履行包括給付不能、給付遲延及不完全給付；消滅時效為請求權消滅之事由。"},
+{q:"民法所稱「抵押權」，其特色為：",opts:["不移轉占有而供擔保，債權人得就抵押物賣得價金優先受償","須移轉占有","僅得設於動產","無優先受償權"],ans:0,ex:"民法第860條定義抵押權：不移轉占有而供擔保之不動產，得就其賣得價金優先受償。"},
+{q:"民法規定，動產質權之設定，須：",opts:["經公證","經法院許可","移轉動產之占有","辦理登記"],ans:2,ex:"民法第885條規定，質權之設定，因供擔保之動產移交於債權人占有而生效力。"},
+{q:"民法規定，所有人於法令限制之範圍內，得：",opts:["僅得收益","完全不受限制使用","僅得使用不得處分","自由使用、收益、處分其所有物，並排除他人之干涉"],ans:3,ex:"民法第765條規定所有權之權能。"},
+{q:"民法規定，繼承人自何時起承受被繼承人財產上之一切權利、義務？",opts:["辦理登記時","法院裁定時","繼承開始時","遺產分割時"],ans:2,ex:"民法第1148條規定，繼承人自繼承開始時，承受被繼承人財產上之一切權利、義務。"},
+{q:"民法規定之遺囑方式共有幾種？",opts:["二種","五種","三種","十種"],ans:1,ex:"民法規定遺囑方式有自書、公證、密封、代筆及口授遺囑，共五種。"},
+{q:"行政程序法規定，行政行為之內容應：",opts:["明確","隱晦不明","由承辦人隨意決定","無須公開"],ans:0,ex:"行政程序法第5條規定明確性原則。"},
+{q:"違法行政處分於法定救濟期間經過後，原處分機關得：",opts:["僅得由人民撤銷","依職權為全部或一部之撤銷","僅得由法院撤銷","永遠不得撤銷"],ans:1,ex:"行政程序法第117條規定，違法行政處分於法定救濟期間經過後，原處分機關得依職權撤銷。"},
+{q:"下列何者屬於行政罰法所定之行政罰？",opts:["罰金","有期徒刑","罰鍰與沒入","拘役"],ans:2,ex:"行政罰包括罰鍰、沒入及其他種類行政罰；其餘為刑罰。"},
+{q:"行政罰法規定，未滿幾歲人之行為，不予處罰？",opts:["十四歲","十六歲","十八歲","十二歲"],ans:0,ex:"行政罰法第9條第1項規定，未滿十四歲人之行為，不予處罰。"},
+{q:"我國行政訴訟之終審法院為：",opts:["最高行政法院","最高法院","司法院","行政院"],ans:0,ex:"依行政訴訟法，最高行政法院為終審法院。"},
+{q:"民事訴訟中「起訴」之意義為：",opts:["原告向法院請求保護其權利之訴訟行為","被告提出答辯","法院作成判決","當事人和解"],ans:0,ex:"起訴是原告向法院提出訴訟請求，開啟訴訟程序。"},
+{q:"告訴乃論之罪，無告訴權人知悉犯人之時起，逾幾個月不得告訴？",opts:["一年","六個月","三個月","二年"],ans:1,ex:"刑事訴訟法第237條第1項規定，告訴乃論之罪，其告訴應自得為告訴之人知悉犯人之時起，於六個月內為之。"},
+{q:"偵查中羈押被告，期間不得逾：",opts:["三個月","一個月","六個月","二個月"],ans:3,ex:"刑事訴訟法第108條第1項規定，羈押被告，偵查中不得逾二月，審判中不得逾三月。"},
+{q:"立法院通過之法律案，移送總統及行政院後，總統應於收到後幾日內公布之？",opts:["十日","七日","三日","三十日"],ans:0,ex:"憲法第72條規定，總統應於收到後十日內公布之。"},
+{q:"司法院大法官之員額為：",opts:["17人","21人","15人","9人"],ans:2,ex:"憲法增修條文第5條規定，司法院設大法官十五人。"},
+{q:"刑法規定，依法令之行為：",opts:["減輕其刑","加重其刑","得免除其刑","不罰"],ans:3,ex:"刑法第21條第1項規定，依法令之行為，不罰。"}
+];
+const grammar_1019 = [
+{pattern:"apply to",explain:"表示「適用於」，to 為介詞，後接名詞。",en:"The new rule applies to all employees.",zh:"這項新規定適用於所有員工。"},
+{pattern:"as soon as + 子句",explain:"表示「一……就……」，引導時間副詞子句。",en:"As soon as the rain stopped, we resumed work.",zh:"雨一停，我們就恢復工作。"},
+{pattern:"deny + V-ing",explain:"deny 之後接動名詞，表示「否認做過某事」。",en:"He denied having seen the document.",zh:"他否認看過那份文件。"},
+{pattern:"If + 過去完成式, would not have + p.p.",explain:"與過去事實相反的假設，表示「要是當時……就不會……」。",en:"If the train had been on time, we would not have missed the meeting.",zh:"要是列車準點，我們就不會錯過會議。"},
+{pattern:"be made up of",explain:"表示「由……組成」，常用於說明成員或構成要素。",en:"The committee is made up of senior engineers.",zh:"委員會由資深工程師組成。"},
+{pattern:"be in charge of",explain:"表示「負責管理、主管」。",en:"She is in charge of the maintenance team.",zh:"她負責管理維修團隊。"},
+{pattern:"would rather + 子句（過去式）",explain:"表示「寧願（別人）……」，子句動詞用過去式表示現在或未來的希望。",en:"I would rather you closed the door.",zh:"我寧願你把門關上。"},
+{pattern:"be said to have been + p.p.",explain:"表示「據說（過去）曾被……」，為常見的被動推測句型。",en:"This bridge is said to have been built in 1950.",zh:"據說這座橋建於1950年。"},
+{pattern:"on request",explain:"表示「應要求時」，常見於規章與公告。",en:"Passengers must show their tickets on request.",zh:"乘客應要求時須出示車票。"},
+{pattern:"be accused of + V-ing",explain:"表示「被指控……」，of 為介詞，後接名詞或動名詞。",en:"He was accused of falsifying the records.",zh:"他被指控偽造紀錄。"}
+];
+
+/* ===================== 國文／英文／法學知識（2026-10-23 場） ===================== */
+const chinese_1023 = [
+{q:"下列「」中的字，讀音何者正確？「莞」爾而笑",opts:["ㄍㄨㄢ","ㄩㄢˊ","ㄨㄢˇ","ㄍㄨㄢˇ"],ans:2,ex:"「莞爾」讀ㄨㄢˇ ㄦˇ，形容微笑的樣子。"},
+{q:"「他模仿老師的語氣，「惟妙惟肖」」，「惟妙惟肖」形容：",opts:["過度誇張","模仿或描寫得非常逼真","平淡無奇","模仿得拙劣"],ans:1,ex:"形容描寫或模仿得極為生動逼真。"},
+{q:"「小說中的場景「躍然紙上」」，「躍然紙上」形容：",opts:["模糊不清","一片空白","飛出紙外","生動地呈現在紙面上"],ans:3,ex:"形容文字或圖畫描寫得生動，如在眼前。"},
+{q:"「這兩位棋手「棋逢對手」」，「棋逢對手」意謂：",opts:["毫無對手","雙方實力相當，難分高下","輕鬆獲勝","棋藝很差"],ans:1,ex:"比喻雙方本領相當，不相上下。"},
+{q:"「他為學「夙興夜寐」」，「夙興夜寐」形容：",opts:["貪睡晚起","喜歡夜遊","生活舒適規律","早起晚睡，勤奮不懈"],ans:3,ex:"語出《詩經》，形容勤勉不倦。"},
+{q:"「這部著作是他「嘔心瀝血」的成果」，「嘔心瀝血」形容：",opts:["得了心臟疾病","用盡心思精力","毫不費力","殘忍無情"],ans:1,ex:"比喻費盡心思精力，多形容創作或研究的辛勞。"},
+{q:"「企業要「與時俱進」，才能生存」，「與時俱進」意謂：",opts:["隨著時代不斷進步","落後於時代","逃避變化","墨守成規"],ans:0,ex:"指行動、思想與時代同步前進。"},
+{q:"「他在舊制度上「推陳出新」」，「推陳出新」意謂：",opts:["重複舊作","固守舊制","抄襲他人","去除舊的，創造新的"],ans:3,ex:"指去除舊的、不好的，創造出新的。"},
+{q:"「這門傳統技藝需要「薪火相傳」」，「薪火相傳」比喻：",opts:["商業買賣","技藝失傳","前人的學問技藝由後人代代延續","僅限家族傳承"],ans:2,ex:"比喻師生相傳，學問技藝代代傳承不絕。"},
+{q:"「他一向「夙夜匪懈」」，「夙夜匪懈」形容：",opts:["日夜勤奮，不敢懈怠","日夜貪玩","懈怠鬆散","偶爾偷懶"],ans:0,ex:"語出《詩經》，形容日夜勤奮，絲毫不鬆懈。"},
+{q:"「談判陷入僵局，後來「峰迴路轉」」，「峰迴路轉」比喻：",opts:["道路崎嶇難行","一路平坦","山峰迴旋","情勢出現轉折，由困境出現新出路"],ans:3,ex:"比喻情況經過曲折後出現轉機。"},
+{q:"「他的作品「別具一格」」，「別具一格」意謂：",opts:["抄襲他人","粗糙草率","平庸無奇","具有獨特的風格"],ans:3,ex:"指在風格上與眾不同，自成一格。"},
+{q:"《史記》在體例上屬於：",opts:["國別體","紀傳體","紀事本末體","編年體"],ans:1,ex:"《史記》以人物傳記為主，開創紀傳體。"},
+{q:"《左傳》在體例上屬於：",opts:["紀傳體","編年體","語錄體","國別體"],ans:1,ex:"《左傳》依年代順序記事，屬編年體。"},
+{q:"《戰國策》在體例上屬於：",opts:["紀傳體","編年體","國別體","語錄體"],ans:2,ex:"《戰國策》依國別分類記載，屬國別體。"},
+{q:"《莊子》屬於哪一家的思想？",opts:["道家","儒家","法家","墨家"],ans:0,ex:"《莊子》與《老子》同為道家重要典籍。"},
+{q:"陶淵明〈歸去來辭〉主要表達：",opts:["辭官歸隱田園的志趣","送別友人的情誼","思念故鄉的鄉愁","報國殺敵的壯志"],ans:0,ex:"〈歸去來辭〉是陶淵明辭去彭澤令、歸隱田園時所作。"},
+{q:"唐代韓愈、柳宗元所倡導的文學革新運動為：",opts:["宮體詩運動","駢文運動","古文運動","新樂府運動"],ans:2,ex:"韓愈、柳宗元提倡古文，反對駢文，稱古文運動。"},
+{q:"唐代白居易所倡導的詩歌運動為：",opts:["古文運動","公安派","江西詩派","新樂府運動"],ans:3,ex:"白居易與元稹倡導新樂府運動，主張詩歌反映社會現實。"},
+{q:"下列何者不屬於「元曲四大家」？",opts:["李清照","馬致遠","關漢卿","白樸"],ans:0,ex:"元曲四大家為關漢卿、馬致遠、鄭光祖、白樸；李清照為宋代詞人。"},
+{q:"「古人云：『千里之行，始於足下』」運用何種修辭？",opts:["轉化","引用","設問","誇飾"],ans:1,ex:"直接援引古人名言以證明論點，屬引用修辭。"},
+{q:"「你真是太『聰明』了，竟然把鑰匙鎖在車裡」運用何種修辭？",opts:["倒反","映襯","借代","雙關"],ans:0,ex:"說話的字面意思與真正想表達的相反，屬倒反修辭。"},
+{q:"「啊！多麼壯闊的山河！」運用何種修辭？",opts:["設問","類疊","排比","感嘆"],ans:3,ex:"以感嘆詞抒發強烈情感，屬感嘆修辭。"},
+{q:"公文中的「鈞部」，是對誰的敬稱？",opts:["一般民眾","下級機關","上級機關","平行機關"],ans:2,ex:"「鈞」為對上級機關或長官的敬稱，如鈞部、鈞長。"},
+{q:"公文中對平行機關的稱呼，通常用：",opts:["貴賓","本","貴","鈞"],ans:2,ex:"公文中對平行機關通常稱「貴」，如貴局、貴部。"},
+{q:"公文中機關自稱，通常用：",opts:["本","貴","鈞","台"],ans:0,ex:"公文中機關自稱多用「本」，如本局、本部。"},
+{q:"公文用語「惠予」，意為：",opts:["感謝對方","敬辭，請求對方給予（協助、支持等）","命令對方","拒絕對方"],ans:1,ex:"「惠予」為敬辭，用於客氣地請求對方給予。"},
+{q:"下列成語使用何者最恰當？",opts:["他看到這幅畫，不禁嗤之以鼻地讚嘆","他對家鄉的歷史文化如數家珍","這場比賽雙方實力相差懸殊，真是旗鼓相當","他總是粗心大意，做事一絲不苟"],ans:1,ex:"「如數家珍」形容對事物十分熟悉，其餘各句成語均誤用。"},
+{q:"下列何者無錯別字？",opts:["安部就班","按步就班","按部就班","按部就斑"],ans:2,ex:"「按部就班」指依照一定的步驟、程序做事。"},
+{q:"「他的書法「龍飛鳳舞」」，「龍飛鳳舞」形容：",opts:["筆勢靈動飛揚，氣勢豪邁","筆畫纖細柔弱","字跡拘謹呆板","字跡潦草難辨"],ans:0,ex:"多形容書法筆勢奔放靈動、氣勢不凡。"}
+];
+const english_1023 = [
+{q:"The report must be submitted ____ Friday at the latest.",opts:["by","on","until","at"],ans:0,ex:"\"by + 時間\" 表示「最遲在……之前」。"},
+{q:"____ the tickets were expensive, the show sold out.",opts:["Unless","Because of","Despite","Although"],ans:3,ex:"although 引導讓步子句；despite 須接名詞片語。"},
+{q:"I am not used to ____ so early.",opts:["got up","getting up","getting","get up"],ans:1,ex:"\"be used to + V-ing\" 表示「習慣於」。"},
+{q:"\"Brisk\" most nearly means:",opts:["silent","quick and energetic","weak","slow"],ans:1,ex:"brisk 意為「輕快的、有活力的」。"},
+{q:"Hardly had he arrived ____ the meeting started.",opts:["than","until","that","when"],ans:3,ex:"\"Hardly...when...\" 表示「一……就……」。"},
+{q:"The teacher, together with the students, ____ going on a trip.",opts:["are","have been","is","were"],ans:2,ex:"\"together with\" 引導的附加語不影響主詞，主詞 teacher 為單數。"},
+{q:"\"Crucial\" most nearly means:",opts:["optional","minor","extremely important","temporary"],ans:2,ex:"crucial 意為「至關重要的」。"},
+{q:"It is essential that the system ____ tested regularly.",opts:["is","was","being","be"],ans:3,ex:"\"It is essential that...\" 之後用「(should) + 原形動詞」，被動為 be tested。"},
+{q:"He insisted ____ paying for the ticket.",opts:["on","to","at","for"],ans:0,ex:"\"insist on + V-ing\" 表示「堅持做某事」。"},
+{q:"The train, ____ departure was delayed, finally left at noon.",opts:["what","who","which","whose"],ans:3,ex:"表示所有格關係，用 whose。"},
+{q:"We are looking forward ____ from you soon.",opts:["hearing","hear","to hear","to hearing"],ans:3,ex:"\"look forward to\" 的 to 為介詞，後接動名詞。"},
+{q:"\"Substitute\" most nearly means:",opts:["to invent","to forget","to replace","to borrow"],ans:2,ex:"substitute 意為「替代」。"},
+{q:"She asked whether the line ____ open.",opts:["be","is being","was","were"],ans:2,ex:"間接問句，主要動詞為過去式時，從屬子句用過去式 was。"},
+{q:"Let's meet ____ the entrance.",opts:["at","by","in","on"],ans:0,ex:"表示地點的一個定點，用介詞 at。"},
+{q:"\"Inspect\" most nearly means:",opts:["to repair","to examine carefully","to ignore","to build"],ans:1,ex:"inspect 意為「檢查、檢視」。"},
+{q:"Not only ____ the delay, but they also lost the luggage.",opts:["they cause","they caused","did they cause","caused they"],ans:2,ex:"\"Not only\" 置於句首須倒裝，過去式用 did they cause。"},
+{q:"The supervisor made the employees ____ the form again.",opts:["to fill out","fill out","filling out","filled out"],ans:1,ex:"\"make + 受詞 + 原形動詞\" 表示「使某人做某事」。"},
+{q:"\"Reduction\" is the opposite of:",opts:["increase","drop","cut","decrease"],ans:0,ex:"reduction（減少）的反義詞為 increase（增加）。"},
+{q:"She has worked here ____ ten years.",opts:["since","for","while","during"],ans:1,ex:"\"for + 一段時間\" 表示持續的時間長度。"},
+{q:"The ticket price is subject ____ change.",opts:["of","to","for","with"],ans:1,ex:"\"be subject to\" 意為「可能受……影響」。"},
+{q:"Read: \"To save energy, station lights will be dimmed after midnight when few passengers are present. Platform safety lighting will remain on at all times.\" Why will station lights be dimmed after midnight?",opts:["To save energy","To close the station","To save time","To hide the platform"],ans:0,ex:"文中說明調暗燈光是為了節約能源。"},
+{q:"According to the passage, which lighting will remain on at all times?",opts:["Advertising lights","Parking lights","Ticket office lighting","Platform safety lighting"],ans:3,ex:"文中指出月台安全照明會一直開著。"},
+{q:"Read: \"The railway received 120 complaints last month, down from 200 the month before. Most complaints were about delays, followed by crowded carriages.\" How many complaints were received last month?",opts:["120","80","200","320"],ans:0,ex:"文中說上個月接獲120件客訴。"},
+{q:"According to the passage, what were most complaints about?",opts:["Delays","Crowded carriages","Station cleanliness","Ticket prices"],ans:0,ex:"文中說大多數客訴與延誤有關，其次是車廂擁擠。"},
+{q:"The phrase \"followed by\" in the passage most nearly means:",opts:["without","with the next in order being","before","instead of"],ans:1,ex:"\"followed by\" 表示依序其次是。"},
+{q:"Choose the correctly punctuated sentence:",opts:["Passengers please remain, seated until the train stops.","Passengers, please remain seated, until the train stops.","Passengers, please remain seated until the train stops.","Passengers please, remain seated until the train stops."],ans:2,ex:"稱呼語後須加逗號，其餘不應多加逗號。"},
+{q:"\"Subsequent\" most nearly means:",opts:["unnecessary","coming after","simultaneous","previous"],ans:1,ex:"subsequent 意為「隨後的、後來的」。"},
+{q:"Had it not been for the signal failure, the train ____ on time.",opts:["arrives","arrived","will arrive","would have arrived"],ans:3,ex:"\"Had it not been for...\" 為與過去事實相反的假設倒裝，主要子句用 would have + p.p.。"},
+{q:"\"Optimal\" most nearly means:",opts:["best possible","worst","unclear","average"],ans:0,ex:"optimal 意為「最理想的、最佳的」。"},
+{q:"They are responsible ____ the safety of passengers.",opts:["with","of","for","to"],ans:2,ex:"\"be responsible for\" 意為「對……負責」。"}
+];
+const law_1023 = [
+{q:"憲法第3條規定，具有中華民國國籍者，為：",opts:["中華民國國民","僅有選舉權者","僅居住國內者","僅成年人"],ans:0,ex:"憲法第3條規定，具有中華民國國籍者，為中華民國國民。"},
+{q:"憲法第9條規定，人民除何者外，不受軍事審判？",opts:["未成年人","外國人","現役軍人","公務員"],ans:2,ex:"憲法第9條規定，人民除現役軍人外，不受軍事審判。"},
+{q:"憲法第35條規定，總統為：",opts:["司法首長","行政首長","立法首長","國家元首，對外代表中華民國"],ans:3,ex:"憲法第35條規定總統為國家元首，對外代表中華民國。"},
+{q:"憲法第36條規定，總統統率：",opts:["考試院","全國陸海空軍","司法院","立法院"],ans:1,ex:"憲法第36條規定總統統率全國陸海空軍。"},
+{q:"憲法第40條規定，總統依法行使：",opts:["大赦、特赦、減刑及復權之權","任免法官","制定法律","審計權"],ans:0,ex:"憲法第40條規定總統依法行使大赦、特赦、減刑及復權之權。"},
+{q:"憲法第41條規定，總統依法：",opts:["制定法律","審判案件","任免文武官員","審計預算"],ans:2,ex:"憲法第41條規定總統依法任免文武官員。"},
+{q:"憲法第66條規定，立法院院長、副院長由何人產生？",opts:["總統任命","立法委員互選","行政院指派","人民直選"],ans:1,ex:"憲法第66條規定，立法院設院長、副院長各一人，由立法委員互選之。"},
+{q:"憲法第77條規定，司法院為國家最高司法機關，掌理：",opts:["立法事項","民事、刑事、行政訴訟之審判及公務員之懲戒","審計事項","考試事項"],ans:1,ex:"憲法第77條規定司法院掌理民事、刑事、行政訴訟之審判及公務員之懲戒。"},
+{q:"法律適用之「三段論法」，其結構為：",opts:["正、反、合","起、承、轉、合","序論、本論、結論","大前提（法律規定）、小前提（具體事實）、結論"],ans:3,ex:"法律適用以法律規定為大前提，具體事實為小前提，推導出結論。"},
+{q:"「權利能力」之意義為：",opts:["得承擔刑事責任之資格","得獨立為有效法律行為之資格","得投票之資格","得享受權利、負擔義務之資格"],ans:3,ex:"權利能力為法律上享受權利、負擔義務之資格。"},
+{q:"「法律事實」係指：",opts:["任何生活事實","法律條文","能引起法律關係發生、變更或消滅之事實","法院判決"],ans:2,ex:"法律事實是引起法律關係發生、變更、消滅的原因事實。"},
+{q:"法律關係之構成要素包括：",opts:["主體、客體、內容","起因、經過、結果","原告、被告、法官","時間、地點、人物"],ans:0,ex:"法律關係由主體、客體及內容三要素構成。"},
+{q:"刑法上犯罪成立之三階層為：",opts:["預備、著手、既遂","構成要件該當性、違法性、有責性","故意、過失、結果","主觀、客觀、折衷"],ans:1,ex:"犯罪成立須具備構成要件該當性、違法性及有責性。"},
+{q:"下列何者屬「違法性阻卻事由」？",opts:["共同正犯","正當防衛","未遂","累犯"],ans:1,ex:"正當防衛、緊急避難、依法令之行為等為違法性阻卻事由。"},
+{q:"民法規定，代理人於代理權限內，以本人名義所為之意思表示：",opts:["效力未定","無效","直接對本人發生效力","僅對代理人發生效力"],ans:2,ex:"民法第103條規定，直接對本人發生效力。"},
+{q:"民法規定，附停止條件之法律行為：",opts:["自始發生效力","條件成就時失其效力","於條件成就時，發生效力","自始無效"],ans:2,ex:"民法第99條第1項規定，附停止條件之法律行為，於條件成就時，發生效力。"},
+{q:"民法規定，通謀虛偽之意思表示，其效力為：",opts:["有效","效力未定","無效","得撤銷"],ans:2,ex:"民法第87條第1項規定，表意人與相對人通謀而為虛偽意思表示者，其意思表示無效。"},
+{q:"下列何者屬民法上之用益物權？",opts:["抵押權","地上權","質權","留置權"],ans:1,ex:"用益物權包括地上權、農育權、不動產役權及典權；其餘為擔保物權。"},
+{q:"下列何者屬民法上之擔保物權？",opts:["抵押權","農育權","不動產役權","地上權"],ans:0,ex:"擔保物權包括抵押權、質權及留置權。"},
+{q:"行政程序法規定，行政機關行使裁量權時：",opts:["不得逾越法定之裁量範圍，並應符合法規授權之目的","可逾越法律界限","無須考量授權目的","可完全任意為之"],ans:0,ex:"行政程序法第10條規定裁量權之行使界限。"},
+{q:"行政程序法第4條所規定之「依法行政原則」，其意旨為：",opts:["行政行為僅受習慣拘束","行政行為不受任何拘束","行政行為僅受長官意思拘束","行政行為應受法律及一般法律原則之拘束"],ans:3,ex:"行政程序法第4條規定，行政行為應受法律及一般法律原則之拘束。"},
+{q:"依國家賠償法，賠償請求權自請求權人知有損害時起，因幾年間不行使而消滅？",opts:["一年","五年","十年","二年"],ans:3,ex:"國家賠償法第8條第1項規定，自請求權人知有損害時起，因二年間不行使而消滅；自損害發生時起，逾五年者亦同。"},
+{q:"我國民事訴訟第三審，原則上為：",opts:["法律審","調查審","簡易審","事實審"],ans:0,ex:"第三審法院原則上僅就法律適用是否正確進行審理，為法律審。"},
+{q:"刑法規定，對於未發覺之罪自首而受裁判者：",opts:["必須加重其刑","不得減輕","得減輕其刑","免除一切責任"],ans:2,ex:"刑法第62條規定，對於未發覺之罪自首而受裁判者，得減輕其刑。"},
+{q:"行政訴訟中，提起撤銷訴訟原則上須先：",opts:["經過立法院同意","經過訴願程序","經過刑事程序","經過民事訴訟"],ans:1,ex:"依行政訴訟法，提起撤銷訴訟原則上須經訴願程序（訴願前置）。"},
+{q:"憲法第5條規定，中華民國各民族之地位：",opts:["一律平等","依貢獻而定","依人口多寡而定","有高低差別"],ans:0,ex:"憲法第5條規定，中華民國各民族一律平等。"},
+{q:"憲法第39條規定，戒嚴之宣告，須：",opts:["由行政院單獨決定","經立法院通過或追認","由司法院核准","由監察院核准"],ans:1,ex:"憲法第39條規定，總統依法宣告戒嚴，但須經立法院之通過或追認。"},
+{q:"憲法第71條規定，立法院開會時，關係院院長及各部會首長：",opts:["必須代理立法委員","須經司法院許可才可列席","不得列席","得列席陳述意見"],ans:3,ex:"憲法第71條規定，立法院開會時，關係院院長及各部會首長得列席陳述意見。"},
+{q:"民法規定，因被脅迫而為意思表示者，表意人得：",opts:["視為有效不得主張","須先履行","須經法院判決","撤銷其意思表示"],ans:3,ex:"民法第92條第1項規定，因被詐欺或被脅迫而為意思表示者，得撤銷其意思表示。"},
+{q:"憲法第42條規定，總統依法：",opts:["授與榮典","行使審計權","制定法律","任免法官"],ans:0,ex:"憲法第42條規定，總統依法授與榮典。"}
+];
+const grammar_1023 = [
+{pattern:"by + 時間（最遲於）",explain:"\"by + 時間\" 表示「最遲在……之前」，強調期限；until 則表示持續到某時。",en:"The report must be submitted by Friday at the latest.",zh:"報告最遲須在週五前繳交。"},
+{pattern:"be used to + V-ing",explain:"表示「習慣於」，to 為介詞；used to + 原形動詞則表示「過去曾經」。",en:"I am not used to getting up so early.",zh:"我不習慣這麼早起床。"},
+{pattern:"insist on + V-ing",explain:"表示「堅持做某事」，on 為介詞，後接動名詞。",en:"He insisted on paying for the ticket.",zh:"他堅持要付車票錢。"},
+{pattern:"together with（不影響主詞）",explain:"\"together with\" 引導的附加語不影響主詞的單複數，動詞依主詞決定。",en:"The teacher, together with the students, is going on a trip.",zh:"老師和學生們一起要去旅行。"},
+{pattern:"It is essential that + (should) + 原形動詞",explain:"表示必要、重要的形容詞之後，子句用虛擬語氣原形動詞。",en:"It is essential that the system be tested regularly.",zh:"系統必須定期測試，這是很重要的。"},
+{pattern:"make + O + 原形動詞",explain:"使役動詞 make 之後接受詞與原形動詞，表示「使某人做某事」。",en:"The supervisor made the employees fill out the form again.",zh:"主管要員工重新填寫表格。"},
+{pattern:"Had it not been for + N",explain:"與過去事實相反的假設倒裝，表示「若非……」。",en:"Had it not been for the signal failure, the train would have arrived on time.",zh:"若不是號誌故障，列車本來會準點抵達。"},
+{pattern:"followed by + N",explain:"表示「其次是……」，用於依序列舉。",en:"Most complaints were about delays, followed by crowded carriages.",zh:"多數客訴與延誤有關，其次是車廂擁擠。"},
+{pattern:"間接問句 whether",explain:"whether 引導間接問句，表示「是否」，主要動詞為過去式時，從屬子句用過去式。",en:"She asked whether the line was open.",zh:"她問這條線是否通車。"},
+{pattern:"in terms of + N",explain:"表示「就……而言」，常用於比較或分析某一方面。",en:"The new system is superior in terms of safety.",zh:"就安全性而言，新系統比較優越。"}
+];
+const officialdoc_1023 = [
+{term:"鈞",category:"上行文",explain:"對上級機關或長官之敬稱，如鈞部、鈞長、鈞座，用於上行文。",example:"例：本案謹陳　鈞部核示。"},
+{term:"貴",category:"平行文",explain:"對平行機關之稱呼，如貴局、貴部，表示尊重，用於平行文。",example:"例：請　貴局惠予協助辦理。"},
+{term:"本",category:"不分層級",explain:"機關於公文中對自己之稱呼，如本局、本部、本府。",example:"例：本局業已依規定辦理完竣。"},
+{term:"惠予",category:"平行文",explain:"敬辭，客氣地請求對方給予協助、同意或指導。",example:"例：請　貴機關惠予提供相關資料。"},
+{term:"另案",category:"不分層級",explain:"表示另外處理之案件，與本案分開辦理，不併案處理。",example:"例：有關預算事項，將另案辦理。"},
+{term:"先行",category:"不分層級",explain:"表示優先、先予辦理，之後再補辦其他程序。",example:"例：因案情緊急，先行辦理，後續補報。"},
+{term:"酌辦",category:"下行文",explain:"上級對下級之用語，請對方斟酌實際情形辦理，保留一定裁量空間。",example:"例：所請事項，請依實際需要酌辦。"},
+{term:"簽覆",category:"不分層級",explain:"機關內部以簽文方式答覆、說明處理意見。",example:"例：承辦單位就來函所詢，另以簽覆方式陳報長官。"},
+{term:"從速",category:"不分層級",explain:"請求儘快辦理之用語，常與限期、催辦併用。",example:"例：請從速辦理並函復。"},
+{term:"依法",category:"不分層級",explain:"表示依照法律規定辦理，用以說明處理之法令依據。",example:"例：本案依法辦理，並副知相關單位。"}
+];
+OFFICIAL_DOC_SETS["2026-10-23"] = officialdoc_1023;
+
 const GRAMMAR_SETS = {
   '2026-08-10': grammar_0810,
   '2026-08-14': grammar_0814,
@@ -3274,7 +3504,9 @@ const GRAMMAR_SETS = {
   '2026-10-05': grammar_1005,
   '2026-10-09': grammar_1009,
   '2026-10-12': grammar_1012,
-  '2026-10-16': grammar_1016
+  '2026-10-16': grammar_1016,
+  '2026-10-19': grammar_1019,
+  '2026-10-23': grammar_1023
 };
 
 const SESSION_SETS = {
@@ -3297,7 +3529,9 @@ const SESSION_SETS = {
   '2026-10-05': {chinese:chinese_1005, english:english_1005, law:law_1005},
   '2026-10-09': {chinese:chinese_1009, english:english_1009, law:law_1009},
   '2026-10-12': {chinese:chinese_1012, english:english_1012, law:law_1012},
-  '2026-10-16': {chinese:chinese_1016, english:english_1016, law:law_1016}
+  '2026-10-16': {chinese:chinese_1016, english:english_1016, law:law_1016},
+  '2026-10-19': {chinese:chinese_1019, english:english_1019, law:law_1019},
+  '2026-10-23': {chinese:chinese_1023, english:english_1023, law:law_1023}
 };
 let currentSessionKey = '2026-08-10';
 let QUIZ = SESSION_SETS[currentSessionKey];
@@ -5592,6 +5826,134 @@ const guide_vehicle_1016 = `
 </ul>
 `;
 
+/* ===================== 講義（2026-10-19 場 / TOPIC 21 / transport） ===================== */
+const guide_transport_1019 = `
+<h4>一、需求預測的目的</h4>
+<p>運輸建設耗資龐大、使用期間長，規劃前須預測未來的運輸需求量，作為路網規模、班次、票價與財務可行性評估的依據。預測並非求得精確數字，而是在合理假設下，估計未來可能的需求範圍。</p>
+<h4>二、常見預測方法</h4>
+<table class="compare">
+<tr><th>方法</th><th>概念</th></tr>
+<tr><td>趨勢外推（時間序列）</td><td>依過去運量變化趨勢，推估未來數值，簡單易行，但假設未來延續過去趨勢</td></tr>
+<tr><td>迴歸分析（因果模式）</td><td>找出運量與人口、所得、票價等解釋變數的關係，再依變數預測值推估運量</td></tr>
+<tr><td>專家判斷（如德爾菲法）</td><td>彙整多位專家意見，經多輪匿名回饋，收斂出共識，適用於缺乏資料的新情境</td></tr>
+<tr><td>類比法</td><td>參考條件相似的既有系統之運量，推估新系統的可能需求</td></tr>
+</table>
+<h4>三、顯示偏好與敘述偏好調查</h4>
+<ul>
+<li><b>顯示偏好（RP）：</b>根據旅客實際發生的選擇行為所蒐集的資料，反映真實行為，但只能分析現有選項。</li>
+<li><b>敘述偏好（SP）：</b>以假設情境問卷詢問旅客在新服務、新票價下的選擇，適用於尚不存在的新運具或新服務。</li>
+</ul>
+<div class="memo"><b>記憶提醒：</b>RP＝「實際做了什麼」，SP＝「假設會怎麼做」；評估全新運輸服務時，因無實際資料可用，常需借助 SP 調查。</div>
+<h4>四、預測的不確定性</h4>
+<ul>
+<li><b>假設不確定：</b>人口成長、經濟情勢、油價、政策變動等外在條件可能與預期不同。</li>
+<li><b>模式與資料誤差：</b>模式簡化現實、調查資料有抽樣誤差，皆會影響預測準確度。</li>
+<li><b>因應方式：</b>進行<b>敏感度分析</b>（觀察關鍵參數變動對結果的影響）與<b>情境分析</b>（設定樂觀、基準、悲觀等多種情境），呈現預測的可能範圍。</li>
+</ul>
+<h4>五、常見考點提醒</h4>
+<ul>
+<li>各種預測方法的概念與適用情境（趨勢外推 vs. 迴歸 vs. 專家判斷）。</li>
+<li>RP 與 SP 的差異，及 SP 適用於新服務的原因。</li>
+<li>敏感度分析、情境分析用於處理預測不確定性（呼應先前成本效益分析主題）。</li>
+</ul>
+`;
+
+/* ===================== 講義（2026-10-19 場 / TOPIC 21 / vehicle） ===================== */
+const guide_vehicle_1019 = `
+<h4>一、空氣系統的功能</h4>
+<p>鐵路車輛上許多裝置以壓縮空氣作為動力或介質，包含空氣煞車、車門開關、空氣彈簧、集電弓升降與汽笛等，因此車輛上設有一套完整的空氣供給系統，是行車安全與乘坐品質的重要基礎。</p>
+<h4>二、主要組成</h4>
+<ul>
+<li><b>空氣壓縮機：</b>由馬達或引擎驅動，將空氣壓縮成高壓空氣。</li>
+<li><b>總風缸：</b>儲存壓縮空氣的容器，使壓縮機不必持續運轉，並穩定供氣壓力。</li>
+<li><b>空氣乾燥器：</b>去除壓縮空氣中的水分與油分，避免管路與閥件鏽蝕或結冰。</li>
+<li><b>壓力調整閥與安全閥：</b>調整供氣壓力，並於壓力異常升高時洩壓保護系統。</li>
+</ul>
+<h4>三、總風管與煞車管</h4>
+<table class="compare">
+<tr><th>管路</th><th>功能</th></tr>
+<tr><td>總風管</td><td>持續供應高壓空氣，作為各用氣設備（含煞車、車門等）的氣源</td></tr>
+<tr><td>煞車管</td><td>傳遞煞車控制訊號，管內壓力變化決定煞車的施放與作用</td></tr>
+</table>
+<div class="memo"><b>記憶提醒：</b>總風管是「氣源」，煞車管是「控制訊號」；煞車管洩壓即觸發煞車，呼應先前空氣煞車「失效即安全」的設計精神。</div>
+<h4>四、空氣乾燥的重要性</h4>
+<ul>
+<li>壓縮空氣冷卻後容易凝結水氣，若未去除，可能造成閥件鏽蝕，或在低溫下結冰堵塞管路，影響煞車與其他空氣設備的可靠性。</li>
+<li>因此空氣乾燥器與定期排水是空氣系統維護的重點項目。</li>
+</ul>
+<h4>五、常見考點提醒</h4>
+<ul>
+<li>空氣系統的組成（壓縮機、總風缸、乾燥器、調壓閥、安全閥）及各自功能。</li>
+<li>總風管與煞車管的功能區別。</li>
+<li>空氣乾燥對防止鏽蝕與結冰的意義。</li>
+</ul>
+`;
+
+/* ===================== 講義（2026-10-23 場 / TOPIC 22 / transport） ===================== */
+const guide_transport_1023 = `
+<h4>一、人為因素的分類</h4>
+<ul>
+<li><b>失誤（Slip／Lapse）：</b>原本意圖正確，但執行時發生疏漏，如按錯按鈕、忘記某個步驟。</li>
+<li><b>錯誤（Mistake）：</b>判斷或計畫本身有誤，卻以為是對的。</li>
+<li><b>違規（Violation）：</b>明知規定仍有意不遵守，可能出於走捷徑、壓力或習慣。</li>
+</ul>
+<div class="memo"><b>記憶提醒：</b>失誤是「做錯」、錯誤是「想錯」、違規是「明知故犯」，三者的成因不同，改善對策也不同。</div>
+<h4>二、疲勞管理</h4>
+<ul>
+<li>疲勞會降低注意力與反應速度，是運輸從業人員重要的人因風險。</li>
+<li>管理重點包括：合理的工時與輪班設計、足夠的休息時間、避免連續夜班過度集中。</li>
+</ul>
+<h4>三、人因工程與防呆設計</h4>
+<ul>
+<li><b>人機介面設計：</b>讓顯示器、操作裝置符合人的認知與操作習慣，降低誤判與誤操作。</li>
+<li><b>防呆（Fail-safe）設計：</b>即使操作者出錯，系統也能阻止危險發生或自動進入安全狀態，例如先前所學的死人開關與列車自動防護。</li>
+</ul>
+<h4>四、安全管理系統（SMS）</h4>
+<p>安全管理系統是一套有系統的安全管理架構，通常涵蓋：安全政策與目標、風險管理、安全保證（監督與稽核）、安全促進（教育訓練與溝通），透過 PDCA 持續改善。</p>
+<h4>五、安全文化</h4>
+<ul>
+<li>良好的安全文化強調人人重視安全、勇於通報異常，並以公正的方式處理疏失（呼應先前公正文化與虛驚事件通報）。</li>
+<li>主管的承諾與以身作則，是塑造安全文化的關鍵。</li>
+</ul>
+<h4>六、常見考點提醒</h4>
+<ul>
+<li>失誤、錯誤、違規三種人為因素的區別。</li>
+<li>防呆設計與人機介面設計的概念。</li>
+<li>安全管理系統的主要組成與持續改善精神。</li>
+</ul>
+`;
+
+/* ===================== 講義（2026-10-23 場 / TOPIC 22 / vehicle） ===================== */
+const guide_vehicle_1023 = `
+<h4>一、輪對的組成</h4>
+<p>輪對由一根車軸與壓裝在兩端的車輪組成，承受車體重量並直接與鋼軌接觸，是影響行車安全的關鍵部件，也是檢修的重點項目。</p>
+<h4>二、常見踏面缺陷</h4>
+<table class="compare">
+<tr><th>缺陷</th><th>說明與成因</th></tr>
+<tr><td>扁疤</td><td>踏面局部被磨平，常因煞車時車輪鎖死、在鋼軌上滑行所造成，行駛時會產生撞擊聲與振動</td></tr>
+<tr><td>剝離</td><td>踏面表層金屬因疲勞而片狀脫落</td></tr>
+<tr><td>踏面磨耗</td><td>長期與鋼軌接觸摩擦，輪廓逐漸改變</td></tr>
+<tr><td>輪緣磨耗</td><td>輪緣厚度因與鋼軌側面摩擦而變薄，過薄將影響導向安全</td></tr>
+</table>
+<div class="memo"><b>記憶提醒：</b>扁疤的主因是「車輪鎖死滑行」，因此防止煞車時輪對鎖死的防滑控制，同時也是在保護踏面。</div>
+<h4>三、檢測方式</h4>
+<ul>
+<li><b>目視與量規量測：</b>檢查踏面外觀，並量測輪徑、輪緣厚度與高度是否在容許範圍內。</li>
+<li><b>探傷檢測：</b>以超音波或渦電流等方法檢查車軸與車輪內部或表面有無裂紋。</li>
+</ul>
+<h4>四、處置方式</h4>
+<ul>
+<li><b>鏇修：</b>以車床削除表層，恢復標準踏面輪廓，常用不落輪車床於車輛不拆卸輪對的情況下作業。</li>
+<li><b>更換：</b>輪徑磨耗至最小限度或發現裂紋等嚴重缺陷時，須更換車輪或輪對。</li>
+</ul>
+<h4>五、常見考點提醒</h4>
+<ul>
+<li>扁疤、剝離、踏面磨耗、輪緣磨耗的區別與成因。</li>
+<li>鏇修與更換的適用時機。</li>
+<li>防滑控制與避免扁疤的關聯（呼應先前黏著力主題）。</li>
+</ul>
+`;
+
 const GUIDES = {
   '2026-08-10': {
     transport: {no:'TOPIC 01', title:'運輸的本質、特性與功能', html: guide_transport_0810},
@@ -5672,9 +6034,17 @@ const GUIDES = {
   '2026-10-16': {
     transport: {no:'TOPIC 20', title:'運輸系統韌性與災害應變管理', html: guide_transport_1016},
     vehicle:   {no:'TOPIC 20', title:'列車運行阻力與運轉曲線', html: guide_vehicle_1016}
+  },
+  '2026-10-19': {
+    transport: {no:'TOPIC 21', title:'運輸需求預測方法與不確定性', html: guide_transport_1019},
+    vehicle:   {no:'TOPIC 21', title:'車輛空氣供給系統', html: guide_vehicle_1019}
+  },
+  '2026-10-23': {
+    transport: {no:'TOPIC 22', title:'運輸安全文化與人為因素管理', html: guide_transport_1023},
+    vehicle:   {no:'TOPIC 22', title:'輪對檢修與踏面缺陷', html: guide_vehicle_1023}
   }
 };
-const GUIDE_WEEK_COUNT = 20; // 規劃主題數，用於「主題 X / 20」顯示
+const GUIDE_WEEK_COUNT = 22; // 規劃主題數，用於「主題 X / 20」顯示
 
 function renderGuides(dateKey){
   // 每一場（每個日期）都有各自獨立的講義主題，不與同一週的另一場共用
@@ -5715,8 +6085,8 @@ const SESSIONS = {
   '2026-10-09': {label:'第 18 次模擬考', available:true},
   '2026-10-12': {label:'第 19 次模擬考', available:true},
   '2026-10-16': {label:'第 20 次模擬考', available:true},
-  '2026-10-19': {label:'第 21 次模擬考', available:false},
-  '2026-10-23': {label:'第 22 次模擬考', available:false},
+  '2026-10-19': {label:'第 21 次模擬考', available:true},
+  '2026-10-23': {label:'第 22 次模擬考', available:true},
   '2026-10-26': {label:'第 23 次模擬考', available:false},
   '2026-10-30': {label:'第 24 次模擬考', available:false},
   '2026-11-02': {label:'第 25 次模擬考', available:false},
